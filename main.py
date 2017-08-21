@@ -32,7 +32,7 @@ def embed_into_table(images):
     delta = 65535
     new_delta = None
     for i in tables:
-        if i[0] =< input_width:
+        if i[0] <= input_width:
             if i[1] <= input_height:
                 new_delta = (i[0] * i[1]) - (input_width * input_height)
                 if new_delta < delta:
