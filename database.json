@@ -1,0 +1,36 @@
+{
+  "userlist": [
+    {
+      "name": "Person 1",
+      "main_pic": "test_faces/1_m.png",
+      "alt_pics":
+      [
+        "test_faces/1_1.png"
+      ]
+    },
+    {
+      "name": "Person 2",
+      "main_pic": "test_faces/2_m.png",
+      "alt_pics":
+      [
+        "test_faces/2_1.png"
+      ]
+    },
+    {
+      "name": "Person 3",
+      "main_pic": "test_faces/3_m.png",
+      "alt_pics":
+      [
+        "test_faces/3_1.png"
+      ]
+    },
+    {
+      "name": "Person 4",
+      "main_pic": "test_faces/4_m.png",
+      "alt_pics":
+      [
+        "test_faces/4_1.png"
+      ]
+    }
+  ]
+}
