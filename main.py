@@ -5,6 +5,7 @@ import pygame.image
 import json
 import warnings
 import random
+import time
 
 warnings.simplefilter('always')
 
@@ -80,6 +81,21 @@ def generate_question(lv, userlist):
     else:
         raise NotImplementedError("Difficulty level " + str(lv) + "not implemented")
 
+def display_question(lv, userlist):
+    question = generate_question(lv, userlist)
+    print(question['str_prequestion'])
+    # TODO: display the image.
+    time.sleep(10 * lv)
+    for i in range(80):
+        print()
+    print(question["str_question"])
+    # TODO: display the image.
+    answer = input("answer> ")
+    if answer.lower() in question['correct_answers']:
+        print("Answer correct.")
+        return True
+    else:
+        print("Answer incorrect.")
 
 if __name__ == '__main__':
     print("To be implemented.")
