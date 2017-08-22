@@ -78,6 +78,24 @@ def generate_question(lv, userlist):
         elif correct_answers == ('B2', '2B'):
             image_question = embed_into_table([[wrong_ans1, wrong_ans2], [wrong_ans3, image_prequestion]])
         return {'str_prequestion': str_prequestion, 'image_prequestion': image_prequestion, 'str_question': str_question, 'image_question': image_question, 'correct_answers': correct_answers}
+    elif lv == 2:
+            answer = random.choice(userlist)
+            image_prequestion = surface.image.load(answer["main_pic"])
+            str_prequestion = "Memorise this face."
+            str_question = "Which face was displayed before?"
+            wrong_ans1 = pygame.image.load(random.choice(random.choice(userlist)['alt_pic']))
+            wrong_ans2 = pygame.image.load(random.choice(random.choice(userlist)['alt_pic'])))
+            wrong_ans3 = pygame.image.load(random.choice(random.choice(userlist)['alt_pic'])))
+            correct_answers = random.choice([('A1', '1A'), ('A2', '2A'), ('B1', '1B'), ('B2', '2B')])
+            if correct_answers == ('A1', '1A'):
+                image_question = embed_into_table([[image_prequestion, wrong_ans1], [wrong_ans2, wrong_ans3]])
+            elif correct_answers == ('A2', '2A'):
+                image_question = embed_into_table([[wrong_ans1, image_prequestion], [wrong_ans2, wrong_ans3]])
+            elif correct_answers == ('B1', '1B'):
+                image_question = embed_into_table([[wrong_ans1, wrong_ans2], [image_prequestion, wrong_ans3]])
+            elif correct_answers == ('B2', '2B'):
+                image_question = embed_into_table([[wrong_ans1, wrong_ans2], [wrong_ans3, image_prequestion]])
+            return {'str_prequestion': str_prequestion, 'image_prequestion': image_prequestion, 'str_question': str_question, 'image_question': image_question, 'correct_answers': correct_answers}
     else:
         raise NotImplementedError("Difficulty level " + str(lv) + "not implemented")
 
