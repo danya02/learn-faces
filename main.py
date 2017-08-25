@@ -63,7 +63,7 @@ def embed_into_table(images):
 def generate_question(lv, userlist):
     if lv == 1:
         answer = random.choice(userlist)
-        image_prequestion = surface.image.load(answer["main_pic"])
+        image_prequestion = pygame.image.load(answer["main_pic"])
         str_prequestion = "Memorise this face."
         str_question = "Which face was displayed before?"
         wrong_ans1 = pygame.image.load(random.choice(userlist)['main_pic'])
