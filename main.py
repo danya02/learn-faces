@@ -81,7 +81,7 @@ def generate_question(lv, userlist):
         return {'str_prequestion': str_prequestion, 'image_prequestion': image_prequestion, 'str_question': str_question, 'image_question': image_question, 'correct_answers': correct_answers}
     elif lv == 2:
             answer = random.choice(userlist)
-            image_prequestion = surface.image.load(answer["main_pic"])
+            image_prequestion = pygame.image.load(answer["main_pic"])
             str_prequestion = "Memorise this face."
             str_question = "Which face was displayed before?"
             wrong_ans1 = pygame.image.load(random.choice(random.choice(userlist)['alt_pic']))
