@@ -102,7 +102,7 @@ def generate_question(lv, userlist):
 
 def display_question(lv, userlist):
     question = generate_question(lv, userlist)
-    display = pygame.display.set_mode(resolution=question["image_prequestion"])
+    display = pygame.display.set_mode(question["image_prequestion"].get_size())
     print(question['str_prequestion'])
     display.blit(question["image_prequestion"], (0, 0))
     time.sleep(10 * lv)
