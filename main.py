@@ -105,17 +105,17 @@ def display_question(lv, userlist):
     display = pygame.display.set_mode(question["image_prequestion"].get_size())
     print(question['str_prequestion'])
     display.blit(question["image_prequestion"], (0, 0))
-    display.flip()
+    pygame.display.flip()
     time.sleep(10 * lv)
     for i in range(80):
         print()
     display = pygame.display.set_mode(resolution=question["image_prequestion"])
     print(question["str_question"])
     display.blit(question["image_prequestion"], (0, 0))
-    display.flip()
+    pygame.display.flip()
     answer = input("answer> ")
     display.fill(pygame.Color(255,255,255,255))
-    display.flip()
+    pygame.display.flip()
     if answer.lower() in question['correct_answers']:
         print("Answer correct.")
         return True
