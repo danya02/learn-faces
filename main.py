@@ -109,7 +109,7 @@ def display_question(lv, userlist):
     time.sleep(10 * lv)
     for i in range(80):
         print()
-    display = pygame.display.set_mode(question["image_prequestion"].get_size())
+    display = pygame.display.set_mode(question["image_question"].get_size())
     print(question["str_question"])
     display.blit(question["image_prequestion"], (0, 0))
     pygame.display.flip()
