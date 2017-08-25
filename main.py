@@ -121,8 +121,10 @@ def display_question(lv, userlist):
 
 if __name__ == '__main__':
     try:
-        # TODO: load the data.
+        data = json.load(open(DATAFILE))["userlist"]
         i=0
         while 1:
             i += 1
             display_question(i, data)
+    except NotImplementedError:
+        print("There are no more questions.")
