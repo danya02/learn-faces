@@ -111,7 +111,7 @@ def display_question(lv, userlist):
         print()
     display = pygame.display.set_mode(question["image_question"].get_size())
     print(question["str_question"])
-    display.blit(question["image_prequestion"], (0, 0))
+    display.blit(question["image_question"], (0, 0))
     pygame.display.flip()
     answer = input("answer> ")
     display.fill(pygame.Color(255,255,255,255))
