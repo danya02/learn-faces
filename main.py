@@ -7,6 +7,7 @@ import warnings
 import random
 import time
 
+pygame.init()
 warnings.simplefilter('always')
 
 DATAFILE = './database.json'
@@ -101,14 +102,17 @@ def generate_question(lv, userlist):
 
 def display_question(lv, userlist):
     question = generate_question(lv, userlist)
+    display = pygame.display.set_mode(resolution=question["image_prequestion"])
     print(question['str_prequestion'])
-    # TODO: display the image.
+    display.blit(question["image_prequestion"], (0, 0))
     time.sleep(10 * lv)
     for i in range(80):
         print()
+    display = pygame.display.set_mode(resolution=question["image_prequestion"])
     print(question["str_question"])
-    # TODO: display the image.
+    display.blit(question["image_prequestion"], (0, 0))
     answer = input("answer> ")
+    display.fill(pygame.Color(255,255,255,255))
     if answer.lower() in question['correct_answers']:
         print("Answer correct.")
         return True
@@ -116,4 +120,9 @@ def display_question(lv, userlist):
         print("Answer incorrect.")
 
 if __name__ == '__main__':
-    print("To be implemented.")
+    try:
+        # TODO: load the data.
+        i=0
+        while 1:
+            i += 1
+            display_question(i, data)
