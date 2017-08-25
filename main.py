@@ -37,7 +37,7 @@ def embed_into_table(images):
     for i in tables:
         if int(i[0]) <= input_width:
             if int(i[1]) <= input_height:
-                new_delta = (i[0] * i[1]) - (input_width * input_height)
+                new_delta = (int(i[0]) * int(i[1])) - (input_width * input_height)
                 if new_delta < delta:
                     delta = new_delta
                     used_table = i
