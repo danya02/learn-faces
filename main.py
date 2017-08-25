@@ -121,6 +121,7 @@ def display_question(lv, userlist):
         return True
     else:
         print("Answer incorrect.")
+        return False
 
 if __name__ == '__main__':
     try:
