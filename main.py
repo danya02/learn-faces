@@ -112,7 +112,16 @@ def display_question(lv, database):
     pygame.display.set_caption(question['str_prequestion'], "Quiz")
     display.blit(question["image_prequestion"], (0, 0))
     pygame.display.flip()
-    time.sleep(5 * lv)
+    for i in range(lv*5*100):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys,exit(0)
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    sys,exit(0)
+        time.sleep(0.01)
     display = pygame.display.set_mode(question["image_question"].get_size())
     pygame.display.set_caption(question['str_question'], "Quiz")
     item_selected = False
