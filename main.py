@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import os
+import sys
 import pygame
 import pygame.image
 import json
@@ -129,8 +130,14 @@ def display_question(lv, database):
         display.blit(frames['yellow'], (hor_now, ver_now))
         pygame.display.flip()
         for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_w or event.key == pygame.K_k or event.key == pygame.K_UP:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys,exit(0)
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    sys,exit(0)
+                elif event.key == pygame.K_w or event.key == pygame.K_k or event.key == pygame.K_UP:
                     ver_now -= ver_delta
                     ver_now = max(ver_min, ver_now)
                 elif event.key == pygame.K_s or event.key == pygame.K_j or event.key == pygame.K_DOWN:
