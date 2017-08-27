@@ -177,9 +177,8 @@ if __name__ == '__main__':
     try:
         with open(DATAFILE) as i:
             data = json.load(i)
-        i=0
+        i=1
         while 1:
-            i += 1
-            display_question(i, data)
+            i += (1 if display_question(i, data) else 0)
     except NotImplementedError:
         print("There are no more questions.")
