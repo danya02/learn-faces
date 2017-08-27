@@ -130,16 +130,16 @@ def display_question(lv, database):
         pygame.display.flip()
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_w or pygame.key == pygame.K_k:
+                if event.key == pygame.K_w or event.key == pygame.K_k:
                     ver_now -= ver_delta
                     ver_now = max(ver_min, ver_now)
-                elif event.key == pygame.K_s or pygame.key == pygame.K_j:
+                elif event.key == pygame.K_s or event.key == pygame.K_j:
                     ver_now += ver_delta
                     ver_now = min(ver_max, ver_now)
-                elif event.key == pygame.K_a or pygame.key == pygame.K_h:
+                elif event.key == pygame.K_a or event.key == pygame.K_h:
                     hor_now -= hor_delta
                     hor_now = max(hor_min, hor_now)
-                elif event.key == pygame.K_d or pygame.key == pygame.K_l:
+                elif event.key == pygame.K_d or event.key == pygame.K_l:
                     hor_now += hor_delta
                     hor_now = min(hor_max, hor_now)
                 elif event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
