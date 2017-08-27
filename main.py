@@ -9,6 +9,7 @@ import time
 
 pygame.init()
 warnings.simplefilter('always')
+warnings.simplefilter('ignore', ImportWarning)
 
 DATAFILE = './database.json'
 ASSETDIR = '.'
@@ -158,7 +159,8 @@ def display_question(lv, database):
 
 if __name__ == '__main__':
     try:
-        data = json.load(open(DATAFILE))
+        with open(DATAFILE) as i:
+            data = json.load(i)
         i=0
         while 1:
             i += 1
