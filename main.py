@@ -107,14 +107,12 @@ def display_question(lv, database):
     question = generate_question(lv, database["userlist"])
     frames = {'yellow': pygame.image.load(os.path.join(ASSETDIR, 'yellow_frame.png')), 'red': pygame.image.load(os.path.join(ASSETDIR, 'red_frame.png')), 'green': pygame.image.load(os.path.join(ASSETDIR, 'green_frame.png'))}
     display = pygame.display.set_mode(question["image_prequestion"].get_size())
-    print(question['str_prequestion'])
+    pygame.display.set_caption(question['str_prequestion'], "Quiz")
     display.blit(question["image_prequestion"], (0, 0))
     pygame.display.flip()
     time.sleep(5 * lv)
-    for i in range(80):
-        print()
     display = pygame.display.set_mode(question["image_question"].get_size())
-    print(question["str_question"])
+    pygame.display.set_caption(question['str_question'], "Quiz")
     item_selected = False
     hor_min = 39
     ver_min = 39
@@ -124,7 +122,6 @@ def display_question(lv, database):
     ver_delta = 461
     hor_max = hor_min + (hor_delta * (question['width']-1))
     ver_max = ver_min + (ver_delta * (question['height']-1))
-    print('hor', hor_max, 'ver', ver_max)
     while not item_selected:
         time.sleep(0.01)
         display.blit(question["image_question"], (0, 0))
