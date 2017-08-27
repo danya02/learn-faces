@@ -60,15 +60,17 @@ def embed_into_table(images):
         current_height += delta_height
     return base_surface
 
-def generate_question(lv, userlist):
+def generate_question(lv, users):
+    userlist = users.copy()
+    random.shuffle(userlist)
     if lv == 1:
-        answer = random.choice(userlist)
+        answer = userlist.pop()
         image_prequestion = pygame.image.load(answer["main_pic"])
         str_prequestion = "Memorise this face."
         str_question = "Which face was displayed before?"
-        wrong_ans1 = pygame.image.load(random.choice(userlist)['main_pic'])
-        wrong_ans2 = pygame.image.load(random.choice(userlist)['main_pic'])
-        wrong_ans3 = pygame.image.load(random.choice(userlist)['main_pic'])
+        wrong_ans1 = pygame.image.load(userlist.pop()['main_pic'])
+        wrong_ans2 = pygame.image.load(userlist.pop()['main_pic'])
+        wrong_ans3 = pygame.image.load(userlist.pop()['main_pic'])
         correct_answer = random.choice([(0,0), (1,0), (0,1), (1,1)])
         if correct_answer == (0,0):
             image_question = embed_into_table([[image_prequestion, wrong_ans1], [wrong_ans2, wrong_ans3]])
@@ -80,14 +82,14 @@ def generate_question(lv, userlist):
             image_question = embed_into_table([[wrong_ans1, wrong_ans2], [wrong_ans3, image_prequestion]])
         return {'str_prequestion': str_prequestion, 'image_prequestion': image_prequestion, 'str_question': str_question, 'image_question': image_question, 'correct_answer': correct_answer, 'width': 2, 'height': 2}
     elif lv == 2:
-            answer = random.choice(userlist)
+            answer = userlist.pop()
             image_prequestion = pygame.image.load(answer["main_pic"])
             str_prequestion = "Memorise this face."
             str_question = "Which face was displayed before?"
             right_ans = pygame.image.load(random.choice(answer["alt_pics"]))
-            wrong_ans1 = pygame.image.load(random.choice(random.choice(userlist)['alt_pics']))
-            wrong_ans2 = pygame.image.load(random.choice(random.choice(userlist)['alt_pics']))
-            wrong_ans3 = pygame.image.load(random.choice(random.choice(userlist)['alt_pics']))
+            wrong_ans1 = pygame.image.load(random.choice(userlist.pop()['alt_pics']))
+            wrong_ans2 = pygame.image.load(random.choice(userlist.pop()['alt_pics']))
+            wrong_ans3 = pygame.image.load(random.choice(userlist.pop()['alt_pics']))
             correct_answer = random.choice([(0,0), (1,0), (0,1), (1,1)])
             if correct_answer == (0,0):
                 image_question = embed_into_table([[right_ans, wrong_ans1], [wrong_ans2, wrong_ans3]])
