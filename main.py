@@ -69,16 +69,16 @@ def generate_question(lv, userlist):
         wrong_ans1 = pygame.image.load(random.choice(userlist)['main_pic'])
         wrong_ans2 = pygame.image.load(random.choice(userlist)['main_pic'])
         wrong_ans3 = pygame.image.load(random.choice(userlist)['main_pic'])
-        correct_answers = random.choice([('A1', '1A'), ('A2', '2A'), ('B1', '1B'), ('B2', '2B')])
-        if correct_answers == ('A1', '1A'):
+        correct_answer = random.choice([(0,0), (1,0), (0,1), (1,1)])
+        if correct_answer == (0,0):
             image_question = embed_into_table([[image_prequestion, wrong_ans1], [wrong_ans2, wrong_ans3]])
-        elif correct_answers == ('A2', '2A'):
+        elif correct_answer == (1,0):
             image_question = embed_into_table([[wrong_ans1, image_prequestion], [wrong_ans2, wrong_ans3]])
-        elif correct_answers == ('B1', '1B'):
+        elif correct_answer == (0,1):
             image_question = embed_into_table([[wrong_ans1, wrong_ans2], [image_prequestion, wrong_ans3]])
-        elif correct_answers == ('B2', '2B'):
+        elif correct_answer == (1,1):
             image_question = embed_into_table([[wrong_ans1, wrong_ans2], [wrong_ans3, image_prequestion]])
-        return {'str_prequestion': str_prequestion, 'image_prequestion': image_prequestion, 'str_question': str_question, 'image_question': image_question, 'correct_answers': correct_answers}
+        return {'str_prequestion': str_prequestion, 'image_prequestion': image_prequestion, 'str_question': str_question, 'image_question': image_question, 'correct_answer': correct_answer, 'width': 2, 'height': 2}
     elif lv == 2:
             answer = random.choice(userlist)
             image_prequestion = pygame.image.load(answer["main_pic"])
@@ -87,21 +87,22 @@ def generate_question(lv, userlist):
             wrong_ans1 = pygame.image.load(random.choice(random.choice(userlist)['alt_pics']))
             wrong_ans2 = pygame.image.load(random.choice(random.choice(userlist)['alt_pics']))
             wrong_ans3 = pygame.image.load(random.choice(random.choice(userlist)['alt_pics']))
-            correct_answers = random.choice([('A1', '1A'), ('A2', '2A'), ('B1', '1B'), ('B2', '2B')])
-            if correct_answers == ('A1', '1A'):
+            correct_answer = random.choice([(0,0), (1,0), (0,1), (1,1)])
+            if correct_answer == (0,0):
                 image_question = embed_into_table([[image_prequestion, wrong_ans1], [wrong_ans2, wrong_ans3]])
-            elif correct_answers == ('A2', '2A'):
+            elif correct_answer == (1,0):
                 image_question = embed_into_table([[wrong_ans1, image_prequestion], [wrong_ans2, wrong_ans3]])
-            elif correct_answers == ('B1', '1B'):
+            elif correct_answer == (0,1):
                 image_question = embed_into_table([[wrong_ans1, wrong_ans2], [image_prequestion, wrong_ans3]])
-            elif correct_answers == ('B2', '2B'):
+            elif correct_answer == (1,1):
                 image_question = embed_into_table([[wrong_ans1, wrong_ans2], [wrong_ans3, image_prequestion]])
-            return {'str_prequestion': str_prequestion, 'image_prequestion': image_prequestion, 'str_question': str_question, 'image_question': image_question, 'correct_answers': correct_answers}
+            return {'str_prequestion': str_prequestion, 'image_prequestion': image_prequestion, 'str_question': str_question, 'image_question': image_question, 'correct_answer': correct_answer, 'width': 2, 'height': 2}
     else:
         raise NotImplementedError("Difficulty level " + str(lv) + "not implemented")
 
-def display_question(lv, userlist):
-    question = generate_question(lv, userlist)
+def display_question(lv, database):
+    question = generate_question(lv, database["userlist"])
+    frames = {'yellow': pygame.image.load(os.path.join(ASSETDIR, 'yellow_frame.png')), 'red': pygame.image.load(os.path.join(ASSETDIR, 'red_frame.png')), 'green': pygame.image.load(os.path.join(ASSETDIR, 'green_frame.png'))}
     display = pygame.display.set_mode(question["image_prequestion"].get_size())
     print(question['str_prequestion'])
     display.blit(question["image_prequestion"], (0, 0))
@@ -111,21 +112,53 @@ def display_question(lv, userlist):
         print()
     display = pygame.display.set_mode(question["image_question"].get_size())
     print(question["str_question"])
-    display.blit(question["image_question"], (0, 0))
-    pygame.display.flip()
-    answer = input("answer> ")
-    display.fill(pygame.Color(255,255,255,255))
-    pygame.display.flip()
-    if answer.lower() in question['correct_answers']:
-        print("Answer correct.")
+    item_selected = False
+    hor_min = 39
+    ver_min = 39
+    hor_now = hor_min
+    ver_now = ver_min
+    hor_delta = 351
+    ver_delta = 461
+    hor_max = hor_min + (hor_delta * (question['width']-1))
+    ver_max = ver_min + (ver_delta * (question['height']-1))
+    print('hor', hor_max, 'ver', ver_max)
+    while not item_selected:
+        time.sleep(0.01)
+        display.blit(question["image_question"], (0, 0))
+        display.blit(frames['yellow'], (hor_now, ver_now))
+        pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_w or pygame.key == pygame.K_k:
+                    ver_now -= ver_delta
+                    ver_now = max(ver_min, ver_now)
+                elif event.key == pygame.K_s or pygame.key == pygame.K_j:
+                    ver_now += ver_delta
+                    ver_now = min(ver_max, ver_now)
+                elif event.key == pygame.K_a or pygame.key == pygame.K_h:
+                    hor_now -= hor_delta
+                    hor_now = max(hor_min, hor_now)
+                elif event.key == pygame.K_d or pygame.key == pygame.K_l:
+                    hor_now += hor_delta
+                    hor_now = min(hor_max, hor_now)
+                elif event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+                    item_selected = True
+    selected_answer = (int((hor_now - hor_min) / hor_delta), int((ver_now - ver_min) / ver_delta))
+    if selected_answer == question['correct_answer']:
+        display.blit(frames['green'], (hor_now, ver_now))
+        pygame.display.flip()
+        time.sleep(5)
         return True
     else:
-        print("Answer incorrect.")
+        display.blit(frames['red'], (hor_now, ver_now))
+        display.blit(frames['green'], (hor_min+(hor_delta * question['correct_answer'][0]), ver_min+(ver_delta * question['correct_answer'][1])))
+        pygame.display.flip()
+        time.sleep(5)
         return False
 
 if __name__ == '__main__':
     try:
-        data = json.load(open(DATAFILE))["userlist"]
+        data = json.load(open(DATAFILE))
         i=0
         while 1:
             i += 1
