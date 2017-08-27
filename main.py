@@ -110,7 +110,7 @@ def display_question(lv, database):
     print(question['str_prequestion'])
     display.blit(question["image_prequestion"], (0, 0))
     pygame.display.flip()
-    time.sleep(10 * lv)
+    time.sleep(5 * lv)
     for i in range(80):
         print()
     display = pygame.display.set_mode(question["image_question"].get_size())
