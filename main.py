@@ -39,7 +39,7 @@ def embed_into_table(images):
     for i in tables:
         if int(i[0]) <= input_width:
             if int(i[1]) <= input_height:
-                new_delta = (int(i[0]) * int(i[1])) - (input_width * input_height)
+                new_delta =  (input_width * input_height) - (int(i[0]) * int(i[1]))
                 if new_delta < delta:
                     delta = new_delta
                     used_table = i
@@ -47,7 +47,7 @@ def embed_into_table(images):
         raise OSError(os.errno.ENOENT, 'Unable to find any matching table.')
     if not delta == 0:
         warnings.warn('No exact table found; using one with delta of ' + str(delta), RuntimeWarning)
-    base_surface = pygame.image.load(os.path.join(ASSETDIR, 'table_'+str(used_table[0])+'x'+str(used_table[0])+'.png'))
+    base_surface = pygame.image.load(os.path.join(ASSETDIR, 'table_'+str(used_table[0])+'x'+str(used_table[1])+'.png'))
     start_width = 39
     start_height = 39
     delta_width = 351
@@ -61,6 +61,29 @@ def embed_into_table(images):
         current_width = start_width
         current_height += delta_height
     return base_surface
+
+def draw_text(surface, text, color, rect, font, aa=False, bkg=None):
+    rect = pygame.Rect(rect)
+    y = rect.top
+    lineSpacing = -2
+    fontHeight = font.size("Tg")[1]
+    while text:
+        i = 1
+        if y + fontHeight > rect.bottom:
+            break
+        while font.size(text[:i])[0] < rect.width and i < len(text):
+            i += 1
+        if i < len(text):
+            i = text.rfind(" ", 0, i) + 1
+        if bkg:
+            image = font.render(text[:i], 1, color, bkg)
+            image.set_colorkey(bkg)
+        else:
+            image = font.render(text[:i], aa, color)
+        surface.blit(image, (rect.left, y))
+        y += fontHeight + lineSpacing
+        text = text[i:]
+    return text
 
 def generate_question(lv, users):
     userlist = users.copy()
@@ -101,6 +124,48 @@ def generate_question(lv, users):
                 image_question = embed_into_table([[wrong_ans1, wrong_ans2], [right_ans, wrong_ans3]])
             elif correct_answer == (1,1):
                 image_question = embed_into_table([[wrong_ans1, wrong_ans2], [wrong_ans3, right_ans]])
+            return {'str_prequestion': str_prequestion, 'image_prequestion': image_prequestion, 'str_question': str_question, 'image_question': image_question, 'correct_answer': correct_answer, 'width': 2, 'height': 2}
+    elif lv == 3:
+            str_prequestion = "Memorise these people."
+            right_person = userlist.pop()
+            str_question = "Which of these is " + right_person["name"] + "?"
+            wrong_person1 = userlist.pop()
+            wrong_person2 = userlist.pop()
+            pic1 = pygame.image.load(right_person["main_pic"])
+            pic2 = pygame.image.load(wrong_person1["main_pic"])
+            pic3 = pygame.image.load(wrong_person2["main_pic"])
+            rect = pygame.Rect(0, 300, 350, 160)
+            pic1.fill(pygame.Color(0, 0, 0, 127), rect)
+            pic2.fill(pygame.Color(0, 0, 0, 127), rect)
+            pic3.fill(pygame.Color(0, 0, 0, 127), rect)
+            draw_text(pic1, right_person["name"], pygame.Color(255, 255, 255), rect, pygame.font.SysFont("arial", 30))
+            draw_text(pic2, wrong_person1["name"], pygame.Color(255, 255, 255), rect, pygame.font.SysFont("arial", 30))
+            draw_text(pic3, wrong_person2["name"], pygame.Color(255, 255, 255), rect, pygame.font.SysFont("arial", 30))
+            empty = pygame.image.load(os.path.join(ASSETDIR, "null_face.png"))
+            k = [pic1, pic2, pic3]
+            random.shuffle(k)
+            image_prequestion = embed_into_table([k, [empty, empty, empty]])
+            right_ans = pygame.image.load(random.choice(right_person["alt_pics"]))
+            wrong_ans1 = pygame.image.load(random.choice(wrong_person1["alt_pics"]))
+            wrong_ans2 = pygame.image.load(random.choice(wrong_person2["alt_pics"]))
+            wrong_ans3 = pygame.image.load(random.choice(userlist.pop()["alt_pics"]))
+            correct_answer = random.choice([(0,0), (1,0), (0,1), (1,1)])
+            if correct_answer == (0,0):
+                k = [wrong_ans2, wrong_ans3]
+                random.shuffle(k)
+                image_question = embed_into_table([[right_ans, wrong_ans1], k])
+            elif correct_answer == (1,0):
+                k = [wrong_ans2, wrong_ans3]
+                random.shuffle(k)
+                image_question = embed_into_table([[wrong_ans1, right_ans], k])
+            elif correct_answer == (0,1):
+                k = [wrong_ans1, wrong_ans2]
+                random.shuffle(k)
+                image_question = embed_into_table([k, [right_ans, wrong_ans3]])
+            elif correct_answer == (1,1):
+                k = [wrong_ans1, wrong_ans2]
+                random.shuffle(k)
+                image_question = embed_into_table([k, [wrong_ans3, right_ans]])
             return {'str_prequestion': str_prequestion, 'image_prequestion': image_prequestion, 'str_question': str_question, 'image_question': image_question, 'correct_answer': correct_answer, 'width': 2, 'height': 2}
     else:
         raise NotImplementedError("Difficulty level " + str(lv) + "not implemented")
