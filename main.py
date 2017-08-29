@@ -141,10 +141,9 @@ def generate_question(lv, users):
             draw_text(pic1, right_person["name"], pygame.Color(255, 255, 255), rect, pygame.font.SysFont("arial", 30))
             draw_text(pic2, wrong_person1["name"], pygame.Color(255, 255, 255), rect, pygame.font.SysFont("arial", 30))
             draw_text(pic3, wrong_person2["name"], pygame.Color(255, 255, 255), rect, pygame.font.SysFont("arial", 30))
-            empty = pygame.image.load(os.path.join(ASSETDIR, "null_face.png"))
             k = [pic1, pic2, pic3]
             random.shuffle(k)
-            image_prequestion = embed_into_table([k, [empty, empty, empty]])
+            image_prequestion = embed_into_table([k])
             right_ans = pygame.image.load(random.choice(right_person["alt_pics"]))
             wrong_ans1 = pygame.image.load(random.choice(wrong_person1["alt_pics"]))
             wrong_ans2 = pygame.image.load(random.choice(wrong_person2["alt_pics"]))
