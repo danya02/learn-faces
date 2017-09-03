@@ -25,7 +25,7 @@ MY_UUID = ''
 def register(uuid):
     s = socket.create_connection((LOGSERVER, LOGPORT))
     f = s.makefile("r+")
-    f.write("REG")
+    f.write("REG\n")
     f.flush()
     if f.read(1) != "0":
         return 1
@@ -48,7 +48,7 @@ def submit_data(data):
     try:
         s = socket.create_connection((LOGSERVER, LOGPORT))
         f = s.makefile("r+")
-        f.write(MY_UUID)
+        f.write(MY_UUID+"\n")
         f.flush()
         if f.read(1) != "0":
             raise ConnectionAbortedError
