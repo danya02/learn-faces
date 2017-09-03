@@ -7,6 +7,8 @@ import json
 import warnings
 import random
 import time
+import socket
+import uuid
 
 pygame.init()
 warnings.simplefilter('always')
@@ -14,6 +16,49 @@ warnings.simplefilter('ignore', ImportWarning)
 
 DATAFILE = './database.json'
 ASSETDIR = '.'
+LOGFILE = './backlog.tmp'
+LOGSERVER = 'danya02.ru'
+LOGPORT = 1337
+UUIDFILE = './thishost.uuid'
+MY_UUID = ''
+
+def register(uuid):
+    s = socket.create_connection((LOGSERVER, LOGPORT))
+    f = s.makefile("r+")
+    f.write("REG")
+    if f.read(1) != "0":
+        return 1
+    f.write(MY_UUID + "::" + str(time.time()) + "::" + "register")
+    f.close()
+    s.shutdown()
+
+def user_init():
+    try:
+        with open(UUIDFILE) as o:
+            MY_UUID = o.read()
+    except:
+        MY_UUID = str(uuid.uuid4())
+        with open(UUIDFILE, 'w') as o:
+            o.write(MY_UUID)
+            register(MY_UUID)
+
+def submit_data(data):
+    try:
+        s = socket.create_connection((LOGSERVER, LOGPORT))
+        f = s.makefile("r+")
+        f.write(MY_UUID)
+        if f.read(1) != "0":
+            raise ConnectionAbortedError
+        with open(LOGFILE) as o:
+            f.write(o.read())
+        f.write(MY_UUID + "::" + str(time.time()) + "::" + str(data) + "\n")
+        f.close()
+        s.shutdown()
+        return 0
+    except ConnectionRefusedError:
+        with open(LOGFILE, "a") as o:
+            o.write(MY_UUID + "::" + str(time.time()) + "::" + str(data) + "\n")
+        return 1
 
 def embed_into_table(images):
     tables = []
@@ -238,6 +283,8 @@ def display_question(lv, database):
         return False
 
 if __name__ == '__main__':
+    user_init()
+    submit_data("app_start")
     try:
         with open(DATAFILE) as i:
             data = json.load(i)
@@ -246,3 +293,4 @@ if __name__ == '__main__':
             i += (1 if display_question(i, data) else 0)
     except NotImplementedError:
         print("There are no more questions.")
+    submit_data("app_start")
