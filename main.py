@@ -29,7 +29,7 @@ def register(uuid):
     f.flush()
     if f.read(1) != "0":
         return 1
-    f.write(MY_UUID + "::" + str(time.time()) + "::" + "register")
+    f.write(MY_UUID + "::" + str(time.time()) + "::" + "register\n")
     f.flush()
     f.close()
     s.shutdown()
