@@ -115,7 +115,7 @@ def embed_into_table(images):
                     delta = new_delta
                     used_table = i
     if used_table is None:
-        raise OSError(os.errno.ENOENT, 'Unable to find any matching table.')
+        raise FileNotFoundError('Unable to find any matching table.')
     if not delta == 0:
         warnings.warn('No exact table found; using one with delta of ' + str(delta), RuntimeWarning)
     base_surface = pygame.image.load(os.path.join(ASSETDIR, 'table_'+str(used_table[0])+'x'+str(used_table[1])+'.png'))
