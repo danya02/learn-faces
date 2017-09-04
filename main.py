@@ -35,14 +35,34 @@ def register(uuid):
     s.shutdown()
 
 def user_init():
+    global MY_UUID
     try:
         with open(UUIDFILE) as o:
-            MY_UUID = o.read()
-    except:
+            i = o.read().split(":")
+            MY_UUID = i[0]
+            if i[1] != "1":
+                raise RuntimeError
+    except RuntimeError:
+        with open(UUIDFILE, 'w') as o:
+            o.write(MY_UUID)
+            try:
+                register(MY_UUID)
+            except ConnectionRefusedError:
+                warnings.warn('Wasn\'t able to register, will retry later.', RuntimeWarning)
+                o.write(":0")
+            else:
+                o.write(':1')
+    except FileNotFoundError:
         MY_UUID = str(uuid.uuid4())
         with open(UUIDFILE, 'w') as o:
             o.write(MY_UUID)
-            register(MY_UUID)
+            try:
+                register(MY_UUID)
+            except ConnectionRefusedError:
+                warnings.warn('Wasn\'t able to register, will retry later.', RuntimeWarning)
+                o.write(":0")
+            else:
+                o.write(':1')
 
 def submit_data(data):
     try:
@@ -54,12 +74,14 @@ def submit_data(data):
             raise ConnectionAbortedError
         with open(LOGFILE) as o:
             f.write(o.read())
+        os.unlink(LOGFILE)
         f.write(MY_UUID + "::" + str(time.time()) + "::" + str(data) + "\n")
         f.flush()
         f.close()
         s.shutdown()
         return 0
     except ConnectionRefusedError:
+        warnings.warn('We couldn\'t connect to the server, saving data locally.', RuntimeWarning)
         with open(LOGFILE, "a") as o:
             o.write(MY_UUID + "::" + str(time.time()) + "::" + str(data) + "\n")
         return 1
@@ -229,10 +251,12 @@ def display_question(lv, database):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                submit_data('app_abort')
                 sys,exit(0)
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
+                    submit_data('app_abort')
                     sys,exit(0)
         time.sleep(0.01)
     display = pygame.display.set_mode(question["image_question"].get_size())
@@ -254,10 +278,12 @@ def display_question(lv, database):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                submit_data('app_abort')
                 sys,exit(0)
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
+                    submit_data('app_abort')
                     sys,exit(0)
                 elif event.key == pygame.K_w or event.key == pygame.K_k or event.key == pygame.K_UP:
                     ver_now -= ver_delta
@@ -297,4 +323,4 @@ if __name__ == '__main__':
             i += (1 if display_question(i, data) else 0)
     except NotImplementedError:
         print("There are no more questions.")
-    submit_data("app_start")
+    submit_data("app_stop")
