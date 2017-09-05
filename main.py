@@ -24,14 +24,16 @@ MY_UUID = ''
 
 def register(uuid):
     s = socket.create_connection((LOGSERVER, LOGPORT))
-    f = s.makefile("r+")
-    f.write("REG\n")
-    f.flush()
-    if f.read(1) != "0":
+    r = s.makefile("r")
+    w = s.makefile("w")
+    w.write("REG\n")
+    w.flush()
+    if r.read(1) != "0":
         return 1
-    f.write(MY_UUID + "::" + str(time.time()) + "::" + "register\n")
-    f.flush()
-    f.close()
+    w.write(MY_UUID + "::" + str(time.time()) + "::" + "register\n")
+    w.flush()
+    w.close()
+    r.close()
     s.shutdown()
 
 def user_init():
@@ -67,17 +69,19 @@ def user_init():
 def submit_data(data):
     try:
         s = socket.create_connection((LOGSERVER, LOGPORT))
-        f = s.makefile("r+")
-        f.write(MY_UUID+"\n")
-        f.flush()
-        if f.read(1) != "0":
+        w = s.makefile("w")
+        r = s.makefile("r")
+        w.write(MY_UUID+"\n")
+        w.flush()
+        if r.read(1) != "0":
             raise ConnectionAbortedError
         with open(LOGFILE) as o:
-            f.write(o.read())
+            w.write(o.read())
         os.unlink(LOGFILE)
-        f.write(MY_UUID + "::" + str(time.time()) + "::" + str(data) + "\n")
-        f.flush()
-        f.close()
+        w.write(MY_UUID + "::" + str(time.time()) + "::" + str(data) + "\n")
+        w.flush()
+        w.close()
+        r.close()
         s.shutdown()
         return 0
     except ConnectionRefusedError:
