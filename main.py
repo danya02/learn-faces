@@ -251,7 +251,9 @@ def display_question(lv, database):
     pygame.display.set_caption(question['str_prequestion'], "Quiz")
     display.blit(question["image_prequestion"], (0, 0))
     pygame.display.flip()
+    time_remaining = 1
     for i in range(lv*5*100):
+        time_remaining = ((lv*5*100) - i) / (lv*5*100)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -262,7 +264,10 @@ def display_question(lv, database):
                     pygame.quit()
                     submit_data('app_abort')
                     sys,exit(0)
-        time.sleep(0.01)
+        display.blit(question["image_prequestion"], (0, 0))
+        rect = pygame.Rect(0, question["image_prequestion"].get_height()-35, question["image_prequestion"].get_width() * time_remaining, 35)
+        display.fill(pygame.Color(int(255 - 255*time_remaining), int(255 * time_remaining), 0, 0), rect)
+        pygame.display.flip()
     display = pygame.display.set_mode(question["image_question"].get_size())
     pygame.display.set_caption(question['str_question'], "Quiz")
     item_selected = False
