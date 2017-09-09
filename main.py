@@ -324,12 +324,48 @@ def display_question(lv, database):
 if __name__ == '__main__':
     user_init()
     submit_data("app_start")
+    time_start = time.time()
     try:
         with open(DATAFILE) as i:
             data = json.load(i)
-        i=1
+        q = 0
+        a = 0
+        l = 2
         while 1:
-            i += (1 if display_question(i, data) else 0)
+            res = display_question(l, data)
+            q += 1
+            a += (1 if res else 0)
+            if res:
+                l += 2
     except NotImplementedError:
+        s = int(time.time() - time_start)
+        h, r = divmod(s, 3600)
+        m, s = divmod(r, 60)
+        submit_data("app_stop")
         print("There are no more questions.")
-    submit_data("app_stop")
+        f = pygame.font.SysFont("arial", 30)
+        c = pygame.Color(255, 255, 255, 255)
+        l1 = f.render("Final Statistics:", True, c)
+        l2 = f.render("Time Spent: " + ('%s:%02s:%02s' % (h, m, s)), True, c)
+        l3 = f.render("Questions answered: " + str(q), True, c)
+        l4 = f.render("Questions answered correctly: " + str(a) + "(" + str(int((a*100)/q)) + "%)", True, c)
+        d = pygame.display.set_mode((max(l1.get_width(), l2.get_width(), l3.get_width(), l4.get_width()), 30*5))
+        while 1:
+            for i in range(d.get_width()):
+                d.fill(pygame.Color(0, 0, 0, 255))
+                d.blit(l1, (0, 0))
+                d.blit(l2, (0, 31))
+                d.blit(l3, (0, 61))
+                d.blit(l4, (0, 91))
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        sys,exit(0)
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE:
+                            pygame.quit()
+                            sys,exit(0)
+                rect = pygame.Rect(i, 120,  30, 30)
+                d.fill(pygame.Color(int(255 - 255*(a/q)), int(255 * (a/q)), 0, 0), rect)
+                pygame.time.wait(10)
+                pygame.display.flip()
