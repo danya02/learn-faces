@@ -331,12 +331,16 @@ if __name__ == '__main__':
         q = 0
         a = 0
         l = 2
+        s = 0
         while 1:
             res = display_question(l, data)
             q += 1
             a += (1 if res else 0)
             if res:
-                l += 2
+                s += 1
+                if s == 10:
+                  s = 0
+                  l += 1
     except NotImplementedError:
         s = int(time.time() - time_start)
         h, r = divmod(s, 3600)
