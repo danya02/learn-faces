@@ -244,12 +244,16 @@ def generate_question(lv, users):
     else:
         raise NotImplementedError("Difficulty level " + str(lv) + "not implemented")
 
-def display_question(lv, database):
+def scale(surface, factor):
+    return pygame.transform.smoothscale(surface, (int(surface.get_width()*factor), int(surface.get_height()*factor)))
+
+def display_question(lv, database, scale_factor=1.0):
     question = generate_question(lv, database["userlist"])
-    frames = {'yellow': pygame.image.load(os.path.join(ASSETDIR, 'yellow_frame.png')), 'red': pygame.image.load(os.path.join(ASSETDIR, 'red_frame.png')), 'green': pygame.image.load(os.path.join(ASSETDIR, 'green_frame.png'))}
-    display = pygame.display.set_mode(question["image_prequestion"].get_size())
+    image_prequestion = scale(question["image_prequestion"], scale_factor)
+    frames = {'yellow': scale(pygame.image.load(os.path.join(ASSETDIR, 'yellow_frame.png')), scale_factor), 'red': scale(pygame.image.load(os.path.join(ASSETDIR, 'red_frame.png')), scale_factor), 'green': scale(pygame.image.load(os.path.join(ASSETDIR, 'green_frame.png')), scale_factor)}
+    display = pygame.display.set_mode(image_prequestion.get_size())
     pygame.display.set_caption(question['str_prequestion'], "Quiz")
-    display.blit(question["image_prequestion"], (0, 0))
+    display.blit(image_prequestion, (0, 0))
     pygame.display.flip()
     time_remaining = 1
     for i in range(lv*5*100):
@@ -264,24 +268,26 @@ def display_question(lv, database):
                     pygame.quit()
                     submit_data('app_abort')
                     sys,exit(0)
-        display.blit(question["image_prequestion"], (0, 0))
-        rect = pygame.Rect(0, question["image_prequestion"].get_height()-35, question["image_prequestion"].get_width() * time_remaining, 35)
+        display.blit(image_prequestion, (0, 0))
+        rect = pygame.Rect(0, image_prequestion.get_height()-35, image_prequestion.get_width() * time_remaining, 35)
         display.fill(pygame.Color(int(255 - 255*time_remaining), int(255 * time_remaining), 0, 0), rect)
         pygame.display.flip()
-    display = pygame.display.set_mode(question["image_question"].get_size())
+        pygame.time.wait(lv*2)
+    image_question = scale(question["image_question"], scale_factor)
+    display = pygame.display.set_mode(image_question.get_size())
     pygame.display.set_caption(question['str_question'], "Quiz")
     item_selected = False
-    hor_min = 39
-    ver_min = 39
+    hor_min = int(39*scale_factor)
+    ver_min = int(39*scale_factor)
     hor_now = hor_min
     ver_now = ver_min
-    hor_delta = 351
-    ver_delta = 461
+    hor_delta = int(351*scale_factor)
+    ver_delta = int(461*scale_factor)
     hor_max = hor_min + (hor_delta * (question['width']-1))
     ver_max = ver_min + (ver_delta * (question['height']-1))
     while not item_selected:
         time.sleep(0.01)
-        display.blit(question["image_question"], (0, 0))
+        display.blit(image_question, (0, 0))
         display.blit(frames['yellow'], (hor_now, ver_now))
         pygame.display.flip()
         for event in pygame.event.get():
@@ -333,7 +339,7 @@ if __name__ == '__main__':
         l = 2
         s = 0
         while 1:
-            res = display_question(l, data)
+            res = display_question(l, data, 0.5)
             q += 1
             a += (1 if res else 0)
             if res:
