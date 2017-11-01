@@ -10,11 +10,15 @@ try:
 except:
     pass
 
+
 def syslog(text):
     print("LOG:", text)
+
+
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serversocket.bind((socket.gethostname(), 1337))
 serversocket.listen(5)
+
 
 def server_thread(socketobj):
     r = socketobj.makefile("r")
@@ -57,6 +61,7 @@ def server_thread(socketobj):
         r.close()
         w.close
         socketobj.close()
+
 
 while True:
     clientsocket, address = serversocket.accept()
