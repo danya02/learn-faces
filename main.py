@@ -270,10 +270,19 @@ def display_question(lv, database, scale_factor=1.0):
               'red': scale(pygame.image.load(os.path.join(ASSETDIR, 'red_frame.png')), scale_factor),
               'green': scale(pygame.image.load(os.path.join(ASSETDIR, 'green_frame.png')), scale_factor)}
     display = pygame.display.set_mode(image_prequestion.get_size())
-    pygame.display.set_caption(question['str_prequestion'], "Quiz")
+    pygame.display.set_caption("Quiz")
+    text = question["str_prequestion"]
+    length = 1000
+    height = 33
+    while not length < image_prequestion.get_width():
+        height -= 1
+        font = pygame.font.SysFont(pygame.font.get_default_font(), height)
+        text_obj = font.render(text, 0, pygame.Color('white'))
+        length = text_obj.get_width()
     display.blit(image_prequestion, (0, 0))
+    display.fill(pygame.Color('black'), pygame.Rect((0, 0), text_obj.get_size()))
+    display.blit(text_obj, (0, 0))
     pygame.display.flip()
-    time_remaining = 1
     for i in range(lv * 5 * 100):
         time_remaining = ((lv * 5 * 100) - i) / (lv * 5 * 100)
         for event in pygame.event.get():
@@ -287,13 +296,25 @@ def display_question(lv, database, scale_factor=1.0):
                     submit_data('app_abort')
                     sys, exit(0)
         display.blit(image_prequestion, (0, 0))
+        display.fill(pygame.Color('black'), pygame.Rect((0, 0), text_obj.get_size()))
+        display.blit(text_obj, (0, 0))
         rect = pygame.Rect(0, image_prequestion.get_height() - 35, image_prequestion.get_width() * time_remaining, 35)
         display.fill(pygame.Color(int(255 - 255 * time_remaining), int(255 * time_remaining), 0, 0), rect)
         pygame.display.flip()
         pygame.time.wait(lv * 2)
     image_question = scale(question["image_question"], scale_factor)
     display = pygame.display.set_mode(image_question.get_size())
-    pygame.display.set_caption(question['str_question'], "Quiz")
+    text = question["str_question"]
+    length = 1000
+    height = 33
+    while not length < image_question.get_width():
+        height -= 1
+        font = pygame.font.SysFont(pygame.font.get_default_font(), height)
+        text_obj = font.render(text, 0, pygame.Color('white'))
+        length = text_obj.get_width()
+    display.blit(image_prequestion, (0, 0))
+    display.fill(pygame.Color('black'), pygame.Rect((0, 0), text_obj.get_size()))
+    display.blit(text_obj, (0, 0))
     item_selected = False
     hor_min = int(39 * scale_factor)
     ver_min = int(39 * scale_factor)
@@ -306,6 +327,8 @@ def display_question(lv, database, scale_factor=1.0):
     while not item_selected:
         time.sleep(0.01)
         display.blit(image_question, (0, 0))
+        display.fill(pygame.Color('black'), pygame.Rect((0, 0), text_obj.get_size()))
+        display.blit(text_obj, (0, 0))
         display.blit(frames['yellow'], (hor_now, ver_now))
         pygame.display.flip()
         for event in pygame.event.get():
