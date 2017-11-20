@@ -1,35 +1,35 @@
 {
   "userlist": [
     {
-      "name": "Person 1",
-      "main_pic": "test_faces/1_m.png",
+      "name": "Энрико Ферми",
+      "main_pic": "test_faces/fermi1.jpg",
       "alt_pics":
       [
-        "test_faces/1_1.png"
+        "test_faces/fermi2.jpg"
       ]
     },
     {
-      "name": "Person 2",
-      "main_pic": "test_faces/2_m.png",
+      "name": "Георгий Флёров",
+      "main_pic": "test_faces/flyorov1.jpg",
       "alt_pics":
       [
-        "test_faces/2_1.png"
+        "test_faces/flyorov1.jpg"
       ]
     },
     {
-      "name": "Person 3",
-      "main_pic": "test_faces/3_m.png",
+      "name": "Эрнест Резерфорд",
+      "main_pic": "test_faces/rutherford1.jpg",
       "alt_pics":
       [
-        "test_faces/3_1.png"
+        "test_faces/rutherford1.jpg"
       ]
     },
     {
-      "name": "Person 4",
-      "main_pic": "test_faces/4_m.png",
+      "name": "Эрвин Шрёдингер",
+      "main_pic": "test_faces/schroedinger1.jpg",
       "alt_pics":
       [
-        "test_faces/4_1.png"
+        "test_faces/schroedinger2.jpg"
       ]
     }
   ]
