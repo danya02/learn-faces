@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">LearnFaces</string>
+    <string name="default_question">Select %s\'s photo.</string>
 </resources>
