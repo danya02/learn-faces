@@ -4,11 +4,13 @@ import android.content.ContentUris;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -84,7 +86,13 @@ public class MainActivity extends AppCompatActivity {
         phones.close();
     }
 
-    public void generateQuestion() { /* TODO: Make pics larger than 96x96px! */
+
+    public void generateQuestion() {
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
         ImageButton[] imageButtons = {findViewById(R.id.b1), findViewById(R.id.b2), findViewById(R.id.b3), findViewById(R.id.b4)};
         ImageButton correctButton = imageButtons[r.nextInt(imageButtons.length)];
         ArrayList<ImageButton> wrongButtons = new ArrayList<>();
@@ -122,11 +130,12 @@ public class MainActivity extends AppCompatActivity {
         while (inputStream == null) {
             targetID = ids.get(r.nextInt(ids.size()));
             inputStream = ContactsContract.Contacts.openContactPhotoInputStream(getContentResolver(),
-                    ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.valueOf(targetID)));
+                    ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.valueOf(targetID)), true);
         }
 
         selectedTargets.add(targetID);
-        photo = BitmapFactory.decodeStream(inputStream);
+        photo = BitmapFactory.decodeStream(inputStream).copy(Bitmap.Config.ARGB_8888, true);
+        photo = Bitmap.createScaledBitmap(photo, Math.min(photo.getWidth(), width / 2), Math.min(photo.getHeight(), height / 2), false); /* FIXME: pic gets distorted */
         String name = names.get(targetID);
         correctButton.setImageBitmap(photo);
         for (int i = 0; i < wrongButtons.size(); i++) {
@@ -144,14 +153,19 @@ public class MainActivity extends AppCompatActivity {
                 if (!selectedTargets.contains(targetID1)) {
                     /* FIXME: won't select a contact with image if contact doesn't contain a phone number. */
                     inputStream1 = ContactsContract.Contacts.openContactPhotoInputStream(getContentResolver(),
-                            ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.valueOf(targetID1)));
+                            ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.valueOf(targetID1)), true);
 
                     selectedTargets.add(targetID1);
-                    photo1 = BitmapFactory.decodeStream(inputStream1);
-                    wrongButtons.get(i).setImageBitmap(photo1);
+                    if (inputStream1 != null) {
+                        photo1 = BitmapFactory.decodeStream(inputStream1).copy(Bitmap.Config.ARGB_8888, true);
+                        photo1 = Bitmap.createScaledBitmap(photo1, Math.min(photo1.getWidth(), width / 2), Math.min(photo1.getHeight(), height / 2), false);
+                        wrongButtons.get(i).setImageBitmap(photo1);
+                    }
+
                 }
+
             }
-            Log.d("pics", "generateQuestion: Selected pic for wrong button "+ i);
+            Log.d("pics", "generateQuestion: Selected pic for wrong button " + i);
         }
         TextView t = findViewById(R.id.question);
         t.setText(String.format(getResources().getText(R.string.default_question).toString(), name));
