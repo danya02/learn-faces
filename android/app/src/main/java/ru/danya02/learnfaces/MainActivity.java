@@ -75,6 +75,21 @@ public class MainActivity extends AppCompatActivity {
                 onSkip();
             }
         });
+        try
+        {
+            generateQuestion();
+        } catch(IllegalStateException e) {
+            Toast t = new Toast(getApplicationContext());
+            t.setText(R.string.no_images_toast);
+            t.setDuration(Toast.LENGTH_LONG);
+            t.show();
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+            finish();
+        }
     }
 
     private void getContactIndex() {
@@ -181,7 +196,15 @@ public class MainActivity extends AppCompatActivity {
         ProgressBar p = findViewById(R.id.progressBar);
         p.setProgress(p.getProgress() + 1);
         if (p.getProgress() != p.getMax()) {
-            generateQuestion();
+            try
+            {
+                generateQuestion();
+            } catch(IllegalStateException e) {
+                Toast t = new Toast(getApplicationContext());
+                t.setText(R.string.no_images_toast);
+                t.setDuration(Toast.LENGTH_LONG);
+                t.show();
+            }
         }
     }
 
