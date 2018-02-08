@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void generateQuestion() {
+    public void generateQuestion() throws IllegalStateException {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             while (inputStream1 == null) {
                 counter += 1;
                 if (counter >= 32768) {
-                    throw new RuntimeException("Too many loops!");
+                    throw new IllegalStateException("Too many loops!");
                 }
                 inputStream1 = null;
                 targetID1 = ids.get(r.nextInt(ids.size()));
@@ -189,7 +190,15 @@ public class MainActivity extends AppCompatActivity {
         ProgressBar p = findViewById(R.id.progressBar);
         p.setProgress(p.getProgress() + 1);
         if (p.getProgress() != p.getMax()) {
-            generateQuestion();
+            try
+            {
+                generateQuestion();
+            } catch(IllegalStateException e) {
+                Toast t = new Toast(getApplicationContext());
+                t.setText(R.string.no_images_toast);
+                t.setDuration(Toast.LENGTH_LONG);
+                t.show();
+            }
         }
 
     }

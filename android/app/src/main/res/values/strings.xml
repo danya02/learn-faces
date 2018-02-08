@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">LearnFaces</string>
     <string name="default_question">Select %s\'s photo.</string>
+    <string name="no_images_toast">Not enough contacts with images!</string>
 </resources>
