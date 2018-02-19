@@ -2,4 +2,8 @@
     <string name="app_name">LearnFaces</string>
     <string name="default_question">Select %s\'s photo.</string>
     <string name="no_images_toast">Not enough contacts with images!</string>
+    <string name="start_button_text">Start</string>
+    <string name="rtfs_button_text">RTFS on GitHub!</string>
+    <string name="source_link">https://github.com/danya02/learn-faces</string>
+
 </resources>

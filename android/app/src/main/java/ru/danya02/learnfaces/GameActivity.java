@@ -1,6 +1,7 @@
 package ru.danya02.learnfaces;
 
 import android.content.ContentUris;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity {
 
     enum buttons {BUTTON1, BUTTON2, BUTTON3, BUTTON4}
 
@@ -38,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getContactIndex();
         ProgressBar p = findViewById(R.id.progressBar);
-        p.setMax(10);
+        Intent origin = getIntent();
+        p.setMax(origin.getIntExtra("questions",10));
         ImageButton b1 = findViewById(R.id.b1);
         ImageButton b2 = findViewById(R.id.b2);
         ImageButton b3 = findViewById(R.id.b3);
