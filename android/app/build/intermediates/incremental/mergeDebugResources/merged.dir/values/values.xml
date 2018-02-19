@@ -519,6 +519,7 @@
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <string name="app_name">LearnFaces</string>
     <string name="default_question">Select %s\'s photo.</string>
+    <string name="no_images_toast">Not enough contacts with images!</string>
     <string name="search_menu_title">Search</string>
     <string name="status_bar_notification_info_overflow">999+</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>

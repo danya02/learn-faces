@@ -2885,8 +2885,9 @@ public final class R {
     public static final int select_dialog_item_material=0x7f09002b;
     public static final int select_dialog_multichoice_material=0x7f09002c;
     public static final int select_dialog_singlechoice_material=0x7f09002d;
-    public static final int support_simple_spinner_dropdown_item=0x7f09002e;
-    public static final int tooltip=0x7f09002f;
+    public static final int start_menu=0x7f09002e;
+    public static final int support_simple_spinner_dropdown_item=0x7f09002f;
+    public static final int tooltip=0x7f090030;
   }
   public static final class mipmap {
     public static final int ic_launcher=0x7f0a0000;
@@ -2926,8 +2927,9 @@ public final class R {
     public static final int abc_toolbar_collapse_description=0x7f0b001e;
     public static final int app_name=0x7f0b001f;
     public static final int default_question=0x7f0b0020;
-    public static final int search_menu_title=0x7f0b0021;
-    public static final int status_bar_notification_info_overflow=0x7f0b0022;
+    public static final int no_images_toast=0x7f0b0021;
+    public static final int search_menu_title=0x7f0b0022;
+    public static final int status_bar_notification_info_overflow=0x7f0b0023;
   }
   public static final class style {
     public static final int AlertDialog_AppCompat=0x7f0c0000;
