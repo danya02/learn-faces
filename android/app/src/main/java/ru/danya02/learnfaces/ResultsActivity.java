@@ -46,17 +46,17 @@ public class ResultsActivity extends AppCompatActivity {
 
         int textSize=48;
         TextView goodCount = findViewById(R.id.good_count);
-        goodCount.setTextColor(Color.rgb(0,200,0));
+        goodCount.setTextColor(getResources().getColor(R.color.colorGood));
         goodCount.setTextSize(textSize);
         goodCount.setText(good.toString());
 
         TextView skipCount = findViewById(R.id.skip_count);
-        skipCount.setTextColor(Color.rgb(255,187,0));
+        skipCount.setTextColor(getResources().getColor(R.color.colorSkip));
         skipCount.setTextSize(textSize);
         skipCount.setText(skipped.toString());
 
         TextView badCount = findViewById(R.id.bad_count);
-        badCount.setTextColor(Color.rgb(255,0,0));
+        badCount.setTextColor(getResources().getColor(R.color.colorBad));
         badCount.setTextSize(textSize);
         badCount.setText(bad.toString());
 
