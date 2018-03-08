@@ -21,6 +21,14 @@ public class StartMenuActivity extends AppCompatActivity {
                 start(v);
             }
         });
+        final Button rtfs = findViewById(R.id.b_rtfs);
+        rtfs.setText(R.string.rtfs_button_text);
+        rtfs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                to_rtfs(v);
+            }
+        });
     }
     public void start(View view){
         Intent toGame = new Intent(this, GameActivity.class);

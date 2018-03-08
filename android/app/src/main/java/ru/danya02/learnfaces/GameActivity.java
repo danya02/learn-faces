@@ -40,7 +40,7 @@ public class GameActivity extends AppCompatActivity {
         getContactIndex();
         ProgressBar p = findViewById(R.id.progressBar);
         Intent origin = getIntent();
-        p.setMax(origin.getIntExtra("questions",10));
+        p.setMax(origin.getIntExtra("questions", 10));
         ImageButton b1 = findViewById(R.id.b1);
         ImageButton b2 = findViewById(R.id.b2);
         ImageButton b3 = findViewById(R.id.b3);
@@ -72,19 +72,11 @@ public class GameActivity extends AppCompatActivity {
                 onSkip();
             }
         });
-        try
-        {
+        try {
             generateQuestion();
-        } catch(IllegalStateException e) {
-            Toast t = new Toast(getApplicationContext());
-            t.setText(R.string.no_images_toast);
-            t.setDuration(Toast.LENGTH_LONG);
+        } catch (IllegalStateException e) {
+            Toast t = Toast.makeText(getApplicationContext(), R.string.no_images_toast, Toast.LENGTH_LONG);
             t.show();
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
-            }
             finish();
         }
     }
@@ -111,24 +103,28 @@ public class GameActivity extends AppCompatActivity {
         ArrayList<ImageButton> wrongButtons = new ArrayList<>();
         switch (correctButton.getId()) {
             case R.id.b1:
+                Log.d("button", "The correct button is b1.");
                 correctAnswer = buttons.BUTTON1;
                 wrongButtons.add((ImageButton) findViewById(R.id.b2));
                 wrongButtons.add((ImageButton) findViewById(R.id.b3));
                 wrongButtons.add((ImageButton) findViewById(R.id.b4));
                 break;
             case R.id.b2:
+                Log.d("button", "The correct button is b2.");
                 correctAnswer = buttons.BUTTON2;
                 wrongButtons.add((ImageButton) findViewById(R.id.b1));
                 wrongButtons.add((ImageButton) findViewById(R.id.b3));
                 wrongButtons.add((ImageButton) findViewById(R.id.b4));
                 break;
             case R.id.b3:
+                Log.d("button", "The correct button is b3.");
                 correctAnswer = buttons.BUTTON3;
                 wrongButtons.add((ImageButton) findViewById(R.id.b1));
                 wrongButtons.add((ImageButton) findViewById(R.id.b2));
                 wrongButtons.add((ImageButton) findViewById(R.id.b4));
                 break;
             case R.id.b4:
+                Log.d("button", "The correct button is b4.");
                 correctAnswer = buttons.BUTTON4;
                 wrongButtons.add((ImageButton) findViewById(R.id.b1));
                 wrongButtons.add((ImageButton) findViewById(R.id.b2));
@@ -158,7 +154,7 @@ public class GameActivity extends AppCompatActivity {
             int counter = 0;
             while (inputStream1 == null) {
                 counter += 1;
-                if (counter >= 32768) {
+                if (counter >= 1024) {
                     throw new IllegalStateException("Too many loops!");
                 }
                 inputStream1 = null;
@@ -193,15 +189,14 @@ public class GameActivity extends AppCompatActivity {
         ProgressBar p = findViewById(R.id.progressBar);
         p.setProgress(p.getProgress() + 1);
         if (p.getProgress() != p.getMax()) {
-            try
-            {
+            try {
                 generateQuestion();
-            } catch(IllegalStateException e) {
-                Toast t = new Toast(getApplicationContext());
-                t.setText(R.string.no_images_toast);
-                t.setDuration(Toast.LENGTH_LONG);
+            } catch (IllegalStateException e) {
+                Toast t = Toast.makeText(getApplicationContext(), R.string.no_images_toast, Toast.LENGTH_LONG);
                 t.show();
             }
+        } else {
+            results();
         }
     }
 
@@ -210,16 +205,25 @@ public class GameActivity extends AppCompatActivity {
         ProgressBar p = findViewById(R.id.progressBar);
         p.setProgress(p.getProgress() + 1);
         if (p.getProgress() != p.getMax()) {
-            try
-            {
+            try {
                 generateQuestion();
-            } catch(IllegalStateException e) {
-                Toast t = new Toast(getApplicationContext());
-                t.setText(R.string.no_images_toast);
-                t.setDuration(Toast.LENGTH_LONG);
+            } catch (IllegalStateException e) {
+                Toast t = Toast.makeText(getApplicationContext(), R.string.no_images_toast, Toast.LENGTH_LONG);
                 t.show();
             }
+        } else {
+            results();
         }
 
+    }
+
+    void results() {
+        ProgressBar p = findViewById(R.id.progressBar);
+        Intent results = new Intent(this, ResultsActivity.class);
+        results.putExtra("total", p.getMax());
+        results.putExtra("good", correctAnswers);
+        results.putExtra("skip", skippedQuestions);
+        results.putExtra("bad", wrongAnswers);
+        startActivity(results);
     }
 }
