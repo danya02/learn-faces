@@ -29,7 +29,7 @@ public class ResultsActivity extends AppCompatActivity {
         final RatingBar ratingBar = findViewById(R.id.rating);
         ratingBar.setMax(total);
         ratingBar.setIsIndicator(true);
-        ratingBar.setRating(good);
+        ratingBar.setRating(good/total);
         int textSizeLabel=16;
         TextView countLabel = findViewById(R.id.count_label);
         countLabel.setText(String.format(getText(R.string.results_total).toString(),total.toString()));
