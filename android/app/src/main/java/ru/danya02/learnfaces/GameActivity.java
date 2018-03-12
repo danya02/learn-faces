@@ -18,10 +18,21 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
+import java.util.Scanner;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -33,9 +44,68 @@ public class GameActivity extends AppCompatActivity {
     buttons correctAnswer;
     Integer correctAnswers = 0, wrongAnswers = 0, skippedQuestions = 0;
 
+    boolean needsUpdating() {
+        URL url;
+        String dataFromNet, dataFromFile = null;
+        try {
+            url = new URL(getString(R.string.database_link));
+        } catch (MalformedURLException e) {
+            Log.wtf("testNeedsUpdate", "Error of URL in resources?!", e);
+            return false;
+        }
+        HttpURLConnection urlConnection = null;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+        } catch (IOException e) {
+            Log.e("testNeedsUpdate", "Problem while opening connection.", e);
+            return false;
+        }
+        try {
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            Scanner scanner = new Scanner(in);
+            StringBuilder fromNet = new StringBuilder();
+            while (scanner.hasNext()) {
+                fromNet.append(scanner.next());
+            }
+            dataFromNet = fromNet.toString();
+        } catch (Exception e) {
+            Log.e("testNeedsUpdate", "Problem while reading from connection.", e);
+            return false;
+        } finally {
+            urlConnection.disconnect();
+        }
+        InputStream inputStream = null;
+        try {
+            inputStream = getApplicationContext().openFileInput("data.json");
+        } catch (FileNotFoundException e) {
+            Log.e("testNeedsUpdate", "Error while opening file.", e);
+            return true;
+        }
+
+        if (inputStream != null) {
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String receiveString;
+            StringBuilder fromFile = new StringBuilder();
+
+            try {
+                while ((receiveString = bufferedReader.readLine()) != null) {
+                    fromFile.append(receiveString);
+                }
+                dataFromFile = fromFile.toString();
+            } catch (IOException e) {
+                Log.e("testNeedsUpdate", "Error while reading file.", e);
+                return true;
+            }
+        }
+        return !Objects.equals(dataFromFile, dataFromNet);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main);
         getContactIndex();
         ProgressBar p = findViewById(R.id.progressBar);
@@ -81,6 +151,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    @Deprecated
     private void getContactIndex() {
         Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
         assert phones != null;
@@ -90,7 +161,6 @@ public class GameActivity extends AppCompatActivity {
         }
         phones.close();
     }
-
 
     public void generateQuestion() throws IllegalStateException {
         Display display = getWindowManager().getDefaultDisplay();

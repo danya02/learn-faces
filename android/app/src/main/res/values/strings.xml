@@ -5,6 +5,7 @@
     <string name="start_button_text">Start</string>
     <string name="rtfs_button_text">RTFS on GitHub!</string>
     <string name="source_link">https://github.com/danya02/learn-faces</string>
+    <string name="database_link">https://raw.githubusercontent.com/danya02/learn-faces/master/database.json</string>
     <string name="title_activity_results">Results</string>
     <string name="results_total">Out of %s pictures, you guessed:</string>
     <string name="good_label">Correctly</string>
