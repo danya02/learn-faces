@@ -6,10 +6,21 @@
     <string name="rtfs_button_text">RTFS on GitHub!</string>
     <string name="source_link">https://github.com/danya02/learn-faces</string>
     <string name="database_link">https://raw.githubusercontent.com/danya02/learn-faces/master/database.json</string>
+    <string name="data_base_directory_link">https://raw.githubusercontent.com/danya02/learn-faces/master/</string>
     <string name="title_activity_results">Results</string>
     <string name="results_total">Out of %s pictures, you guessed:</string>
     <string name="good_label">Correctly</string>
     <string name="skip_label">Skipped</string>
     <string name="bad_label">Incorrectly</string>
     <string name="try_again">Try again</string>
+    <string name="update_updating_index">Downloading file index…</string>
+    <string name="update_writing_index">Writing file index to file…</string>
+    <string name="update_json_parse">Parsing JSON…</string>
+    <string name="update_create_image_index">Creating image index…</string>
+    <string name="update_start_text">Start update!</string>
+    <string name="update_no_error">No errors while updating. You\'re good to go!</string>
+    <string name="b_continue_from_update_text">Continue</string>
+    <string name="update_error_formattable">An error was detected while updating data. The error was:   %s</string>
+    <string name="update_try_again">Try again</string>
+    <string name="update_downloading_formattable">Downloading file %s...</string>
 </resources>

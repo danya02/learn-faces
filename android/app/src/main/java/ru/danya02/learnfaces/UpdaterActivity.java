@@ -1,19 +1,39 @@
 package ru.danya02.learnfaces;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import static android.os.Environment.*;
 
 public class UpdaterActivity extends AppCompatActivity {
 
@@ -21,49 +41,267 @@ public class UpdaterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_updater);
+        ProgressBar b1 = findViewById(R.id.progressBarMain);
+        ProgressBar b2 = findViewById(R.id.progressBarAux);
+        b1.setIndeterminate(true);
+        b2.setIndeterminate(true);
+        Button b = findViewById(R.id.b_start_update);
+        b.setText(R.string.update_start_text);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startUpdateWrapper();
+            }
+        });
     }
 
-    boolean startUpdate(View v) {
-        URL url;
-        String dataFromNet, dataFromFile = null;
+    void startUpdateWrapper() {
         try {
-            url = new URL(getString(R.string.database_link));
-        } catch (MalformedURLException e) {
-            Log.wtf("updateData", "Error of URL in resources?!", e);
-            return false;
-        }
-        HttpURLConnection urlConnection = null;
-        try {
-            urlConnection = (HttpURLConnection) url.openConnection();
-        } catch (IOException e) {
-            Log.e("updateData", "Problem while opening connection.", e);
-            return false;
-        }
-        try {
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            Scanner scanner = new Scanner(in);
-            StringBuilder fromNet = new StringBuilder();
-            while (scanner.hasNext()) {
-                fromNet.append(scanner.next());
-            }
-            dataFromNet = fromNet.toString();
+            startUpdate();
         } catch (Exception e) {
-            Log.e("updateData", "Problem while reading from connection.", e);
-            return false;
-        } finally {
-            urlConnection.disconnect();
+            leave(e.toString());
+        }
+    }
+    void continueUpdateWrapper() {
+        try {
+            continueUpdate();
+        } catch (Exception e) {
+            leave(e.toString());
+        }
+    }
+
+    ArrayList<String> paths;
+
+
+    class DownloadDatabase extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            int count;
+            String file = getString(R.string.database_link);
+            try {
+                URL url = new URL(file);
+                URLConnection urlConnection = url.openConnection();
+                urlConnection.connect();
+
+                int fileLength = urlConnection.getContentLength();
+                InputStream input = new BufferedInputStream(url.openStream(),
+                        8192);
+
+                File f = new File(getFilesDir(), "data.json");
+                f.createNewFile();
+                OutputStream output = new FileOutputStream(String.format("%s/%s", getFilesDir(), "data.json"));
+
+                byte data[] = new byte[1024];
+
+                long total = 0;
+
+                while ((count = input.read(data)) != -1) {
+                    total += count;
+                    publishProgress("" + (int) ((total * 100) / fileLength));
+                    output.write(data, 0, count);
+                }
+                output.flush();
+                output.close();
+                input.close();
+
+
+            } catch (Exception e) {
+                Log.e("updateData", String.format("Error while downloading file %s.", file), e);
+                onPostExecute(e.toString());
+            }
+            onPostExecute(null);
+            return null;
         }
 
-        FileOutputStream outputStream;
-        try {
-            outputStream = openFileOutput("data.json", Context.MODE_PRIVATE);
-            outputStream.write(dataFromNet.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            Log.e("updateData", "Problem while writing to file.", e);
-            return false;
+        @Override
+        protected void onPostExecute(String s) {
+            continueUpdateWrapper();
         }
-        //TODO: Add downloading of images.
-        return true;
+        protected void onProgressUpdate(final String... progress) {
+            runOnUiThread(new Runnable(){
+
+                @Override
+                public void run() {
+                    ProgressBar p = findViewById(R.id.progressBarAux);
+                    p.setProgress(Integer.parseInt(progress[0]));
+                    p.setMax(100);
+                    p.setIndeterminate(false);
+
+                }
+            });
+        }
+    }
+
+    void startUpdate(){
+        ProgressBar b = findViewById(R.id.progressBarAux);
+        TextView t = findViewById(R.id.textStatus);
+        URL url;
+        b.setIndeterminate(true);
+        t.setText(R.string.update_updating_index);
+        DownloadDatabase d = new DownloadDatabase();
+        d.execute();
+    }
+
+    void continueUpdate() throws JSONException, FileNotFoundException {        FileInputStream file;
+        ProgressBar b = findViewById(R.id.progressBarAux);
+        final TextView t = findViewById(R.id.textStatus);
+        try {
+            file = openFileInput("data.json");
+        } catch (FileNotFoundException e) {
+            Log.wtf("updateData", "Not found file we just created?!", e);
+            throw e;
+        }
+        runOnUiThread(new Runnable(){
+            @Override
+            public void run() {
+                t.setText(R.string.update_json_parse);
+            }
+        });
+
+        StringBuilder text = new StringBuilder();
+
+        Scanner r = new Scanner(file);
+
+        while (r.hasNext()) {
+            text.append(r.nextLine());
+        }
+        r.close();
+        String json = text.toString();
+        JSONObject jObject;
+        try {
+            jObject = new JSONObject(json);
+        } catch (JSONException e) {
+            Log.wtf("updateData", "Cannot parse JSON we wrote ourselves?!", e);
+            throw e;
+        }
+        JSONArray jsonArray;
+        try {
+            jsonArray = jObject.getJSONArray("userlist");
+        } catch (JSONException e) {
+            Log.wtf("updateData", "Cannot find `userlist` in JSON?!", e);
+            throw e;
+        }
+        runOnUiThread(new Runnable(){
+            @Override
+            public void run() {
+                t.setText(R.string.update_create_image_index);
+            }
+        });
+
+        paths = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                JSONObject oneObject = jsonArray.getJSONObject(i);
+                String mainPic = oneObject.getString("main_pic");
+                JSONArray altPics = oneObject.getJSONArray("alt_pics");
+                ArrayList<String> altPicsPaths = new ArrayList<>();
+                for (int j = 0; j < altPics.length(); j++) {
+                    altPicsPaths.add(altPics.getString(j));
+                }
+                paths.add(mainPic);
+                paths.addAll(altPicsPaths);
+            } catch (JSONException e) {
+                Log.wtf("updateData", "Error while parsing trusted JSON?!", e);
+                throw e;
+            }
+        }
+        downloadFromIndex(0);
+    }
+
+    class DownloadFileFromURL extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            int count;
+            final TextView t = findViewById(R.id.textStatus);
+            final String file = strings[0];
+            int index = Integer.parseInt(strings[1]);
+            runOnUiThread(new Runnable(){
+                @Override
+                public void run() {
+                    t.setText(String.format(getString(R.string.update_downloading_formattable), file));
+                }
+            });
+            try {
+                URL url = new URL(getString(R.string.data_base_directory_link) + file);
+                URLConnection urlConnection = url.openConnection();
+                urlConnection.connect();
+
+                int fileLength = urlConnection.getContentLength();
+                InputStream input = new BufferedInputStream(url.openStream(),
+                        8192);
+                File f = new File( getFilesDir(), file);
+                f.createNewFile(); //FIXME: java.io.IOException: open failed: ENOENT (No such file or directory)
+                OutputStream output = new FileOutputStream(String.format("%s/%s", getFilesDir(), file));
+
+                byte data[] = new byte[1024];
+
+                long total = 0;
+
+                while ((count = input.read(data)) != -1) {
+                    total += count;
+                    publishProgress("" + (int) ((total * 100) / fileLength));
+                    output.write(data, 0, count);
+                }
+                output.flush();
+                output.close();
+                input.close();
+
+
+            } catch (Exception e) {
+                Log.e("updateData", String.format("Error while downloading file %s.", file), e);
+                leave(e.toString());
+            }
+            onPostExecute(index);
+            return null;
+        }
+
+
+        protected void onProgressUpdate(final String... progress) {
+runOnUiThread(new Runnable(){
+
+    @Override
+    public void run() {
+        ProgressBar p = findViewById(R.id.progressBarAux);
+        p.setProgress(Integer.parseInt(progress[0]));
+        p.setMax(100);
+        p.setIndeterminate(false);
+    }
+});
+        }
+
+        protected void onPostExecute(int file_index) {
+            downloadFromIndex(file_index + 1);
+        }
+
+    }
+
+    void leave(String s) {
+        Intent i = new Intent(this, UpdaterResultActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        i.putExtra("result", s);
+        startActivity(i);
+    }
+
+    void downloadFromIndex(final int index) {
+        if (paths.size() <= index) {
+            leave(null);
+        } else {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ProgressBar p = findViewById(R.id.progressBarMain);
+                    p.setMax(paths.size());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        p.setProgress(index, true);
+                    } else {
+                        p.setProgress(index);
+                    }
+                    p.setIndeterminate(false);
+                }
+            });
+
+            DownloadFileFromURL d = new DownloadFileFromURL();
+            d.execute(paths.get(index), String.valueOf(index));
+        }
     }
 }
