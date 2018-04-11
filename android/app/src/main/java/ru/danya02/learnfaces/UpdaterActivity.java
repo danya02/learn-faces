@@ -45,6 +45,8 @@ public class UpdaterActivity extends AppCompatActivity {
         ProgressBar b2 = findViewById(R.id.progressBarAux);
         b1.setIndeterminate(true);
         b2.setIndeterminate(true);
+        b1.setVisibility(View.GONE);
+        b2.setVisibility(View.GONE);
         Button b = findViewById(R.id.b_start_update);
         b.setText(R.string.update_start_text);
         b.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +64,7 @@ public class UpdaterActivity extends AppCompatActivity {
             leave(e.toString());
         }
     }
+
     void continueUpdateWrapper() {
         try {
             continueUpdate();
@@ -117,8 +120,9 @@ public class UpdaterActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             continueUpdateWrapper();
         }
+
         protected void onProgressUpdate(final String... progress) {
-            runOnUiThread(new Runnable(){
+            runOnUiThread(new Runnable() {
 
                 @Override
                 public void run() {
@@ -132,17 +136,21 @@ public class UpdaterActivity extends AppCompatActivity {
         }
     }
 
-    void startUpdate(){
-        ProgressBar b = findViewById(R.id.progressBarAux);
+    void startUpdate() {
+        ProgressBar b1 = findViewById(R.id.progressBarAux);
+        b1.setVisibility(View.VISIBLE);
+        ProgressBar b2 = findViewById(R.id.progressBarMain);
+        b2.setVisibility(View.VISIBLE);
+
         TextView t = findViewById(R.id.textStatus);
-        URL url;
-        b.setIndeterminate(true);
+        b1.setIndeterminate(true);
         t.setText(R.string.update_updating_index);
         DownloadDatabase d = new DownloadDatabase();
         d.execute();
     }
 
-    void continueUpdate() throws JSONException, FileNotFoundException {        FileInputStream file;
+    void continueUpdate() throws JSONException, FileNotFoundException {
+        FileInputStream file;
         ProgressBar b = findViewById(R.id.progressBarAux);
         final TextView t = findViewById(R.id.textStatus);
         try {
@@ -151,7 +159,7 @@ public class UpdaterActivity extends AppCompatActivity {
             Log.wtf("updateData", "Not found file we just created?!", e);
             throw e;
         }
-        runOnUiThread(new Runnable(){
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 t.setText(R.string.update_json_parse);
@@ -181,7 +189,7 @@ public class UpdaterActivity extends AppCompatActivity {
             Log.wtf("updateData", "Cannot find `userlist` in JSON?!", e);
             throw e;
         }
-        runOnUiThread(new Runnable(){
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 t.setText(R.string.update_create_image_index);
@@ -215,7 +223,7 @@ public class UpdaterActivity extends AppCompatActivity {
             final TextView t = findViewById(R.id.textStatus);
             final String file = strings[0];
             int index = Integer.parseInt(strings[1]);
-            runOnUiThread(new Runnable(){
+            runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     t.setText(String.format(getString(R.string.update_downloading_formattable), file));
@@ -229,8 +237,9 @@ public class UpdaterActivity extends AppCompatActivity {
                 int fileLength = urlConnection.getContentLength();
                 InputStream input = new BufferedInputStream(url.openStream(),
                         8192);
-                File f = new File( getFilesDir(), file);
-                f.createNewFile(); //FIXME: java.io.IOException: open failed: ENOENT (No such file or directory)
+                File f = new File(getFilesDir(), file);
+                f.getParentFile().mkdirs();
+                f.createNewFile();
                 OutputStream output = new FileOutputStream(String.format("%s/%s", getFilesDir(), file));
 
                 byte data[] = new byte[1024];
@@ -257,16 +266,16 @@ public class UpdaterActivity extends AppCompatActivity {
 
 
         protected void onProgressUpdate(final String... progress) {
-runOnUiThread(new Runnable(){
+            runOnUiThread(new Runnable() {
 
-    @Override
-    public void run() {
-        ProgressBar p = findViewById(R.id.progressBarAux);
-        p.setProgress(Integer.parseInt(progress[0]));
-        p.setMax(100);
-        p.setIndeterminate(false);
-    }
-});
+                @Override
+                public void run() {
+                    ProgressBar p = findViewById(R.id.progressBarAux);
+                    p.setProgress(Integer.parseInt(progress[0]));
+                    p.setMax(100);
+                    p.setIndeterminate(false);
+                }
+            });
         }
 
         protected void onPostExecute(int file_index) {
@@ -279,7 +288,9 @@ runOnUiThread(new Runnable(){
         Intent i = new Intent(this, UpdaterResultActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         i.putExtra("result", s);
+        finish();
         startActivity(i);
+
     }
 
     void downloadFromIndex(final int index) {
