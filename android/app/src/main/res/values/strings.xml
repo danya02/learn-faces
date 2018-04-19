@@ -22,5 +22,5 @@
     <string name="b_continue_from_update_text">Continue</string>
     <string name="update_error_formattable">An error was detected while updating data. The error was:   %s</string>
     <string name="update_try_again">Try again</string>
-    <string name="update_downloading_formattable">Downloading file %s...</string>
+    <string name="update_downloading_formattable">Downloading file %s…</string>
 </resources>

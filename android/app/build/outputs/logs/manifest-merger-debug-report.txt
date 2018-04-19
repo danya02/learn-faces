@@ -4,20 +4,25 @@ ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-
 INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-35:12
 INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-35:12
 INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-35:12
-MERGED from [com.android.support:design:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/33c0835d224401b59a7fd605cd4d2c0d/AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:appcompat-v7:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/4b648429c7db4649c5b0730f2288294c/AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /home/danya/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/bc177a21aec435c8f545becd7ed0dced/AndroidManifest.xml:2:1-11:12
-MERGED from [com.android.support:animated-vector-drawable:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.1.0.aar/25cd8974ed8d8e1817e2051149c84617/AndroidManifest.xml:17:1-28:12
-MERGED from [com.android.support:support-vector-drawable:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.1.0.aar/1c8a87efc0fd3b87b80d3fb644720665/AndroidManifest.xml:17:1-28:12
-MERGED from [com.android.support:recyclerview-v7:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-26.1.0.aar/53db928a98a1f5bfa92ddc6dd241e3e7/AndroidManifest.xml:17:1-28:12
-MERGED from [com.android.support:transition:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/transition-26.1.0.aar/f09a1c8b6663f9e5e5b00ea2736f219d/AndroidManifest.xml:17:1-28:12
-MERGED from [com.android.support:support-v4:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-v4-26.1.0.aar/53077ec3eba4570ebc1d449eaffba112/AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-media-compat:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.1.0.aar/cce892dea4d54f56e9651b820cf6f287/AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-fragment:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-fragment-26.1.0.aar/8b3bd4015ccf9d210c20f781c6c8d2e0/AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-core-utils:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-utils-26.1.0.aar/422a36a85e1fd2d32f6cc2fb9b2c8ef6/AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-core-ui:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-ui-26.1.0.aar/d8047b7eb7d54c4b85c7eba4740f8c3d/AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-compat:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/dbb73ffedde282022bfc6f2b45d127ee/AndroidManifest.xml:17:1-31:12
-MERGED from [android.arch.lifecycle:runtime:1.0.0] /home/danya/.gradle/caches/transforms-1/files-1.1/runtime-1.0.0.aar/43641e9258daa81fda3b5bbb96b1fd4c/AndroidManifest.xml:17:1-30:12
+MERGED from [com.android.support:design:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/620119098d5b27643fc7b88901580967/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:appcompat-v7:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/9b26732acef36783406c3791bfd9a74c/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.0.aar/b6e4081d5e04a232c361e9223681b995/AndroidManifest.xml:2:1-11:12
+MERGED from [com.github.bumptech.glide:glide:4.6.1] /home/danya/.gradle/caches/transforms-1/files-1.1/glide-4.6.1.aar/6de37ea1cdfa81a8f6c78d41048944b2/AndroidManifest.xml:2:1-13:12
+MERGED from [com.android.support:support-v4:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-v4-27.1.1.aar/01c25d645f3bc59a9a0ee19b7fb05dbd/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.1.1.aar/494bcd341659bd16a5dba709f17d1cae/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:recyclerview-v7:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-27.1.1.aar/c0beea4731797ee91e3a28479d7f2f80/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-fragment:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.1.aar/91f745f7cb11fac8f6fbf96df4631b3c/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.1.aar/64b6f9d9a7957a1e9101f404c0ff2cab/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.1.1.aar/eff01f0126b9aa0ea9f63614aaad2e69/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.1.1.aar/281c0fd94172385d23e57113655a5d83/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:transition:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/transition-27.1.1.aar/255b1e9149a015552928923ede6e4c09/AndroidManifest.xml:17:1-22:12
+MERGED from [com.github.bumptech.glide:gifdecoder:4.6.1] /home/danya/.gradle/caches/transforms-1/files-1.1/gifdecoder-4.6.1.aar/a765059aa64a0ffe30ff43823717cf09/AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:support-media-compat:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.1.1.aar/06b306760ddf6cf2518be8c305ba5531/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/e0b90afcbfaa5d361d3844ec20aa0bc9/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:runtime:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/3b530ad766c22a3b062aedb3f6d017c0/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.0.aar/2dc09e29d0bff58f20367297f9d823f1/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/1e11c46d82d2552bdca80e15102a43ca/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.0.aar/63376e401dfc45383101423865a85d0a/AndroidManifest.xml:17:1-22:12
 INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-35:12
 INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-35:12
 INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-35:12
@@ -45,34 +50,12 @@ ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:6:5-
 		ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:6:22-64
 application
 ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:8:5-33:19
-MERGED from [com.android.support:design:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/33c0835d224401b59a7fd605cd4d2c0d/AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:design:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/33c0835d224401b59a7fd605cd4d2c0d/AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:appcompat-v7:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/4b648429c7db4649c5b0730f2288294c/AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:appcompat-v7:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/4b648429c7db4649c5b0730f2288294c/AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /home/danya/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/bc177a21aec435c8f545becd7ed0dced/AndroidManifest.xml:9:5-20
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /home/danya/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/bc177a21aec435c8f545becd7ed0dced/AndroidManifest.xml:9:5-20
-MERGED from [com.android.support:animated-vector-drawable:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.1.0.aar/25cd8974ed8d8e1817e2051149c84617/AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:animated-vector-drawable:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.1.0.aar/25cd8974ed8d8e1817e2051149c84617/AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:support-vector-drawable:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.1.0.aar/1c8a87efc0fd3b87b80d3fb644720665/AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:support-vector-drawable:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.1.0.aar/1c8a87efc0fd3b87b80d3fb644720665/AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:recyclerview-v7:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-26.1.0.aar/53db928a98a1f5bfa92ddc6dd241e3e7/AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:recyclerview-v7:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-26.1.0.aar/53db928a98a1f5bfa92ddc6dd241e3e7/AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:transition:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/transition-26.1.0.aar/f09a1c8b6663f9e5e5b00ea2736f219d/AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:transition:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/transition-26.1.0.aar/f09a1c8b6663f9e5e5b00ea2736f219d/AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:support-v4:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-v4-26.1.0.aar/53077ec3eba4570ebc1d449eaffba112/AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-v4:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-v4-26.1.0.aar/53077ec3eba4570ebc1d449eaffba112/AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-media-compat:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.1.0.aar/cce892dea4d54f56e9651b820cf6f287/AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-media-compat:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.1.0.aar/cce892dea4d54f56e9651b820cf6f287/AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-fragment:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-fragment-26.1.0.aar/8b3bd4015ccf9d210c20f781c6c8d2e0/AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-fragment:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-fragment-26.1.0.aar/8b3bd4015ccf9d210c20f781c6c8d2e0/AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-core-utils:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-utils-26.1.0.aar/422a36a85e1fd2d32f6cc2fb9b2c8ef6/AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-core-utils:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-utils-26.1.0.aar/422a36a85e1fd2d32f6cc2fb9b2c8ef6/AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-core-ui:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-ui-26.1.0.aar/d8047b7eb7d54c4b85c7eba4740f8c3d/AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-core-ui:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-ui-26.1.0.aar/d8047b7eb7d54c4b85c7eba4740f8c3d/AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-compat:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/dbb73ffedde282022bfc6f2b45d127ee/AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-compat:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/dbb73ffedde282022bfc6f2b45d127ee/AndroidManifest.xml:25:5-29:19
-MERGED from [android.arch.lifecycle:runtime:1.0.0] /home/danya/.gradle/caches/transforms-1/files-1.1/runtime-1.0.0.aar/43641e9258daa81fda3b5bbb96b1fd4c/AndroidManifest.xml:24:5-28:19
-MERGED from [android.arch.lifecycle:runtime:1.0.0] /home/danya/.gradle/caches/transforms-1/files-1.1/runtime-1.0.0.aar/43641e9258daa81fda3b5bbb96b1fd4c/AndroidManifest.xml:24:5-28:19
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.0.aar/b6e4081d5e04a232c361e9223681b995/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.0.aar/b6e4081d5e04a232c361e9223681b995/AndroidManifest.xml:9:5-20
+MERGED from [com.github.bumptech.glide:glide:4.6.1] /home/danya/.gradle/caches/transforms-1/files-1.1/glide-4.6.1.aar/6de37ea1cdfa81a8f6c78d41048944b2/AndroidManifest.xml:11:5-20
+MERGED from [com.github.bumptech.glide:glide:4.6.1] /home/danya/.gradle/caches/transforms-1/files-1.1/glide-4.6.1.aar/6de37ea1cdfa81a8f6c78d41048944b2/AndroidManifest.xml:11:5-20
+MERGED from [com.github.bumptech.glide:gifdecoder:4.6.1] /home/danya/.gradle/caches/transforms-1/files-1.1/gifdecoder-4.6.1.aar/a765059aa64a0ffe30ff43823717cf09/AndroidManifest.xml:9:5-20
+MERGED from [com.github.bumptech.glide:gifdecoder:4.6.1] /home/danya/.gradle/caches/transforms-1/files-1.1/gifdecoder-4.6.1.aar/a765059aa64a0ffe30ff43823717cf09/AndroidManifest.xml:9:5-20
 	android:supportsRtl
 		ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:13:9-35
 	android:label
@@ -125,38 +108,46 @@ uses-sdk
 INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml
 INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml
-MERGED from [com.android.support:design:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/33c0835d224401b59a7fd605cd4d2c0d/AndroidManifest.xml:21:5-23:62
-MERGED from [com.android.support:design:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/33c0835d224401b59a7fd605cd4d2c0d/AndroidManifest.xml:21:5-23:62
-MERGED from [com.android.support:appcompat-v7:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/4b648429c7db4649c5b0730f2288294c/AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support:appcompat-v7:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/4b648429c7db4649c5b0730f2288294c/AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /home/danya/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/bc177a21aec435c8f545becd7ed0dced/AndroidManifest.xml:5:5-7:41
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /home/danya/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/bc177a21aec435c8f545becd7ed0dced/AndroidManifest.xml:5:5-7:41
-MERGED from [com.android.support:animated-vector-drawable:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.1.0.aar/25cd8974ed8d8e1817e2051149c84617/AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:animated-vector-drawable:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.1.0.aar/25cd8974ed8d8e1817e2051149c84617/AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-vector-drawable:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.1.0.aar/1c8a87efc0fd3b87b80d3fb644720665/AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-vector-drawable:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.1.0.aar/1c8a87efc0fd3b87b80d3fb644720665/AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:recyclerview-v7:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-26.1.0.aar/53db928a98a1f5bfa92ddc6dd241e3e7/AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:recyclerview-v7:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-26.1.0.aar/53db928a98a1f5bfa92ddc6dd241e3e7/AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:transition:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/transition-26.1.0.aar/f09a1c8b6663f9e5e5b00ea2736f219d/AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:transition:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/transition-26.1.0.aar/f09a1c8b6663f9e5e5b00ea2736f219d/AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-v4:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-v4-26.1.0.aar/53077ec3eba4570ebc1d449eaffba112/AndroidManifest.xml:21:5-23:54
-MERGED from [com.android.support:support-v4:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-v4-26.1.0.aar/53077ec3eba4570ebc1d449eaffba112/AndroidManifest.xml:21:5-23:54
-MERGED from [com.android.support:support-media-compat:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.1.0.aar/cce892dea4d54f56e9651b820cf6f287/AndroidManifest.xml:21:5-23:63
-MERGED from [com.android.support:support-media-compat:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.1.0.aar/cce892dea4d54f56e9651b820cf6f287/AndroidManifest.xml:21:5-23:63
-MERGED from [com.android.support:support-fragment:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-fragment-26.1.0.aar/8b3bd4015ccf9d210c20f781c6c8d2e0/AndroidManifest.xml:21:5-23:60
-MERGED from [com.android.support:support-fragment:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-fragment-26.1.0.aar/8b3bd4015ccf9d210c20f781c6c8d2e0/AndroidManifest.xml:21:5-23:60
-MERGED from [com.android.support:support-core-utils:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-utils-26.1.0.aar/422a36a85e1fd2d32f6cc2fb9b2c8ef6/AndroidManifest.xml:21:5-23:61
-MERGED from [com.android.support:support-core-utils:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-utils-26.1.0.aar/422a36a85e1fd2d32f6cc2fb9b2c8ef6/AndroidManifest.xml:21:5-23:61
-MERGED from [com.android.support:support-core-ui:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-ui-26.1.0.aar/d8047b7eb7d54c4b85c7eba4740f8c3d/AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-core-ui:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-ui-26.1.0.aar/d8047b7eb7d54c4b85c7eba4740f8c3d/AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-compat:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/dbb73ffedde282022bfc6f2b45d127ee/AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-compat:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/dbb73ffedde282022bfc6f2b45d127ee/AndroidManifest.xml:21:5-23:58
-MERGED from [android.arch.lifecycle:runtime:1.0.0] /home/danya/.gradle/caches/transforms-1/files-1.1/runtime-1.0.0.aar/43641e9258daa81fda3b5bbb96b1fd4c/AndroidManifest.xml:20:5-22:41
-MERGED from [android.arch.lifecycle:runtime:1.0.0] /home/danya/.gradle/caches/transforms-1/files-1.1/runtime-1.0.0.aar/43641e9258daa81fda3b5bbb96b1fd4c/AndroidManifest.xml:20:5-22:41
+MERGED from [com.android.support:design:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/620119098d5b27643fc7b88901580967/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:design:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/620119098d5b27643fc7b88901580967/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/9b26732acef36783406c3791bfd9a74c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/9b26732acef36783406c3791bfd9a74c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.0.aar/b6e4081d5e04a232c361e9223681b995/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.0.aar/b6e4081d5e04a232c361e9223681b995/AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:glide:4.6.1] /home/danya/.gradle/caches/transforms-1/files-1.1/glide-4.6.1.aar/6de37ea1cdfa81a8f6c78d41048944b2/AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.bumptech.glide:glide:4.6.1] /home/danya/.gradle/caches/transforms-1/files-1.1/glide-4.6.1.aar/6de37ea1cdfa81a8f6c78d41048944b2/AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:support-v4:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-v4-27.1.1.aar/01c25d645f3bc59a9a0ee19b7fb05dbd/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-v4-27.1.1.aar/01c25d645f3bc59a9a0ee19b7fb05dbd/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.1.1.aar/494bcd341659bd16a5dba709f17d1cae/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.1.1.aar/494bcd341659bd16a5dba709f17d1cae/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-27.1.1.aar/c0beea4731797ee91e3a28479d7f2f80/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-27.1.1.aar/c0beea4731797ee91e3a28479d7f2f80/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.1.aar/91f745f7cb11fac8f6fbf96df4631b3c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.1.aar/91f745f7cb11fac8f6fbf96df4631b3c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.1.aar/64b6f9d9a7957a1e9101f404c0ff2cab/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.1.aar/64b6f9d9a7957a1e9101f404c0ff2cab/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.1.1.aar/eff01f0126b9aa0ea9f63614aaad2e69/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.1.1.aar/eff01f0126b9aa0ea9f63614aaad2e69/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.1.1.aar/281c0fd94172385d23e57113655a5d83/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.1.1.aar/281c0fd94172385d23e57113655a5d83/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/transition-27.1.1.aar/255b1e9149a015552928923ede6e4c09/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/transition-27.1.1.aar/255b1e9149a015552928923ede6e4c09/AndroidManifest.xml:20:5-44
+MERGED from [com.github.bumptech.glide:gifdecoder:4.6.1] /home/danya/.gradle/caches/transforms-1/files-1.1/gifdecoder-4.6.1.aar/a765059aa64a0ffe30ff43823717cf09/AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:gifdecoder:4.6.1] /home/danya/.gradle/caches/transforms-1/files-1.1/gifdecoder-4.6.1.aar/a765059aa64a0ffe30ff43823717cf09/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:support-media-compat:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.1.1.aar/06b306760ddf6cf2518be8c305ba5531/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.1.1.aar/06b306760ddf6cf2518be8c305ba5531/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/e0b90afcbfaa5d361d3844ec20aa0bc9/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/e0b90afcbfaa5d361d3844ec20aa0bc9/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/3b530ad766c22a3b062aedb3f6d017c0/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/3b530ad766c22a3b062aedb3f6d017c0/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.0.aar/2dc09e29d0bff58f20367297f9d823f1/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.0.aar/2dc09e29d0bff58f20367297f9d823f1/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/1e11c46d82d2552bdca80e15102a43ca/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/1e11c46d82d2552bdca80e15102a43ca/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.0.aar/63376e401dfc45383101423865a85d0a/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.0.aar/63376e401dfc45383101423865a85d0a/AndroidManifest.xml:20:5-44
 INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml
 INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml
-	tools:overrideLibrary
-		ADDED from [com.android.support:design:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/33c0835d224401b59a7fd605cd4d2c0d/AndroidManifest.xml:23:9-59
 	android:targetSdkVersion
 		INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml
 		ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml
@@ -165,37 +156,3 @@ INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml
 		INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml
 		ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml
 		INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml
-meta-data#android.support.VERSION
-ADDED from [com.android.support:design:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/33c0835d224401b59a7fd605cd4d2c0d/AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:appcompat-v7:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/4b648429c7db4649c5b0730f2288294c/AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:appcompat-v7:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/4b648429c7db4649c5b0730f2288294c/AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:animated-vector-drawable:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.1.0.aar/25cd8974ed8d8e1817e2051149c84617/AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:animated-vector-drawable:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.1.0.aar/25cd8974ed8d8e1817e2051149c84617/AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:support-vector-drawable:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.1.0.aar/1c8a87efc0fd3b87b80d3fb644720665/AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:support-vector-drawable:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.1.0.aar/1c8a87efc0fd3b87b80d3fb644720665/AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:recyclerview-v7:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-26.1.0.aar/53db928a98a1f5bfa92ddc6dd241e3e7/AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:recyclerview-v7:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-26.1.0.aar/53db928a98a1f5bfa92ddc6dd241e3e7/AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:transition:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/transition-26.1.0.aar/f09a1c8b6663f9e5e5b00ea2736f219d/AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:transition:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/transition-26.1.0.aar/f09a1c8b6663f9e5e5b00ea2736f219d/AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:support-v4:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-v4-26.1.0.aar/53077ec3eba4570ebc1d449eaffba112/AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-v4:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-v4-26.1.0.aar/53077ec3eba4570ebc1d449eaffba112/AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-media-compat:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.1.0.aar/cce892dea4d54f56e9651b820cf6f287/AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-media-compat:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.1.0.aar/cce892dea4d54f56e9651b820cf6f287/AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-fragment:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-fragment-26.1.0.aar/8b3bd4015ccf9d210c20f781c6c8d2e0/AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-fragment:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-fragment-26.1.0.aar/8b3bd4015ccf9d210c20f781c6c8d2e0/AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-core-utils:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-utils-26.1.0.aar/422a36a85e1fd2d32f6cc2fb9b2c8ef6/AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-core-utils:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-utils-26.1.0.aar/422a36a85e1fd2d32f6cc2fb9b2c8ef6/AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-core-ui:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-ui-26.1.0.aar/d8047b7eb7d54c4b85c7eba4740f8c3d/AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-core-ui:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-core-ui-26.1.0.aar/d8047b7eb7d54c4b85c7eba4740f8c3d/AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-compat:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/dbb73ffedde282022bfc6f2b45d127ee/AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-compat:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/dbb73ffedde282022bfc6f2b45d127ee/AndroidManifest.xml:26:9-28:38
-	android:value
-		ADDED from [com.android.support:design:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/33c0835d224401b59a7fd605cd4d2c0d/AndroidManifest.xml:28:13-35
-	android:name
-		ADDED from [com.android.support:design:26.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/33c0835d224401b59a7fd605cd4d2c0d/AndroidManifest.xml:27:13-51
-meta-data#android.arch.lifecycle.VERSION
-ADDED from [android.arch.lifecycle:runtime:1.0.0] /home/danya/.gradle/caches/transforms-1/files-1.1/runtime-1.0.0.aar/43641e9258daa81fda3b5bbb96b1fd4c/AndroidManifest.xml:25:9-27:47
-	android:value
-		ADDED from [android.arch.lifecycle:runtime:1.0.0] /home/danya/.gradle/caches/transforms-1/files-1.1/runtime-1.0.0.aar/43641e9258daa81fda3b5bbb96b1fd4c/AndroidManifest.xml:27:13-44
-	android:name
-		ADDED from [android.arch.lifecycle:runtime:1.0.0] /home/danya/.gradle/caches/transforms-1/files-1.1/runtime-1.0.0.aar/43641e9258daa81fda3b5bbb96b1fd4c/AndroidManifest.xml:26:13-58

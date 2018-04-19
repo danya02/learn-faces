@@ -1,14 +1,12 @@
 package ru.danya02.learnfaces;
 
-import android.content.ContentUris;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
@@ -19,37 +17,40 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
-
-import static android.os.Environment.getDataDirectory;
 
 public class GameActivity extends AppCompatActivity {
 
     enum buttons {BUTTON1, BUTTON2, BUTTON3, BUTTON4}
 
     Random r = new Random();
-    ArrayList<String> ids = new ArrayList<>();
-    HashMap<String, String> names = new HashMap<>();
+    ArrayList<HashMap<String, ArrayList<String>>> json_arr = new ArrayList<>();
     buttons correctAnswer;
     Integer correctAnswers = 0, wrongAnswers = 0, skippedQuestions = 0;
+
+    Target<Drawable> Button1Target, Button2Target, Button3Target, Button4Target;
 
     class TestJSONChanged extends AsyncTask<String, String, String> {
         @Override
@@ -76,7 +77,7 @@ public class GameActivity extends AppCompatActivity {
                 Scanner scanner = new Scanner(in);
                 StringBuilder fromNet = new StringBuilder();
                 while (scanner.hasNext()) {
-                    fromNet.append(scanner.next());
+                    fromNet.append(" ").append(scanner.next());
                 }
                 dataFromNet = fromNet.toString();
             } catch (Exception e) {
@@ -103,7 +104,7 @@ public class GameActivity extends AppCompatActivity {
 
                 try {
                     while ((receiveString = bufferedReader.readLine()) != null) {
-                        fromFile.append(receiveString);
+                        fromFile.append(" ").append(receiveString).append(" ");
                     }
                     dataFromFile = fromFile.toString();
                 } catch (IOException e) {
@@ -112,7 +113,16 @@ public class GameActivity extends AppCompatActivity {
                     return null;
                 }
             }
-            leaveTest(!Objects.equals(dataFromFile, dataFromNet));
+            JSONObject jObjectFromFile, jObjectFromNet;
+            try {
+                jObjectFromFile = new JSONObject(dataFromFile);
+                jObjectFromNet = new JSONObject(dataFromNet);
+            } catch (JSONException e) {
+                Log.wtf("testNeedsUpdate", "Invalid trusted JSON?!", e);
+                leaveTest(true);
+                return null;
+            }
+            leaveTest(!(jObjectFromFile.toString().equals(jObjectFromNet.toString())));
             return null;
         }
 
@@ -127,11 +137,56 @@ public class GameActivity extends AppCompatActivity {
         a.execute();
     }
 
-
     private void updateData() {
         Intent i = new Intent(this, UpdaterActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(i);
+        finish();
+    }
+
+    private void loadData() throws JSONException {
+        FileInputStream file;
+        try {
+            file = openFileInput("data.json");
+        } catch (FileNotFoundException e) {
+            Log.e("loadData", "Not found database; skipping to updating...", e);
+            updateData();
+            return;
+        }
+        StringBuilder text = new StringBuilder();
+
+        Scanner r = new Scanner(file);
+
+        while (r.hasNext()) {
+            text.append(r.nextLine());
+        }
+        r.close();
+        String json = text.toString();
+        JSONObject jObject;
+        try {
+            jObject = new JSONObject(json);
+        } catch (JSONException e) {
+            Log.wtf("loadData", "Cannot parse trusted JSON?!", e);
+            throw e;
+        }
+        JSONArray jsonArray;
+        try {
+            jsonArray = jObject.getJSONArray("userlist");
+        } catch (JSONException e) {
+            Log.wtf("loadData", "Cannot find `userlist` in JSON?!", e);
+            throw e;
+        }
+        for (int i = 0; i < jsonArray.length(); i++) {
+            HashMap<String, ArrayList<String>> s = new HashMap<>();
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            ArrayList<String> ss = new ArrayList<>();
+            ss.add(String.valueOf(jsonObject.get("name")));
+            s.put("name", ss);
+            ss = new ArrayList<>();
+            ss.add(String.valueOf(jsonObject.get("main_pic")));
+            s.put("main_pic", ss);
+            json_arr.add(s);
+        }
     }
 
     boolean leaveToUpdate = false;
@@ -141,9 +196,14 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        json_arr = new ArrayList<>();
         testNeedsUpdating();
         setContentView(R.layout.activity_main);
-        getContactIndex();
+        try {
+            loadData();
+        } catch (JSONException e) {
+            updateData();
+        }
         ProgressBar p = findViewById(R.id.progressBar);
         Intent origin = getIntent();
         p.setMax(origin.getIntExtra("questions", 10));
@@ -151,6 +211,31 @@ public class GameActivity extends AppCompatActivity {
         ImageButton b2 = findViewById(R.id.b2);
         ImageButton b3 = findViewById(R.id.b3);
         ImageButton b4 = findViewById(R.id.b4);
+        Button1Target = new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                ((ImageButton) findViewById(R.id.b1)).setImageDrawable(resource);
+            }
+        };
+        Button2Target = new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                ((ImageButton) findViewById(R.id.b2)).setImageDrawable(resource);
+            }
+        };
+        Button3Target = new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                ((ImageButton) findViewById(R.id.b3)).setImageDrawable(resource);
+            }
+        };
+        Button4Target = new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                ((ImageButton) findViewById(R.id.b4)).setImageDrawable(resource);
+            }
+        };
+
         Button skip = findViewById(R.id.skip);
         b1.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
@@ -193,96 +278,77 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    @Deprecated
-    private void getContactIndex() {
-        Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
-        assert phones != null;
-        while (phones.moveToNext()) {
-            ids.add(phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)));
-            names.put(phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)), phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));
-        }
-        phones.close();
-    }
-
     public void generateQuestion() throws IllegalStateException {
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
-        ImageButton[] imageButtons = {findViewById(R.id.b1), findViewById(R.id.b2), findViewById(R.id.b3), findViewById(R.id.b4)};
-        ImageButton correctButton = imageButtons[r.nextInt(imageButtons.length)];
-        ArrayList<ImageButton> wrongButtons = new ArrayList<>();
-        switch (correctButton.getId()) {
-            case R.id.b1:
+        int[] imageButtonNumbers = {1, 2, 3, 4};
+        int correctButtonNumber = imageButtonNumbers[r.nextInt(imageButtonNumbers.length)];
+        ArrayList<Target<Drawable>> wrongButtonTargets = new ArrayList<>();
+        Target<Drawable> correctButtonTarget;
+        switch (correctButtonNumber) {
+            case 1:
                 Log.d("button", "The correct button is b1.");
                 correctAnswer = buttons.BUTTON1;
-                wrongButtons.add((ImageButton) findViewById(R.id.b2));
-                wrongButtons.add((ImageButton) findViewById(R.id.b3));
-                wrongButtons.add((ImageButton) findViewById(R.id.b4));
+                correctButtonTarget = Button1Target;
+                wrongButtonTargets.add(Button2Target);
+                wrongButtonTargets.add(Button3Target);
+                wrongButtonTargets.add(Button4Target);
                 break;
-            case R.id.b2:
+            case 2:
                 Log.d("button", "The correct button is b2.");
                 correctAnswer = buttons.BUTTON2;
-                wrongButtons.add((ImageButton) findViewById(R.id.b1));
-                wrongButtons.add((ImageButton) findViewById(R.id.b3));
-                wrongButtons.add((ImageButton) findViewById(R.id.b4));
+                correctButtonTarget = Button2Target;
+                wrongButtonTargets.add(Button1Target);
+                wrongButtonTargets.add(Button3Target);
+                wrongButtonTargets.add(Button4Target);
                 break;
-            case R.id.b3:
+            case 3:
                 Log.d("button", "The correct button is b3.");
                 correctAnswer = buttons.BUTTON3;
-                wrongButtons.add((ImageButton) findViewById(R.id.b1));
-                wrongButtons.add((ImageButton) findViewById(R.id.b2));
-                wrongButtons.add((ImageButton) findViewById(R.id.b4));
+                correctButtonTarget = Button3Target;
+                wrongButtonTargets.add(Button1Target);
+                wrongButtonTargets.add(Button2Target);
+                wrongButtonTargets.add(Button4Target);
                 break;
-            case R.id.b4:
+            case 4:
                 Log.d("button", "The correct button is b4.");
                 correctAnswer = buttons.BUTTON4;
-                wrongButtons.add((ImageButton) findViewById(R.id.b1));
-                wrongButtons.add((ImageButton) findViewById(R.id.b2));
-                wrongButtons.add((ImageButton) findViewById(R.id.b3));
+                correctButtonTarget = Button4Target;
+                wrongButtonTargets.add(Button1Target);
+                wrongButtonTargets.add(Button2Target);
+                wrongButtonTargets.add(Button3Target);
+                break;
+            default:
+                Log.d("button", "The correct button is b1.");
+                Log.wtf("button", "The correct button number check fell through all possible values and got " + correctButtonNumber + "?!");
+                correctAnswer = buttons.BUTTON1;
+                correctButtonTarget = Button1Target;
+                wrongButtonTargets.add(Button2Target);
+                wrongButtonTargets.add(Button3Target);
+                wrongButtonTargets.add(Button4Target);
                 break;
         }
 
-        Bitmap photo;
-        InputStream inputStream = null;
-        String targetID = null;
-        ArrayList<String> selectedTargets = new ArrayList<>();
-        while (inputStream == null) {
-            targetID = ids.get(r.nextInt(ids.size()));
-            inputStream = ContactsContract.Contacts.openContactPhotoInputStream(getContentResolver(),
-                    ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.valueOf(targetID)), true);
-        }
-
-        selectedTargets.add(targetID);
-        photo = BitmapFactory.decodeStream(inputStream).copy(Bitmap.Config.ARGB_8888, true);
-        photo = Bitmap.createScaledBitmap(photo, Math.min(photo.getWidth(), width / 2), Math.min(photo.getHeight(), height / 2), false); /* FIXME: pic gets distorted */
-        String name = names.get(targetID);
-        correctButton.setImageBitmap(photo);
-        for (int i = 0; i < wrongButtons.size(); i++) {
-            Bitmap photo1;
-            String targetID1;
-            InputStream inputStream1 = null;
+        ArrayList<HashMap> selectedTargets = new ArrayList<>();
+        selectedTargets.add(json_arr.get(r.nextInt(json_arr.size())));
+        String storage = getFilesDir().getPath();
+        Glide.with(this).clear(correctButtonTarget);
+        Glide.with(this).load(storage + "/" + ((ArrayList) selectedTargets.get(0).get("main_pic")).get(0)).into(correctButtonTarget);
+        String name = String.valueOf(selectedTargets.get(0).get("name"));
+        name = name.substring(1, name.length() - 1);
+        for (int i = 0; i < wrongButtonTargets.size(); i++) {
+            HashMap target;
             int counter = 0;
-            while (inputStream1 == null) {
+            boolean selected = false;
+            while (!selected) {
                 counter += 1;
                 if (counter >= 1024) {
                     throw new IllegalStateException("Too many loops!");
                 }
-                inputStream1 = null;
-                targetID1 = ids.get(r.nextInt(ids.size()));
-                if (!selectedTargets.contains(targetID1)) {
-                    /* FIXME: won't select a contact with image if contact doesn't contain a phone number. */
-                    inputStream1 = ContactsContract.Contacts.openContactPhotoInputStream(getContentResolver(),
-                            ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.valueOf(targetID1)), true);
-
-                    selectedTargets.add(targetID1);
-                    if (inputStream1 != null) {
-                        photo1 = BitmapFactory.decodeStream(inputStream1).copy(Bitmap.Config.ARGB_8888, true);
-                        photo1 = Bitmap.createScaledBitmap(photo1, Math.min(photo1.getWidth(), width / 2), Math.min(photo1.getHeight(), height / 2), false);
-                        wrongButtons.get(i).setImageBitmap(photo1);
-                    }
-
+                target = json_arr.get(r.nextInt(json_arr.size()));
+                if (!selectedTargets.contains(target)) {
+                    selected = true;
+                    selectedTargets.add(target);
+                    Glide.with(this).clear(wrongButtonTargets.get(i));
+                    Glide.with(this).load(storage + "/" + ((ArrayList) target.get("main_pic")).get(0)).into(wrongButtonTargets.get(i));
                 }
 
             }

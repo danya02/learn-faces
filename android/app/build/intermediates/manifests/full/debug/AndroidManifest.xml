@@ -38,13 +38,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="ru.danya02.learnfaces.UpdaterActivity" />
         <activity android:name="ru.danya02.learnfaces.UpdaterResultActivity" />
-
-        <meta-data
-            android:name="android.support.VERSION"
-            android:value="26.1.0" />
-        <meta-data
-            android:name="android.arch.lifecycle.VERSION"
-            android:value="27.0.0-SNAPSHOT" />
     </application>
 
 </manifest>
