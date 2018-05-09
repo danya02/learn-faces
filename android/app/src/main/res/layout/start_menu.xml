@@ -24,6 +24,14 @@
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp" />
         <Button
+            android:id="@+id/b_dataview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="start"
+            android:text="@string/b_dataview_text"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
+        <Button
             android:id="@+id/b_rtfs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

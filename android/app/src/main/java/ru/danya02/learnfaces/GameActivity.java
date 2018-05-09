@@ -1,7 +1,6 @@
 package ru.danya02.learnfaces;
 
 import android.content.Intent;
-import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -22,13 +20,11 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,7 +33,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -46,7 +41,7 @@ public class GameActivity extends AppCompatActivity {
     enum buttons {BUTTON1, BUTTON2, BUTTON3, BUTTON4}
 
     Random r = new Random();
-    ArrayList<HashMap<String, ArrayList<String>>> json_arr = new ArrayList<>();
+    ArrayList<Person> json_arr = new ArrayList<>();
     buttons correctAnswer;
     Integer correctAnswers = 0, wrongAnswers = 0, skippedQuestions = 0;
 
@@ -133,60 +128,23 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void testNeedsUpdating() {
+        Toast t = new Toast(getApplicationContext());
+        t.setDuration(Toast.LENGTH_SHORT);
+        t.setText("Testing if update is needed...");
+        t.show();
         TestJSONChanged a = new TestJSONChanged();
         a.execute();
     }
 
     private void updateData() {
+        Toast t = new Toast(getApplicationContext());
+        t.setText(R.string.toast_obligatory_update);
+        t.setDuration(Toast.LENGTH_SHORT);
+        t.show();
         Intent i = new Intent(this, UpdaterActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(i);
         finish();
-    }
-
-    private void loadData() throws JSONException {
-        FileInputStream file;
-        try {
-            file = openFileInput("data.json");
-        } catch (FileNotFoundException e) {
-            Log.e("loadData", "Not found database; skipping to updating...", e);
-            updateData();
-            return;
-        }
-        StringBuilder text = new StringBuilder();
-
-        Scanner r = new Scanner(file);
-
-        while (r.hasNext()) {
-            text.append(r.nextLine());
-        }
-        r.close();
-        String json = text.toString();
-        JSONObject jObject;
-        try {
-            jObject = new JSONObject(json);
-        } catch (JSONException e) {
-            Log.wtf("loadData", "Cannot parse trusted JSON?!", e);
-            throw e;
-        }
-        JSONArray jsonArray;
-        try {
-            jsonArray = jObject.getJSONArray("userlist");
-        } catch (JSONException e) {
-            Log.wtf("loadData", "Cannot find `userlist` in JSON?!", e);
-            throw e;
-        }
-        for (int i = 0; i < jsonArray.length(); i++) {
-            HashMap<String, ArrayList<String>> s = new HashMap<>();
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
-            ArrayList<String> ss = new ArrayList<>();
-            ss.add(String.valueOf(jsonObject.get("name")));
-            s.put("name", ss);
-            ss = new ArrayList<>();
-            ss.add(String.valueOf(jsonObject.get("main_pic")));
-            s.put("main_pic", ss);
-            json_arr.add(s);
-        }
     }
 
     boolean leaveToUpdate = false;
@@ -196,12 +154,12 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        json_arr = new ArrayList<>();
         testNeedsUpdating();
         setContentView(R.layout.activity_main);
         try {
-            loadData();
-        } catch (JSONException e) {
+            json_arr = Person.loadData(getApplicationContext());
+        } catch (Exception e) {
+            Log.i("loadData", "There was an error, so updating data.", e);
             updateData();
         }
         ProgressBar p = findViewById(R.id.progressBar);
@@ -327,15 +285,15 @@ public class GameActivity extends AppCompatActivity {
                 break;
         }
 
-        ArrayList<HashMap> selectedTargets = new ArrayList<>();
+        ArrayList<Person> selectedTargets = new ArrayList<>();
         selectedTargets.add(json_arr.get(r.nextInt(json_arr.size())));
         String storage = getFilesDir().getPath();
         Glide.with(this).clear(correctButtonTarget);
-        Glide.with(this).load(storage + "/" + ((ArrayList) selectedTargets.get(0).get("main_pic")).get(0)).into(correctButtonTarget);
-        String name = String.valueOf(selectedTargets.get(0).get("name"));
+        Glide.with(this).load(storage + "/" + selectedTargets.get(0).main_pic).into(correctButtonTarget);
+        String name = String.valueOf(selectedTargets.get(0).name);
         name = name.substring(1, name.length() - 1);
         for (int i = 0; i < wrongButtonTargets.size(); i++) {
-            HashMap target;
+            Person target;
             int counter = 0;
             boolean selected = false;
             while (!selected) {
@@ -348,7 +306,7 @@ public class GameActivity extends AppCompatActivity {
                     selected = true;
                     selectedTargets.add(target);
                     Glide.with(this).clear(wrongButtonTargets.get(i));
-                    Glide.with(this).load(storage + "/" + ((ArrayList) target.get("main_pic")).get(0)).into(wrongButtonTargets.get(i));
+                    Glide.with(this).load(storage + "/" + target.main_pic).into(wrongButtonTargets.get(i));
                 }
 
             }

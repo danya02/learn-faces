@@ -23,4 +23,6 @@
     <string name="update_error_formattable">An error was detected while updating data. The error was:   %s</string>
     <string name="update_try_again">Try again</string>
     <string name="update_downloading_formattable">Downloading file %s…</string>
+    <string name="toast_obligatory_update">An update is required for the app to work.</string>
+    <string name="b_dataview_text">View Database</string>
 </resources>

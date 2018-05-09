@@ -29,10 +29,19 @@ public class StartMenuActivity extends AppCompatActivity {
                 to_rtfs(v);
             }
         });
+        final Button dataview = findViewById(R.id.b_dataview);
+        dataview.setText(R.string.b_dataview_text);
+        dataview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                to_dataview(v);
+            }
+        });
     }
-    public void start(View view){
+
+    public void start(View view) {
         Intent toGame = new Intent(this, GameActivity.class);
-        toGame.putExtra("questions",10);
+        toGame.putExtra("questions", 10);
         startActivity(toGame);
     }
 
@@ -40,5 +49,10 @@ public class StartMenuActivity extends AppCompatActivity {
         Intent toFS = new Intent(Intent.ACTION_VIEW);
         toFS.setData(Uri.parse(getString(R.string.source_link)));
         startActivity(toFS);
+    }
+
+    public void to_dataview(View view) {
+        Intent to_data = new Intent(this, DatabaseViewActivity.class);
+        startActivity(to_data);
     }
 }

@@ -30,6 +30,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".UpdaterActivity" />
         <activity android:name=".UpdaterResultActivity" />
+        <activity android:name=".DatabaseViewActivity"></activity>
     </application>
 
 </manifest>
