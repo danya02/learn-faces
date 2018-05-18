@@ -48,7 +48,7 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Person
         ArrayList<String> pics = new ArrayList<>();
         pics.add(persons.get(position).main_pic);
         pics.addAll(persons.get(position).alt_pics);
-        holder.personPics.setLayoutManager(new LinearLayoutManager(context));
+        holder.personPics.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         holder.personPics.setHasFixedSize(true);
         holder.personPics.setAdapter(new PicsAdapter(pics));
     }

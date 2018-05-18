@@ -106,5 +106,11 @@
             android:text="Button"
             tools:layout_editor_absoluteY="37dp" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/answer_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

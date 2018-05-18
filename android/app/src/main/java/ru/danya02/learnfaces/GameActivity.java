@@ -44,6 +44,8 @@ public class GameActivity extends AppCompatActivity {
     ArrayList<Person> json_arr = new ArrayList<>();
     buttons correctAnswer;
     Integer correctAnswers = 0, wrongAnswers = 0, skippedQuestions = 0;
+    ArrayList<Answer> answers = new ArrayList<>();
+    String correctName, correctPath;
 
     Target<Drawable> Button1Target, Button2Target, Button3Target, Button4Target;
 
@@ -277,7 +279,8 @@ public class GameActivity extends AppCompatActivity {
         selectedTargets.add(json_arr.get(r.nextInt(json_arr.size())));
         String storage = getFilesDir().getPath();
         Glide.with(this).clear(correctButtonTarget);
-        Glide.with(this).load(storage + "/" + selectedTargets.get(0).main_pic).into(correctButtonTarget);
+        correctPath = storage + "/" + selectedTargets.get(0).main_pic;
+        Glide.with(this).load(correctPath).into(correctButtonTarget);
         String name = String.valueOf(selectedTargets.get(0).name);
         for (int i = 0; i < wrongButtonTargets.size(); i++) {
             Person target;
@@ -301,6 +304,7 @@ public class GameActivity extends AppCompatActivity {
         }
         TextView t = findViewById(R.id.question);
         t.setText(String.format(getResources().getText(R.string.default_question).toString(), name));
+        correctName = name;
     }
 
     private void generateQuestionWrapper(boolean exit) {
@@ -316,13 +320,19 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onButtonPress(buttons b) {
+        Answer answer = new Answer();
         if (b == correctAnswer) {
             correctAnswers += 1;
+            answer.state = Answer.states.CORRECT;
         } else {
             wrongAnswers += 1;
+            answer.state = Answer.states.INCORRECT;
         }
         ProgressBar p = findViewById(R.id.progressBar);
         p.setProgress(p.getProgress() + 1);
+        answer.name = correctName;
+        answer.path = correctPath;
+        answers.add(answer);
         if (p.getProgress() != p.getMax()) {
             try {
                 generateQuestion();
@@ -336,7 +346,12 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onSkip() {
+        Answer answer = new Answer();
+        answer.state = Answer.states.SKIPPED;
         skippedQuestions += 1;
+        answer.name = correctName;
+        answer.path = correctPath;
+        answers.add(answer);
         ProgressBar p = findViewById(R.id.progressBar);
         p.setProgress(p.getProgress() + 1);
         if (p.getProgress() != p.getMax()) {
@@ -354,6 +369,9 @@ public class GameActivity extends AppCompatActivity {
         results.putExtra("good", correctAnswers);
         results.putExtra("skip", skippedQuestions);
         results.putExtra("bad", wrongAnswers);
+        Bundle args = new Bundle();
+        args.putSerializable("answers", answers);
+        results.putExtra("answers", args);
         startActivity(results);
     }
 }
