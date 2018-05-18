@@ -71,7 +71,7 @@ public class Person {
             person.main_pic = (String) jsonObject.get("main_pic");
             JSONArray a = jsonObject.getJSONArray("alt_pics");
             ArrayList<String> s = new ArrayList<>();
-            for (int j = 0; i < a.length(); j++) {
+            for (int j = 0; j < a.length(); j++) {
                 s.add(a.getString(j));
             }
             person.alt_pics = s;

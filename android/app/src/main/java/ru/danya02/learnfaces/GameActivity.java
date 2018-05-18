@@ -59,7 +59,7 @@ public class GameActivity extends AppCompatActivity {
                 leaveTest(false);
                 return null;
             }
-            HttpURLConnection urlConnection = null;
+            HttpURLConnection urlConnection;
             try {
                 urlConnection = (HttpURLConnection) url.openConnection();
             } catch (IOException e) {
@@ -86,7 +86,7 @@ public class GameActivity extends AppCompatActivity {
             try {
                 inputStream = getApplicationContext().openFileInput("data.json");
             } catch (FileNotFoundException e) {
-                Log.e("testNeedsUpdate", "Error while opening file.", e);
+                Log.e("testNeedsUpdate", "Error while opening file. (" + e.toString() + ")");
                 leaveTest(true);
                 return null;
             }
@@ -128,19 +128,13 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void testNeedsUpdating() {
-        Toast t = new Toast(getApplicationContext());
-        t.setDuration(Toast.LENGTH_SHORT);
-        t.setText("Testing if update is needed...");
-        t.show();
+        Toast.makeText(this, R.string.toast_testing_update, Toast.LENGTH_LONG).show();
         TestJSONChanged a = new TestJSONChanged();
         a.execute();
     }
 
     private void updateData() {
-        Toast t = new Toast(getApplicationContext());
-        t.setText(R.string.toast_obligatory_update);
-        t.setDuration(Toast.LENGTH_SHORT);
-        t.show();
+        Toast.makeText(this, R.string.toast_obligatory_update, Toast.LENGTH_LONG).show();
         Intent i = new Intent(this, UpdaterActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(i);
@@ -226,13 +220,7 @@ public class GameActivity extends AppCompatActivity {
         if (leaveToUpdate) updateData();
         else {
 
-            try {
-                generateQuestion();
-            } catch (IllegalStateException e) {
-                Toast t = Toast.makeText(getApplicationContext(), R.string.no_images_toast, Toast.LENGTH_LONG);
-                t.show();
-                finish();
-            }
+            generateQuestionWrapper(true);
         }
     }
 
@@ -291,7 +279,6 @@ public class GameActivity extends AppCompatActivity {
         Glide.with(this).clear(correctButtonTarget);
         Glide.with(this).load(storage + "/" + selectedTargets.get(0).main_pic).into(correctButtonTarget);
         String name = String.valueOf(selectedTargets.get(0).name);
-        name = name.substring(1, name.length() - 1);
         for (int i = 0; i < wrongButtonTargets.size(); i++) {
             Person target;
             int counter = 0;
@@ -314,6 +301,18 @@ public class GameActivity extends AppCompatActivity {
         }
         TextView t = findViewById(R.id.question);
         t.setText(String.format(getResources().getText(R.string.default_question).toString(), name));
+    }
+
+    private void generateQuestionWrapper(boolean exit) {
+        try {
+            generateQuestion();
+        } catch (IllegalStateException e) {
+            Toast t = Toast.makeText(getApplicationContext(), R.string.no_images_toast, Toast.LENGTH_LONG);
+            t.show();
+            if (exit) {
+                finish();
+            }
+        }
     }
 
     public void onButtonPress(buttons b) {
@@ -341,12 +340,7 @@ public class GameActivity extends AppCompatActivity {
         ProgressBar p = findViewById(R.id.progressBar);
         p.setProgress(p.getProgress() + 1);
         if (p.getProgress() != p.getMax()) {
-            try {
-                generateQuestion();
-            } catch (IllegalStateException e) {
-                Toast t = Toast.makeText(getApplicationContext(), R.string.no_images_toast, Toast.LENGTH_LONG);
-                t.show();
-            }
+            generateQuestionWrapper(false);
         } else {
             results();
         }

@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-35:12
-INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-35:12
-INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-35:12
-INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-35:12
+ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-36:12
+INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-36:12
+INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-36:12
+INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-36:12
 MERGED from [com.android.support:design:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/620119098d5b27643fc7b88901580967/AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:appcompat-v7:27.1.1] /home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/9b26732acef36783406c3791bfd9a74c/AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.0.aar/b6e4081d5e04a232c361e9223681b995/AndroidManifest.xml:2:1-11:12
@@ -23,20 +23,20 @@ MERGED from [android.arch.lifecycle:runtime:1.1.0] /home/danya/.gradle/caches/tr
 MERGED from [android.arch.lifecycle:livedata-core:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.0.aar/2dc09e29d0bff58f20367297f9d823f1/AndroidManifest.xml:17:1-22:12
 MERGED from [android.arch.core:runtime:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/1e11c46d82d2552bdca80e15102a43ca/AndroidManifest.xml:17:1-22:12
 MERGED from [android.arch.lifecycle:viewmodel:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.0.aar/63376e401dfc45383101423865a85d0a/AndroidManifest.xml:17:1-22:12
-INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-35:12
-INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-35:12
-INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-35:12
+INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-36:12
+INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-36:12
+INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-36:12
 	package
 		ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:3:5-36
 		INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml
 		INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml
 	android:versionName
 		INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml
-		ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-35:12
+		ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-36:12
 		INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml
-		ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-35:12
+		ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:1-36:12
 		INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml
 	xmlns:android
 		ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:2:11-69
@@ -49,7 +49,7 @@ ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:6:5-
 	android:name
 		ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:6:22-64
 application
-ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:8:5-33:19
+ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:8:5-34:19
 MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.0.aar/b6e4081d5e04a232c361e9223681b995/AndroidManifest.xml:9:5-20
 MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /home/danya/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.0.aar/b6e4081d5e04a232c361e9223681b995/AndroidManifest.xml:9:5-20
 MERGED from [com.github.bumptech.glide:glide:4.6.1] /home/danya/.gradle/caches/transforms-1/files-1.1/glide-4.6.1.aar/6de37ea1cdfa81a8f6c78d41048944b2/AndroidManifest.xml:11:5-20
@@ -104,6 +104,10 @@ activity#ru.danya02.learnfaces.UpdaterResultActivity
 ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:32:9-59
 	android:name
 		ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:32:19-56
+activity#ru.danya02.learnfaces.DatabaseViewActivity
+ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:33:9-58
+	android:name
+		ADDED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml:33:19-55
 uses-sdk
 INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/danya/learn-faces/android/app/src/main/AndroidManifest.xml

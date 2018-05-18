@@ -38,6 +38,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="ru.danya02.learnfaces.UpdaterActivity" />
         <activity android:name="ru.danya02.learnfaces.UpdaterResultActivity" />
+        <activity android:name="ru.danya02.learnfaces.DatabaseViewActivity" />
     </application>
 
 </manifest>
