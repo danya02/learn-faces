@@ -1,6 +1,14 @@
 {
   "userlist": [
     {
+      "name": "TestTestTestTestTestTestTestTest",
+      "main_pic": "null_face.png",
+      "alt_pics":
+      [
+        "null_face.png"
+      ]
+    },
+    {
       "name": "Энрико Ферми",
       "main_pic": "test_faces/fermi1.png",
       "alt_pics":
