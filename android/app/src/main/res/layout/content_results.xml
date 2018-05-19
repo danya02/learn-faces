@@ -6,11 +6,13 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ru.danya02.learnfaces.ResultsActivity"
+
     tools:showIn="@layout/activity_results">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,15 +21,18 @@
 
         <RatingBar
             android:id="@+id/rating"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:stepSize="0.1" />
 
         <TextView
             android:id="@+id/count_label"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:text="@string/results_total" />
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -45,13 +50,13 @@
                     android:id="@+id/good_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="@string/infty" />
 
                 <TextView
                     android:id="@+id/good_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="@string/good_label" />
             </LinearLayout>
 
             <LinearLayout
@@ -65,13 +70,13 @@
                     android:id="@+id/skip_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="@string/infty" />
 
                 <TextView
                     android:id="@+id/skip_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="@string/skip_label" />
             </LinearLayout>
 
             <LinearLayout
@@ -87,13 +92,13 @@
                     android:id="@+id/bad_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="@string/infty" />
 
                 <TextView
                     android:id="@+id/bad_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="@string/bad_label" />
 
             </LinearLayout>
 
@@ -103,7 +108,7 @@
             android:id="@+id/try_again"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:text="@string/try_again"
             tools:layout_editor_absoluteY="37dp" />
 
         <android.support.v7.widget.RecyclerView

@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +37,9 @@ public class ResultsActivity extends AppCompatActivity {
         ArrayList<Answer> answers = (ArrayList<Answer>) b.getSerializable("answers");
 
         final RatingBar ratingBar = findViewById(R.id.rating);
-        ratingBar.setMax(total);
+        ratingBar.setMax(5);
         ratingBar.setIsIndicator(true);
-        ratingBar.setRating(good / total);
+        ratingBar.setRating((float) (((1.0 * good) / (1.0 * total)) * 5.0));
         int textSizeLabel = 16;
         TextView countLabel = findViewById(R.id.count_label);
         countLabel.setText(String.format(getText(R.string.results_total).toString(), total.toString()));
