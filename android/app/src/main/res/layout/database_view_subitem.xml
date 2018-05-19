@@ -5,8 +5,8 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/dataview_pic_container"
+        android:layout_width="350px"
+        android:layout_height="460px"
         app:srcCompat="@mipmap/ic_launcher" />
 </LinearLayout>

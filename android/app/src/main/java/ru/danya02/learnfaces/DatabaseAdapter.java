@@ -83,7 +83,7 @@ class PicsAdapter extends RecyclerView.Adapter<PicsAdapter.PicViewHolder> {
     @NonNull
     @Override
     public PicViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.database_view_item, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.database_view_subitem, viewGroup, false);
         return new PicsAdapter.PicViewHolder(v);
     }
 

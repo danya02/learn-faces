@@ -112,7 +112,7 @@ class AnswerListAdapter extends RecyclerView.Adapter<AnswerListAdapter.AnswerHol
     @NonNull
     @Override
     public AnswerHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.database_view_item, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.results_item_list, viewGroup, false);
         return new AnswerHolder(v);
     }
 
@@ -141,22 +141,8 @@ class AnswerListAdapter extends RecyclerView.Adapter<AnswerListAdapter.AnswerHol
 
         AnswerHolder(View itemView) {
             super(itemView);
-            // Ad-hockery adapted from https://stackoverflow.com/a/8395263/5936187
-            // AD-HOCKERY STARTS HERE.
-            for (int i = 0; i < ((ViewGroup) itemView).getChildCount(); ++i) {
-                View nextChild = ((ViewGroup) itemView).getChildAt(i);
-                if (nextChild instanceof RecyclerView) {
-                    try {
-                        personPic = (ImageView) nextChild;
-                    } catch (ClassCastException e) {
-                        Log.wtf("answerHolder", "Exception while casting even though tested for instance?!", e);
-                    }
-                }
-                if (nextChild instanceof TextView) {
-                    personName = (TextView) nextChild;
-                }
-            }
-            //AD-HOCKERY ENDS HERE.
+            personPic = itemView.findViewById(R.id.results_answer_picture);
+            personName = itemView.findViewById(R.id.results_answer_name);
         }
     }
 }

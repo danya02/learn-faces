@@ -4,7 +4,17 @@
             "outputFile": "/home/danya/learn-faces/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "/home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/9b26732acef36783406c3791bfd9a74c/res/values-v16/values-v16.xml",
+                    "source": "/home/danya/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/3fe583071efb9df6faaa6e0c96fcc2d3/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                },
+                {
+                    "source": "/home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/bc4f19664975218daa0353cd3525d008/res/values-v16/values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -20,16 +30,6 @@
                         "endLines": "6",
                         "endColumns": "12",
                         "endOffsets": "289"
-                    }
-                },
-                {
-                    "source": "/home/danya/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/e0b90afcbfaa5d361d3844ec20aa0bc9/res/values-v16/values-v16.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "65",
-                        "endOffsets": "116"
                     }
                 }
             ]

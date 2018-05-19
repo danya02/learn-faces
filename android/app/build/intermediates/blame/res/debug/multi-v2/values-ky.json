@@ -4,7 +4,17 @@
             "outputFile": "/home/danya/learn-faces/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ky/values-ky.xml",
             "map": [
                 {
-                    "source": "/home/danya/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/e0b90afcbfaa5d361d3844ec20aa0bc9/res/values-ky/values-ky.xml",
+                    "source": "/home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/bc4f19664975218daa0353cd3525d008/res/values-ky/values-ky.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,209,304,423,507,614,731,809,888,969,1079,1186,1284,1390,1497,1598,1759,1862",
+                        "endColumns": "103,94,118,83,106,116,77,78,80,109,106,97,105,106,100,160,102,80",
+                        "endOffsets": "204,299,418,502,609,726,804,883,964,1074,1181,1279,1385,1492,1593,1754,1857,1938"
+                    }
+                },
+                {
+                    "source": "/home/danya/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/3fe583071efb9df6faaa6e0c96fcc2d3/res/values-ky/values-ky.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -18,16 +28,6 @@
                         "startOffsets": "1943",
                         "endColumns": "100",
                         "endOffsets": "2039"
-                    }
-                },
-                {
-                    "source": "/home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/9b26732acef36783406c3791bfd9a74c/res/values-ky/values-ky.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,209,304,423,507,614,731,809,888,969,1079,1186,1284,1390,1497,1598,1759,1862",
-                        "endColumns": "103,94,118,83,106,116,77,78,80,109,106,97,105,106,100,160,102,80",
-                        "endOffsets": "204,299,418,502,609,726,804,883,964,1074,1181,1279,1385,1492,1593,1754,1857,1938"
                     }
                 }
             ]

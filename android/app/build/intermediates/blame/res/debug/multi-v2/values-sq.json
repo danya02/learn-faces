@@ -4,7 +4,7 @@
             "outputFile": "/home/danya/learn-faces/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sq/values-sq.xml",
             "map": [
                 {
-                    "source": "/home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/9b26732acef36783406c3791bfd9a74c/res/values-sq/values-sq.xml",
+                    "source": "/home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/bc4f19664975218daa0353cd3525d008/res/values-sq/values-sq.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/home/danya/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/e0b90afcbfaa5d361d3844ec20aa0bc9/res/values-sq/values-sq.xml",
+                    "source": "/home/danya/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/3fe583071efb9df6faaa6e0c96fcc2d3/res/values-sq/values-sq.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
