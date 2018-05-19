@@ -50,7 +50,7 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Person
         pics.addAll(persons.get(position).alt_pics);
         holder.personPics.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         holder.personPics.setHasFixedSize(true);
-        holder.personPics.setAdapter(new PicsAdapter(pics));
+        holder.personPics.setAdapter(new PicsAdapter(pics, context));
     }
 
     public static class PersonViewHolder extends RecyclerView.ViewHolder {
@@ -69,8 +69,10 @@ class PicsAdapter extends RecyclerView.Adapter<PicsAdapter.PicViewHolder> {
 
 
     private ArrayList<String> pics;
+    private Context context;
 
-    public PicsAdapter(ArrayList<String> pics) {
+    public PicsAdapter(ArrayList<String> pics, Context context) {
+        this.context = context;
         this.pics = pics;
     }
 
@@ -90,7 +92,7 @@ class PicsAdapter extends RecyclerView.Adapter<PicsAdapter.PicViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull PicViewHolder holder, int position) {
         try {
-            Glide.with(holder.itemView).load(pics.get(position)).into(holder.personPic);
+            Glide.with(holder.itemView).load(context.getFilesDir().getPath() + "/" + pics.get(position)).into(holder.personPic);
         } catch (NullPointerException e) {
             Log.e("databaseViewPicHolder", "Tried to get missing picture or put it into a null holder.", e);
         }
