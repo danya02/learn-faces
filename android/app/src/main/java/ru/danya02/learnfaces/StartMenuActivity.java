@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class StartMenuActivity extends AppCompatActivity {
 
@@ -40,8 +42,16 @@ public class StartMenuActivity extends AppCompatActivity {
     }
 
     public void start(View view) {
+        EditText t = findViewById(R.id.question_num_startmenu);
         Intent toGame = new Intent(this, GameActivity.class);
-        toGame.putExtra("questions", 10);
+        String qs = String.valueOf(t.getText());
+        Integer qn = 10;
+        try {
+            qn = Integer.parseInt(qs);
+        } catch (NumberFormatException e) {
+            Log.wtf("startMenu", "Invalid number from number-only EditText?!", e);
+        }
+        toGame.putExtra("questions", qn);
         toGame.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(toGame);
     }

@@ -104,12 +104,32 @@
 
         </android.support.constraint.ConstraintLayout>
 
-        <Button
-            android:id="@+id/try_again"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/try_again"
-            tools:layout_editor_absoluteY="37dp" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/question_num_results"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/questions_hint"
+                android:inputType="number"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:text="@string/default_question_num"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/try_again"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/try_again"
+                tools:layout_editor_absoluteY="37dp" />
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/answer_list"

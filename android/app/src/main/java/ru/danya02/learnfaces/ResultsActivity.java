@@ -8,10 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -40,6 +42,10 @@ public class ResultsActivity extends AppCompatActivity {
         ratingBar.setMax(5);
         ratingBar.setIsIndicator(true);
         ratingBar.setRating((float) (((1.0 * good) / (1.0 * total)) * 5.0));
+
+        EditText t = findViewById(R.id.question_num_results);
+        t.setText(total.toString());
+
         int textSizeLabel = 16;
         TextView countLabel = findViewById(R.id.count_label);
         countLabel.setText(String.format(getText(R.string.results_total).toString(), total.toString()));
@@ -86,8 +92,16 @@ public class ResultsActivity extends AppCompatActivity {
     }
 
     void game() {
+        EditText t = findViewById(R.id.question_num_results);
         Intent toGame = new Intent(this, GameActivity.class);
-        toGame.putExtra("questions", 10);
+        String qs = String.valueOf(t.getText());
+        Integer qn = 10;
+        try {
+            qn = Integer.parseInt(qs);
+        } catch (NumberFormatException e) {
+            Log.wtf("startMenu", "Invalid number from number-only EditText?!", e);
+        }
+        toGame.putExtra("questions", qn);
         toGame.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(toGame);
     }

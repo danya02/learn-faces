@@ -27,4 +27,6 @@
     <string name="b_dataview_text">View Database</string>
     <string name="toast_testing_update">Testing if update is needed...</string>
     <string name="infty">∞</string>
+    <string name="questions_hint">Questions</string>
+    <string name="default_question_num">10</string>
 </resources>
