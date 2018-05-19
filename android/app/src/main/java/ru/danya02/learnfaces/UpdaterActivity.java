@@ -1,13 +1,10 @@
 package ru.danya02.learnfaces;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,17 +20,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import static android.os.Environment.*;
 
 public class UpdaterActivity extends AppCompatActivity {
 
@@ -43,10 +35,12 @@ public class UpdaterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_updater);
         ProgressBar b1 = findViewById(R.id.progressBarMain);
         ProgressBar b2 = findViewById(R.id.progressBarAux);
+        TextView t = findViewById(R.id.textStatus);
         b1.setIndeterminate(true);
         b2.setIndeterminate(true);
         b1.setVisibility(View.GONE);
         b2.setVisibility(View.GONE);
+        t.setVisibility(View.GONE);
         Button b = findViewById(R.id.b_start_update);
         b.setText(R.string.update_start_text);
         b.setOnClickListener(new View.OnClickListener() {
@@ -144,6 +138,7 @@ public class UpdaterActivity extends AppCompatActivity {
 
         TextView t = findViewById(R.id.textStatus);
         b1.setIndeterminate(true);
+        t.setVisibility(View.VISIBLE);
         t.setText(R.string.update_updating_index);
         DownloadDatabase d = new DownloadDatabase();
         d.execute();

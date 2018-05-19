@@ -88,6 +88,7 @@ public class ResultsActivity extends AppCompatActivity {
     void game() {
         Intent toGame = new Intent(this, GameActivity.class);
         toGame.putExtra("questions", 10);
+        toGame.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(toGame);
     }
 }

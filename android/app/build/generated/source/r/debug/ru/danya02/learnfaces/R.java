@@ -2034,7 +2034,7 @@ public final class R {
      * <tr><td>barrier</td><td>2</td><td></td></tr>
      * <tr><td>chains</td><td>4</td><td></td></tr>
      * <tr><td>dimensions</td><td>8</td><td></td></tr>
-     * <tr><td>direct</td><td>1</td><td>for now only direct & barriers</td></tr>
+     * <tr><td>direct</td><td>1</td><td></td></tr>
      * <tr><td>none</td><td>0</td><td></td></tr>
      * <tr><td>standard</td><td>3</td><td></td></tr>
      * </table>
@@ -3989,32 +3989,33 @@ public final class R {
     public static final int database_link=0x7f0c0025;
     public static final int default_question=0x7f0c0026;
     public static final int good_label=0x7f0c0027;
-    public static final int no_images_toast=0x7f0c0028;
-    public static final int password_toggle_content_description=0x7f0c0029;
-    public static final int path_password_eye=0x7f0c002a;
-    public static final int path_password_eye_mask_strike_through=0x7f0c002b;
-    public static final int path_password_eye_mask_visible=0x7f0c002c;
-    public static final int path_password_strike_through=0x7f0c002d;
-    public static final int results_total=0x7f0c002e;
-    public static final int rtfs_button_text=0x7f0c002f;
-    public static final int search_menu_title=0x7f0c0030;
-    public static final int skip_label=0x7f0c0031;
-    public static final int source_link=0x7f0c0032;
-    public static final int start_button_text=0x7f0c0033;
-    public static final int status_bar_notification_info_overflow=0x7f0c0034;
-    public static final int title_activity_results=0x7f0c0035;
-    public static final int toast_obligatory_update=0x7f0c0036;
-    public static final int toast_testing_update=0x7f0c0037;
-    public static final int try_again=0x7f0c0038;
-    public static final int update_create_image_index=0x7f0c0039;
-    public static final int update_downloading_formattable=0x7f0c003a;
-    public static final int update_error_formattable=0x7f0c003b;
-    public static final int update_json_parse=0x7f0c003c;
-    public static final int update_no_error=0x7f0c003d;
-    public static final int update_start_text=0x7f0c003e;
-    public static final int update_try_again=0x7f0c003f;
-    public static final int update_updating_index=0x7f0c0040;
-    public static final int update_writing_index=0x7f0c0041;
+    public static final int infty=0x7f0c0028;
+    public static final int no_images_toast=0x7f0c0029;
+    public static final int password_toggle_content_description=0x7f0c002a;
+    public static final int path_password_eye=0x7f0c002b;
+    public static final int path_password_eye_mask_strike_through=0x7f0c002c;
+    public static final int path_password_eye_mask_visible=0x7f0c002d;
+    public static final int path_password_strike_through=0x7f0c002e;
+    public static final int results_total=0x7f0c002f;
+    public static final int rtfs_button_text=0x7f0c0030;
+    public static final int search_menu_title=0x7f0c0031;
+    public static final int skip_label=0x7f0c0032;
+    public static final int source_link=0x7f0c0033;
+    public static final int start_button_text=0x7f0c0034;
+    public static final int status_bar_notification_info_overflow=0x7f0c0035;
+    public static final int title_activity_results=0x7f0c0036;
+    public static final int toast_obligatory_update=0x7f0c0037;
+    public static final int toast_testing_update=0x7f0c0038;
+    public static final int try_again=0x7f0c0039;
+    public static final int update_create_image_index=0x7f0c003a;
+    public static final int update_downloading_formattable=0x7f0c003b;
+    public static final int update_error_formattable=0x7f0c003c;
+    public static final int update_json_parse=0x7f0c003d;
+    public static final int update_no_error=0x7f0c003e;
+    public static final int update_start_text=0x7f0c003f;
+    public static final int update_try_again=0x7f0c0040;
+    public static final int update_updating_index=0x7f0c0041;
+    public static final int update_writing_index=0x7f0c0042;
   }
   public static final class style {
     public static final int AlertDialog_AppCompat=0x7f0d0000;
@@ -9118,7 +9119,7 @@ public final class R {
      * <tr><td>barrier</td><td>2</td><td></td></tr>
      * <tr><td>chains</td><td>4</td><td></td></tr>
      * <tr><td>dimensions</td><td>8</td><td></td></tr>
-     * <tr><td>direct</td><td>1</td><td>for now only direct & barriers</td></tr>
+     * <tr><td>direct</td><td>1</td><td></td></tr>
      * <tr><td>none</td><td>0</td><td></td></tr>
      * <tr><td>standard</td><td>3</td><td></td></tr>
      * </table>

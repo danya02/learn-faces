@@ -372,6 +372,8 @@ public class GameActivity extends AppCompatActivity {
         Bundle args = new Bundle();
         args.putSerializable("answers", answers);
         results.putExtra("answers", args);
+        results.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(results);
+        finish();
     }
 }
