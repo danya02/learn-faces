@@ -8,5 +8,5 @@
         android:id="@+id/dataview_pic_container"
         android:layout_width="124dp"
         android:layout_height="164dp"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/null_face" />
 </LinearLayout>

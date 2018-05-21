@@ -39,6 +39,14 @@ public class StartMenuActivity extends AppCompatActivity {
                 to_dataview(v);
             }
         });
+        final Button update = findViewById(R.id.b_update);
+        update.setText(R.string.b_update_text);
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                to_update(v);
+            }
+        });
     }
 
     public void start(View view) {
@@ -65,5 +73,11 @@ public class StartMenuActivity extends AppCompatActivity {
     public void to_dataview(View view) {
         Intent to_data = new Intent(this, DatabaseViewActivity.class);
         startActivity(to_data);
+    }
+
+    public void to_update(View view) {
+        Intent to_update = new Intent(this, UpdaterActivity.class);
+        startActivity(to_update);
+
     }
 }

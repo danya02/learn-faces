@@ -29,4 +29,7 @@
     <string name="infty">∞</string>
     <string name="questions_hint">Questions</string>
     <string name="default_question_num">10</string>
+    <string name="b_update_text">Update data</string>
+    <string name="b_skip_text"><![CDATA[Skip >>]]></string>
+    <string name="face_content_description">A face.</string>
 </resources>

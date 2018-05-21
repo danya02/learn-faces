@@ -10,13 +10,13 @@
         android:id="@+id/results_answer_picture"
         android:layout_width="124dp"
         android:layout_height="164dp"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/null_face" />
 
     <TextView
         android:id="@+id/results_answer_name"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="TextView"
+        android:text=""
         android:textAlignment="center"
         android:textAllCaps="false" />
 </LinearLayout>

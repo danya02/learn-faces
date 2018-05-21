@@ -68,6 +68,7 @@ public class UpdaterActivity extends AppCompatActivity {
     }
 
     ArrayList<String> paths;
+    boolean left = false;
 
 
     class DownloadDatabase extends AsyncTask<String, String, String> {
@@ -280,12 +281,14 @@ public class UpdaterActivity extends AppCompatActivity {
     }
 
     void leave(String s) {
-        Intent i = new Intent(this, UpdaterResultActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        i.putExtra("result", s);
-        finish();
-        startActivity(i);
-
+        if (!left) {
+            left = true;
+            Intent i = new Intent(this, UpdaterResultActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            i.putExtra("result", s);
+            finish();
+            startActivity(i);
+        }
     }
 
     void downloadFromIndex(final int index) {
