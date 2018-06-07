@@ -75,7 +75,9 @@ public class UpdaterActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             int count;
-            String file = getString(R.string.database_link);
+            CheapoConfigManager configManager = new CheapoConfigManager(getApplication());
+
+            String file = configManager.getDataField("databaseUri") + "database.json";
             try {
                 URL url = new URL(file);
                 URLConnection urlConnection = url.openConnection();
@@ -175,14 +177,14 @@ public class UpdaterActivity extends AppCompatActivity {
         try {
             jObject = new JSONObject(json);
         } catch (JSONException e) {
-            Log.wtf("updateData", "Cannot parse JSON we wrote ourselves?!", e);
+            Log.e("updateData", "Cannot parse downloaded JSON.", e);
             throw e;
         }
         JSONArray jsonArray;
         try {
             jsonArray = jObject.getJSONArray("userlist");
         } catch (JSONException e) {
-            Log.wtf("updateData", "Cannot find `userlist` in JSON?!", e);
+            Log.e("updateData", "Cannot find `userlist` in JSON.", e);
             throw e;
         }
         runOnUiThread(new Runnable() {
@@ -226,7 +228,8 @@ public class UpdaterActivity extends AppCompatActivity {
                 }
             });
             try {
-                URL url = new URL(getString(R.string.data_base_directory_link) + file);
+                CheapoConfigManager configManager = new CheapoConfigManager(getApplicationContext());
+                URL url = new URL(configManager.getDataField("databaseUri") + file);
                 URLConnection urlConnection = url.openConnection();
                 urlConnection.connect();
 

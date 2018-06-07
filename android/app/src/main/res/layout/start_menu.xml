@@ -7,7 +7,7 @@
     tools:context="ru.danya02.learnfaces.StartMenuActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -59,14 +59,35 @@
             android:layout_height="wrap_content"
             android:text="@string/b_update_text" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/source_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/hint_url_json"
+                android:inputType="textUri"
+                android:text="@string/data_base_directory_link" />
+
+            <Button
+                android:id="@+id/b_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/b_save" />
+        </LinearLayout>
+
         <Button
             android:id="@+id/b_rtfs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="to_rtfs"
-            android:text="@string/rtfs_button_text"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
+            android:onClick="toRtfs"
+            android:text="@string/rtfs_button_text" />
 
     </LinearLayout>
 

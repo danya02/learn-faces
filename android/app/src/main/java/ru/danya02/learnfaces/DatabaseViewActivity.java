@@ -21,9 +21,9 @@ public class DatabaseViewActivity extends AppCompatActivity {
         try {
             v.setAdapter(new DatabaseAdapter(this));
         } catch (FileNotFoundException e) {
-            Toast.makeText(this, "No database file found; play to update.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.no_database_need_update, Toast.LENGTH_LONG).show();
         } catch (JSONException e) {
-            Toast.makeText(this, "Unexpected error in JSON file.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.error_in_json, Toast.LENGTH_LONG).show();
         }
     }
 }

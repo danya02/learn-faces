@@ -696,6 +696,10 @@
         "source": "/home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/9b26732acef36783406c3791bfd9a74c/res/drawable/abc_vector_test.xml"
     },
     {
+        "merged": "/home/danya/learn-faces/android/app/build/intermediates/res/merged/debug/drawable_null_face.png.flat",
+        "source": "/home/danya/learn-faces/android/app/src/main/res/drawable/null_face.png"
+    },
+    {
         "merged": "/home/danya/learn-faces/android/app/build/intermediates/res/merged/debug/layout_abc_list_menu_item_icon.xml.flat",
         "source": "/home/danya/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/9b26732acef36783406c3791bfd9a74c/res/layout/abc_list_menu_item_icon.xml"
     },

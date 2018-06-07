@@ -1,5 +1,6 @@
 package ru.danya02.learnfaces;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -20,21 +21,10 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -53,84 +43,60 @@ public class GameActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             URL url;
-            String dataFromNet, dataFromFile = null;
             try {
-                url = new URL(getString(R.string.database_link));
+                url = new URL(new CheapoConfigManager(getApplicationContext()).getDataField("databaseUri") + "database.json");
             } catch (MalformedURLException e) {
-                Log.wtf("testNeedsUpdate", "Error of URL in resources?!", e);
+                Log.wtf("testNeedsUpdate", "Error in tested URL?!", e);
                 leaveTest(false);
                 return null;
             }
-            HttpURLConnection urlConnection;
-            try {
-                urlConnection = (HttpURLConnection) url.openConnection();
-            } catch (IOException e) {
-                Log.e("testNeedsUpdate", "Problem while opening connection.", e);
-                leaveTest(false);
-                return null;
-            }
-            try {
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                Scanner scanner = new Scanner(in);
-                StringBuilder fromNet = new StringBuilder();
-                while (scanner.hasNext()) {
-                    fromNet.append(" ").append(scanner.next());
-                }
-                dataFromNet = fromNet.toString();
-            } catch (Exception e) {
-                Log.e("testNeedsUpdate", "Problem while reading from connection.", e);
-                leaveTest(false);
-                return null;
-            } finally {
-                urlConnection.disconnect();
-            }
-            InputStream inputStream;
-            try {
-                inputStream = getApplicationContext().openFileInput("data.json");
-            } catch (FileNotFoundException e) {
-                Log.e("testNeedsUpdate", "Error while opening file. (" + e.toString() + ")");
-                leaveTest(true);
-                return null;
-            }
-
-            if (inputStream != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString;
-                StringBuilder fromFile = new StringBuilder();
-
-                try {
-                    while ((receiveString = bufferedReader.readLine()) != null) {
-                        fromFile.append(" ").append(receiveString).append(" ");
-                    }
-                    dataFromFile = fromFile.toString();
-                } catch (IOException e) {
-                    Log.e("testNeedsUpdate", "Error while reading file.", e);
-                    leaveTest(true);
-                    return null;
-                }
-            }
-            JSONObject jObjectFromFile, jObjectFromNet;
-            try {
-                jObjectFromFile = new JSONObject(dataFromFile);
-                jObjectFromNet = new JSONObject(dataFromNet);
-            } catch (JSONException e) {
-                Log.wtf("testNeedsUpdate", "Invalid trusted JSON?!", e);
-                leaveTest(true);
-                return null;
-            }
-            leaveTest(!(jObjectFromFile.toString().equals(jObjectFromNet.toString())));
+            leaveTest(DatabaseTools.databaseOnDiskOutdated(url, getApplicationContext()));
             return null;
         }
 
         private void leaveTest(boolean update) {
-            if (update) leaveToUpdate = true;
-            else runMain = true;
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    hideDialog();
+                }
+            });
+            if (update) updateData();
+            else generateQuestionWrapper(true);
         }
     }
 
+    ProgressDialog dialog;
+    GameActivity activity;
+
+    public void showDialog() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                dialog = new ProgressDialog(activity);
+                dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                dialog.setMessage(getString(R.string.toast_testing_update));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(false);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+
+            }
+        });
+    }
+
+    public void hideDialog() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismiss();
+
+            }
+        });
+    }
+
     private void testNeedsUpdating() {
-        Toast.makeText(this, R.string.toast_testing_update, Toast.LENGTH_LONG).show();
+        showDialog();
         TestJSONChanged a = new TestJSONChanged();
         a.execute();
     }
@@ -143,17 +109,17 @@ public class GameActivity extends AppCompatActivity {
         finish();
     }
 
-    boolean leaveToUpdate = false;
-    boolean runMain = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        testNeedsUpdating();
+        activity = this;
         setContentView(R.layout.activity_main);
         try {
             json_arr = Person.loadData(getApplicationContext());
+            if (json_arr.size() == 0) {
+                throw new Exception();
+            }
         } catch (Exception e) {
             Log.i("loadData", "There was an error, so updating data.", e);
             updateData();
@@ -217,20 +183,20 @@ public class GameActivity extends AppCompatActivity {
                 onSkip();
             }
         });
-        while (!leaveToUpdate && !runMain) {
-        }
-        if (leaveToUpdate) updateData();
-        else {
-
-            generateQuestionWrapper(true);
-        }
+        new AsyncTask<Integer, Integer, Integer>() {
+            @Override
+            protected Integer doInBackground(Integer... integers) {
+                testNeedsUpdating();
+                return null;
+            }
+        }.execute();
     }
 
     public void generateQuestion() throws IllegalStateException {
         int[] imageButtonNumbers = {1, 2, 3, 4};
         int correctButtonNumber = imageButtonNumbers[r.nextInt(imageButtonNumbers.length)];
-        ArrayList<Target<Drawable>> wrongButtonTargets = new ArrayList<>();
-        Target<Drawable> correctButtonTarget;
+        final ArrayList<Target<Drawable>> wrongButtonTargets = new ArrayList<>();
+        final Target<Drawable> correctButtonTarget;
         switch (correctButtonNumber) {
             case 1:
                 Log.d("button", "The correct button is b1.");
@@ -277,11 +243,17 @@ public class GameActivity extends AppCompatActivity {
 
         ArrayList<Person> selectedTargets = new ArrayList<>();
         selectedTargets.add(json_arr.get(r.nextInt(json_arr.size())));
-        String storage = getFilesDir().getPath();
-        Glide.with(this).clear(correctButtonTarget);
+        final String storage = getFilesDir().getPath();
         correctPath = storage + "/" + selectedTargets.get(0).main_pic;
-        Glide.with(this).load(correctPath).into(correctButtonTarget);
-        String name = String.valueOf(selectedTargets.get(0).name);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Glide.with(getApplicationContext()).clear(correctButtonTarget);
+                Glide.with(getApplicationContext()).load(correctPath).into(correctButtonTarget);
+
+            }
+        });
+        final String name = String.valueOf(selectedTargets.get(0).name);
         for (int i = 0; i < wrongButtonTargets.size(); i++) {
             Person target;
             int counter = 0;
@@ -295,15 +267,29 @@ public class GameActivity extends AppCompatActivity {
                 if (!selectedTargets.contains(target)) {
                     selected = true;
                     selectedTargets.add(target);
-                    Glide.with(this).clear(wrongButtonTargets.get(i));
-                    Glide.with(this).load(storage + "/" + target.main_pic).into(wrongButtonTargets.get(i));
+                    final Person finalTarget = target;
+                    final int finalI = i;
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            Glide.with(getApplicationContext()).clear(wrongButtonTargets.get(finalI));
+                            Glide.with(getApplicationContext()).load(storage + "/" + finalTarget.main_pic).into(wrongButtonTargets.get(finalI));
+                        }
+                    });
                 }
 
             }
             Log.d("pics", "generateQuestion: Selected pic for wrong button " + i);
         }
-        TextView t = findViewById(R.id.question);
-        t.setText(String.format(getResources().getText(R.string.default_question).toString(), name));
+        final TextView t = findViewById(R.id.question);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                t.setText(String.format(getResources().getText(R.string.default_question).toString(), name));
+
+            }
+        });
         correctName = name;
     }
 
