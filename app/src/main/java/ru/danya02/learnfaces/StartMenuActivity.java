@@ -24,44 +24,19 @@ public class StartMenuActivity extends AppCompatActivity {
         setContentView(R.layout.start_menu);
         final Button start = findViewById(R.id.b_start);
         start.setText(R.string.start_button_text);
-        start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                start(v);
-            }
-        });
+        start.setOnClickListener(this::start);
         final Button rtfs = findViewById(R.id.b_rtfs);
         rtfs.setText(R.string.rtfs_button_text);
-        rtfs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toRtfs(v);
-            }
-        });
+        rtfs.setOnClickListener(this::toRtfs);
         final Button dataview = findViewById(R.id.b_dataview);
         dataview.setText(R.string.b_dataview_text);
-        dataview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toDataview(v);
-            }
-        });
+        dataview.setOnClickListener(this::toDataview);
         final Button update = findViewById(R.id.b_update);
         update.setText(R.string.b_update_text);
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toUpdate(v);
-            }
-        });
+        update.setOnClickListener(this::toUpdate);
         final Button save = findViewById(R.id.b_save);
         save.setText(R.string.b_save);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setAddress(v);
-            }
-        });
+        save.setOnClickListener(this::setAddress);
         loadAddress();
     }
 
@@ -121,18 +96,15 @@ public class StartMenuActivity extends AppCompatActivity {
     }
 
     public void showDialog() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                dialog = new ProgressDialog(getApplicationContext());
-                dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                dialog.setMessage(getString(R.string.testing_wait_popup));
-                dialog.setIndeterminate(true);
-                dialog.setCancelable(false);
-                dialog.setCanceledOnTouchOutside(false);
-                dialog.show();
+        runOnUiThread(() -> {
+            dialog = new ProgressDialog(getApplicationContext());
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage(getString(R.string.testing_wait_popup));
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
 
-            }
         });
     }
 
@@ -140,45 +112,31 @@ public class StartMenuActivity extends AppCompatActivity {
         dialog.dismiss();
     }
 
+    // FIXME: replace this with other concurrency mechanisms.
     static class testAddressRunner extends AsyncTask<StartMenuActivity, Integer, StartMenuActivity> {
 
         protected StartMenuActivity doInBackground(StartMenuActivity... activities) {
             final StartMenuActivity activity = activities[0];
             final EditText addr = activity.findViewById(R.id.source_address);
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    addr.setText(addr.getText().toString().trim());
-                    if (addr.getText().charAt(addr.getText().toString().length() - 1) != '/') {
-                        addr.getText().append('/');
-                    }
-
+            activity.runOnUiThread(() -> {
+                addr.setText(addr.getText().toString().trim());
+                if (addr.getText().charAt(addr.getText().toString().length() - 1) != '/') {
+                    addr.getText().append('/');
                 }
+
             });
 
             DatabaseTools.databaseStatus status = DatabaseTools.databaseAddressCheck(addr.getText().toString());
             if (status == DatabaseTools.databaseStatus.BAD_URI) {
-                activity.runOnUiThread(new Runnable() {
-                    public void run() {
-                        Toast.makeText(activity, R.string.invalid_address_toast, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                activity.runOnUiThread(() -> Toast.makeText(activity, R.string.invalid_address_toast, Toast.LENGTH_SHORT).show());
                 return activity;
             }
             if (status == DatabaseTools.databaseStatus.NOT_CONNECTING) {
-                activity.runOnUiThread(new Runnable() {
-                    public void run() {
-                        Toast.makeText(activity, R.string.cannot_download_to_test_toast, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                activity.runOnUiThread(() -> Toast.makeText(activity, R.string.cannot_download_to_test_toast, Toast.LENGTH_SHORT).show());
                 return activity;
             }
             if (status == DatabaseTools.databaseStatus.BAD_JSON) {
-                activity.runOnUiThread(new Runnable() {
-                    public void run() {
-                        Toast.makeText(activity, R.string.invalid_json_to_test_toast, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                activity.runOnUiThread(() -> Toast.makeText(activity, R.string.invalid_json_to_test_toast, Toast.LENGTH_SHORT).show());
                 return activity;
             }
             CheapoConfigManager configManager = new CheapoConfigManager(activity);
@@ -186,30 +144,16 @@ public class StartMenuActivity extends AppCompatActivity {
                 configManager.setDataField("databaseUri", String.valueOf(addr.getText()));
             } catch (IOException e) {
                 Log.wtf("mainMenu", "Error while writing to my directory?!", e);
-                activity.runOnUiThread(new Runnable() {
-                    public void run() {
-                        Toast.makeText(activity, R.string.error_saving_address, Toast.LENGTH_LONG).show();
-                    }
-                });
+                activity.runOnUiThread(() -> Toast.makeText(activity, R.string.error_saving_address, Toast.LENGTH_LONG).show());
                 return activity;
             }
-            activity.runOnUiThread(new Runnable() {
-                public void run() {
-                    Toast.makeText(activity, R.string.address_set_ok_toast, Toast.LENGTH_SHORT).show();
-                }
-            });
+            activity.runOnUiThread(() -> Toast.makeText(activity, R.string.address_set_ok_toast, Toast.LENGTH_SHORT).show());
             return activity;
         }
 
         @Override
         protected void onPostExecute(final StartMenuActivity startMenuActivity) {
-            startMenuActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    startMenuActivity.hideDialog();
-
-                }
-            });
+            startMenuActivity.runOnUiThread(startMenuActivity::hideDialog);
         }
     }
 

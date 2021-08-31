@@ -117,7 +117,7 @@ public class DatabaseTools {
         }
         JSONObject jObjectFromFile, jObjectFromNet;
         try {
-            jObjectFromFile = new JSONObject(dataFromFile);
+            jObjectFromFile = new JSONObject(dataFromFile != null ? dataFromFile : "");
             jObjectFromNet = new JSONObject(dataFromNet);
         } catch (JSONException e) {
             Log.e("testNeedsUpdate", "Invalid JSON.", e);

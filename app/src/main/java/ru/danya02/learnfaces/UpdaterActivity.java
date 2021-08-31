@@ -1,5 +1,6 @@
 package ru.danya02.learnfaces;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -25,6 +26,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class UpdaterActivity extends AppCompatActivity {
@@ -43,12 +45,7 @@ public class UpdaterActivity extends AppCompatActivity {
         t.setVisibility(View.GONE);
         Button b = findViewById(R.id.b_start_update);
         b.setText(R.string.update_start_text);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startUpdateWrapper();
-            }
-        });
+        b.setOnClickListener(v -> startUpdateWrapper());
     }
 
     void startUpdateWrapper() {
@@ -71,7 +68,10 @@ public class UpdaterActivity extends AppCompatActivity {
     boolean left = false;
 
 
+    // FIXME: replace with other concurrency mechanisms.
     class DownloadDatabase extends AsyncTask<String, String, String> {
+        @SuppressLint("WrongThread") // re: line 108 and 110.
+        // FIXME: figure out why this issues a warning, it worked before.
         @Override
         protected String doInBackground(String... strings) {
             int count;
@@ -88,10 +88,10 @@ public class UpdaterActivity extends AppCompatActivity {
                         8192);
 
                 File f = new File(getFilesDir(), "data.json");
-                f.createNewFile();
+                assert f.createNewFile();
                 OutputStream output = new FileOutputStream(String.format("%s/%s", getFilesDir(), "data.json"));
 
-                byte data[] = new byte[1024];
+                byte[] data = new byte[1024];
 
                 long total = 0;
 
@@ -119,16 +119,12 @@ public class UpdaterActivity extends AppCompatActivity {
         }
 
         protected void onProgressUpdate(final String... progress) {
-            runOnUiThread(new Runnable() {
+            runOnUiThread(() -> {
+                ProgressBar p = findViewById(R.id.progressBarAux);
+                p.setProgress(Integer.parseInt(progress[0]));
+                p.setMax(100);
+                p.setIndeterminate(false);
 
-                @Override
-                public void run() {
-                    ProgressBar p = findViewById(R.id.progressBarAux);
-                    p.setProgress(Integer.parseInt(progress[0]));
-                    p.setMax(100);
-                    p.setIndeterminate(false);
-
-                }
             });
         }
     }
@@ -149,7 +145,6 @@ public class UpdaterActivity extends AppCompatActivity {
 
     void continueUpdate() throws JSONException, FileNotFoundException {
         FileInputStream file;
-        ProgressBar b = findViewById(R.id.progressBarAux);
         final TextView t = findViewById(R.id.textStatus);
         try {
             file = openFileInput("data.json");
@@ -157,12 +152,7 @@ public class UpdaterActivity extends AppCompatActivity {
             Log.wtf("updateData", "Not found file we just created?!", e);
             throw e;
         }
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                t.setText(R.string.update_json_parse);
-            }
-        });
+        runOnUiThread(() -> t.setText(R.string.update_json_parse));
 
         StringBuilder text = new StringBuilder();
 
@@ -187,12 +177,7 @@ public class UpdaterActivity extends AppCompatActivity {
             Log.e("updateData", "Cannot find `userlist` in JSON.", e);
             throw e;
         }
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                t.setText(R.string.update_create_image_index);
-            }
-        });
+        runOnUiThread(() -> t.setText(R.string.update_create_image_index));
 
         paths = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -214,19 +199,14 @@ public class UpdaterActivity extends AppCompatActivity {
         downloadFromIndex(0);
     }
 
+    // TODO: replace with other concurrency mechanisms.
     class DownloadFileFromURL extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... strings) {
-            int count;
             final TextView t = findViewById(R.id.textStatus);
             final String file = strings[0];
             int index = Integer.parseInt(strings[1]);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    t.setText(String.format(getString(R.string.update_downloading_formattable), file));
-                }
-            });
+            runOnUiThread(() -> t.setText(String.format(getString(R.string.update_downloading_formattable), file)));
             try {
                 CheapoConfigManager configManager = new CheapoConfigManager(getApplicationContext());
                 URL url = new URL(configManager.getDataField("databaseUri") + file);
@@ -237,14 +217,14 @@ public class UpdaterActivity extends AppCompatActivity {
                 InputStream input = new BufferedInputStream(url.openStream(),
                         8192);
                 File f = new File(getFilesDir(), file);
-                f.getParentFile().mkdirs();
-                f.createNewFile();
+                assert Objects.requireNonNull(f.getParentFile()).mkdirs();
+                assert f.createNewFile();
                 OutputStream output = new FileOutputStream(String.format("%s/%s", getFilesDir(), file));
 
-                byte data[] = new byte[1024];
+                byte[] data = new byte[1024];
 
+                int count;
                 long total = 0;
-
                 while ((count = input.read(data)) != -1) {
                     total += count;
                     publishProgress("" + (int) ((total * 100) / fileLength));
@@ -265,15 +245,11 @@ public class UpdaterActivity extends AppCompatActivity {
 
 
         protected void onProgressUpdate(final String... progress) {
-            runOnUiThread(new Runnable() {
-
-                @Override
-                public void run() {
-                    ProgressBar p = findViewById(R.id.progressBarAux);
-                    p.setProgress(Integer.parseInt(progress[0]));
-                    p.setMax(100);
-                    p.setIndeterminate(false);
-                }
+            runOnUiThread(() -> {
+                ProgressBar p = findViewById(R.id.progressBarAux);
+                p.setProgress(Integer.parseInt(progress[0]));
+                p.setMax(100);
+                p.setIndeterminate(false);
             });
         }
 
@@ -298,18 +274,15 @@ public class UpdaterActivity extends AppCompatActivity {
         if (paths.size() <= index) {
             leave(null);
         } else {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    ProgressBar p = findViewById(R.id.progressBarMain);
-                    p.setMax(paths.size());
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        p.setProgress(index, true);
-                    } else {
-                        p.setProgress(index);
-                    }
-                    p.setIndeterminate(false);
+            runOnUiThread(() -> {
+                ProgressBar p = findViewById(R.id.progressBarMain);
+                p.setMax(paths.size());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    p.setProgress(index, true);
+                } else {
+                    p.setProgress(index);
                 }
+                p.setIndeterminate(false);
             });
 
             DownloadFileFromURL d = new DownloadFileFromURL();

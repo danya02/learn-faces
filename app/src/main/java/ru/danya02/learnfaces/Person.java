@@ -1,5 +1,6 @@
 package ru.danya02.learnfaces;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
@@ -27,6 +28,8 @@ public class Person {
 
     }
 
+    // this overrides a method annotated as @RecentlyNotNull -- what?!?
+    // TODO: figure out what this means and fix it
     public String toString() {
         return name;
     }

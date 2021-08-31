@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ResultsActivity extends AppCompatActivity {
 
@@ -31,12 +32,28 @@ public class ResultsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent origin = getIntent();
-        Integer total = origin.getIntExtra("total", 10);
-        Integer good = origin.getIntExtra("good", 0);
-        Integer skipped = origin.getIntExtra("skip", 10);
-        Integer bad = origin.getIntExtra("bad", 0);
+        int total = origin.getIntExtra("total", 10);
+        int good = origin.getIntExtra("good", 0);
+        int skipped = origin.getIntExtra("skip", 10);
+        int bad = origin.getIntExtra("bad", 0);
         Bundle b = origin.getBundleExtra("answers");
-        ArrayList<Answer> answers = (ArrayList<Answer>) b.getSerializable("answers");
+
+        // ArrayList<Answer> answers = (ArrayList<Answer>) b.getSerializable("answers");
+        // for reasons of type safety, you can't be sure that this is valid, and Android Studio complains.
+        // see https://stackoverflow.com/a/14643339/5936187 for explanation and reasoning behind my solution.
+
+        ArrayList<?> maybe_answers = (ArrayList<?>) b.getSerializable("answers");
+
+        ArrayList<Answer> answers = new ArrayList<>();
+        for (Object maybe_answer:
+             maybe_answers) {
+            if(maybe_answer instanceof Answer){
+                answers.add((Answer)maybe_answer);
+            } else {
+                Log.wtf("ResultsActivity", "In intent to create a ResultsActivity, found an item that isn't an Answer instance!! Object was: " + maybe_answer.toString());
+            }
+        }
+
 
         final RatingBar ratingBar = findViewById(R.id.rating);
         ratingBar.setMax(5);
@@ -44,11 +61,11 @@ public class ResultsActivity extends AppCompatActivity {
         ratingBar.setRating((float) (((1.0 * good) / (1.0 * total)) * 5.0));
 
         EditText t = findViewById(R.id.question_num_results);
-        t.setText(total.toString());
+        t.setText(String.format(Locale.getDefault(), "%d", total));
 
         int textSizeLabel = 16;
         TextView countLabel = findViewById(R.id.count_label);
-        countLabel.setText(String.format(getText(R.string.results_total).toString(), total.toString()));
+        countLabel.setText(String.format(getText(R.string.results_total).toString(), total));
         TextView goodLabel = findViewById(R.id.good_label);
         goodLabel.setText(R.string.good_label);
         goodLabel.setTextSize(textSizeLabel);
@@ -64,30 +81,25 @@ public class ResultsActivity extends AppCompatActivity {
         TextView goodCount = findViewById(R.id.good_count);
         goodCount.setTextColor(getResources().getColor(R.color.colorGood));
         goodCount.setTextSize(textSize);
-        goodCount.setText(good.toString());
+        goodCount.setText(String.format(Locale.getDefault(), "%d", good));
 
         TextView skipCount = findViewById(R.id.skip_count);
         skipCount.setTextColor(getResources().getColor(R.color.colorSkip));
         skipCount.setTextSize(textSize);
-        skipCount.setText(skipped.toString());
+        skipCount.setText(String.format(Locale.getDefault(), "%d", skipped));
 
         TextView badCount = findViewById(R.id.bad_count);
         badCount.setTextColor(getResources().getColor(R.color.colorBad));
         badCount.setTextSize(textSize);
-        badCount.setText(bad.toString());
+        badCount.setText(String.format(Locale.getDefault(), "%d", bad));
 
         Button tryAgain = findViewById(R.id.try_again);
         tryAgain.setText(R.string.try_again);
-        tryAgain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                game();
-            }
-        });
+        tryAgain.setOnClickListener(v -> game());
         RecyclerView recyclerView = findViewById(R.id.answer_list);
-        LinearLayoutManager horizontalLayoutManagaer
+        LinearLayoutManager horizontalLayoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(horizontalLayoutManagaer);
+        recyclerView.setLayoutManager(horizontalLayoutManager);
         recyclerView.setAdapter(new AnswerListAdapter(answers, getResources()));
     }
 
@@ -110,8 +122,8 @@ public class ResultsActivity extends AppCompatActivity {
 
 class AnswerListAdapter extends RecyclerView.Adapter<AnswerListAdapter.AnswerHolder> {
 
-    private ArrayList<Answer> answers;
-    private Resources resources;
+    private final ArrayList<Answer> answers;
+    private final Resources resources;
 
     public AnswerListAdapter(ArrayList<Answer> answers, Resources resources) {
         this.answers = answers;

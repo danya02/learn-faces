@@ -1,5 +1,6 @@
 package ru.danya02.learnfaces;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -39,6 +40,10 @@ public class GameActivity extends AppCompatActivity {
 
     Target<Drawable> Button1Target, Button2Target, Button3Target, Button4Target;
 
+    // This requires access to `getApplicationContext()` to be able to store config files.
+    // Because of this, it cannot be static.
+    // TODO: there is probably a better way of doing this -- probably requires upgrading to `java.util.concurrent`; see https://stackoverflow.com/q/58767733/5936187
+    @SuppressLint("StaticFieldLeak")
     class TestJSONChanged extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... strings) {
@@ -55,12 +60,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         private void leaveTest(boolean update) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    hideDialog();
-                }
-            });
+            runOnUiThread(GameActivity.this::hideDialog);
             if (update) updateData();
             else generateQuestionWrapper(true);
         }
@@ -70,29 +70,20 @@ public class GameActivity extends AppCompatActivity {
     GameActivity activity;
 
     public void showDialog() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                dialog = new ProgressDialog(activity);
-                dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                dialog.setMessage(getString(R.string.toast_testing_update));
-                dialog.setIndeterminate(true);
-                dialog.setCancelable(false);
-                dialog.setCanceledOnTouchOutside(false);
-                dialog.show();
+        runOnUiThread(() -> {
+            dialog = new ProgressDialog(activity);
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage(getString(R.string.toast_testing_update));
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
 
-            }
         });
     }
 
     public void hideDialog() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismiss();
-
-            }
-        });
+        runOnUiThread(() -> dialog.dismiss());
     }
 
     private void testNeedsUpdating() {
@@ -157,32 +148,11 @@ public class GameActivity extends AppCompatActivity {
         };
 
         Button skip = findViewById(R.id.skip);
-        b1.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                onButtonPress(buttons.BUTTON1);
-            }
-        });
-        b2.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                onButtonPress(buttons.BUTTON2);
-            }
-        });
-        b3.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                onButtonPress(buttons.BUTTON3);
-            }
-        });
-        b4.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                onButtonPress(buttons.BUTTON4);
-            }
-        });
-        skip.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSkip();
-            }
-        });
+        b1.setOnClickListener(v -> onButtonPress(buttons.BUTTON1));
+        b2.setOnClickListener(v -> onButtonPress(buttons.BUTTON2));
+        b3.setOnClickListener(v -> onButtonPress(buttons.BUTTON3));
+        b4.setOnClickListener(v -> onButtonPress(buttons.BUTTON4));
+        skip.setOnClickListener(v -> onSkip());
         new AsyncTask<Integer, Integer, Integer>() {
             @Override
             protected Integer doInBackground(Integer... integers) {
@@ -245,13 +215,10 @@ public class GameActivity extends AppCompatActivity {
         selectedTargets.add(json_arr.get(r.nextInt(json_arr.size())));
         final String storage = getFilesDir().getPath();
         correctPath = storage + "/" + selectedTargets.get(0).main_pic;
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Glide.with(getApplicationContext()).clear(correctButtonTarget);
-                Glide.with(getApplicationContext()).load(correctPath).into(correctButtonTarget);
+        runOnUiThread(() -> {
+            Glide.with(getApplicationContext()).clear(correctButtonTarget);
+            Glide.with(getApplicationContext()).load(correctPath).into(correctButtonTarget);
 
-            }
         });
         final String name = String.valueOf(selectedTargets.get(0).name);
         for (int i = 0; i < wrongButtonTargets.size(); i++) {
@@ -269,13 +236,10 @@ public class GameActivity extends AppCompatActivity {
                     selectedTargets.add(target);
                     final Person finalTarget = target;
                     final int finalI = i;
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                    runOnUiThread(() -> {
 
-                            Glide.with(getApplicationContext()).clear(wrongButtonTargets.get(finalI));
-                            Glide.with(getApplicationContext()).load(storage + "/" + finalTarget.main_pic).into(wrongButtonTargets.get(finalI));
-                        }
+                        Glide.with(getApplicationContext()).clear(wrongButtonTargets.get(finalI));
+                        Glide.with(getApplicationContext()).load(storage + "/" + finalTarget.main_pic).into(wrongButtonTargets.get(finalI));
                     });
                 }
 
@@ -283,13 +247,7 @@ public class GameActivity extends AppCompatActivity {
             Log.d("pics", "generateQuestion: Selected pic for wrong button " + i);
         }
         final TextView t = findViewById(R.id.question);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                t.setText(String.format(getResources().getText(R.string.default_question).toString(), name));
-
-            }
-        });
+        runOnUiThread(() -> t.setText(String.format(getResources().getText(R.string.default_question).toString(), name)));
         correctName = name;
     }
 

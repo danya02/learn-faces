@@ -4,6 +4,8 @@ import android.content.Intent;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,32 +29,22 @@ public class UpdaterResultActivity extends AppCompatActivity {
 
     void goodSetup() {
         ImageView iv = findViewById(R.id.update_result_image_view);
-        iv.setImageDrawable(getDrawable(R.drawable.ic_launcher_background)); //TODO: set actual drawables.
+        iv.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_launcher_background)); //TODO: set actual drawables.
         TextView t = findViewById(R.id.update_result);
         t.setText(R.string.update_no_error);
         Button b = findViewById(R.id.b_continue_from_update);
         b.setText(R.string.b_continue_from_update_text);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                continueWork();
-            }
-        });
+        b.setOnClickListener(v -> continueWork());
     }
 
     void badSetup(String result) {
         ImageView iv = findViewById(R.id.update_result_image_view);
-        iv.setImageDrawable(getDrawable(R.drawable.ic_launcher_background)); //TODO: set actual drawables.
+        iv.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_launcher_background)); //TODO: set actual drawables.
         TextView t = findViewById(R.id.update_result);
         t.setText(String.format(getString(R.string.update_error_formattable), result));
         Button b = findViewById(R.id.b_continue_from_update);
         b.setText(R.string.update_try_again);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateAgain();
-            }
-        });
+        b.setOnClickListener(v -> updateAgain());
     }
 
     void continueWork() {

@@ -16,7 +16,7 @@ import java.io.Writer;
 public class CheapoConfigManager {
     // Because I can't be arsed to learn how to access the system settings database.
 
-    private Context context;
+    private final Context context;
 
     public CheapoConfigManager(Context c) {
         context = c;

@@ -10,28 +10,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9babeff4-2d99-4881-890b-2b4e5d1f528b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/xml/backup_descriptor.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/CheapoConfigManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/CheapoConfigManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/DatabaseAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/DatabaseAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/DatabaseViewActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/DatabaseViewActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/DatabaseTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/DatabaseTools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/GameActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/GameActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/Person.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/ResultsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/ResultsActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/StartMenuActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/StartMenuActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/UpdaterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/UpdaterActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/UpdaterResultActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/UpdaterResultActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_database_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_database_view.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_results.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_results.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_updater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_updater.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_updater_result.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_updater_result.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_results.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_results.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/database_view_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/database_view_item.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/start_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/start_menu.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

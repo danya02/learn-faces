@@ -21,8 +21,8 @@ import java.util.ArrayList;
 public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.PersonViewHolder> {
 
 
-    private ArrayList<Person> persons;
-    private Context context;
+    private final ArrayList<Person> persons;
+    private final Context context;
 
 
     public DatabaseAdapter(Context context) throws FileNotFoundException, JSONException {
@@ -68,8 +68,8 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Person
 class PicsAdapter extends RecyclerView.Adapter<PicsAdapter.PicViewHolder> {
 
 
-    private ArrayList<String> pics;
-    private Context context;
+    private final ArrayList<String> pics;
+    private final Context context;
 
     public PicsAdapter(ArrayList<String> pics, Context context) {
         this.context = context;
