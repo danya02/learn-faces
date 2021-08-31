@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/learn-faces.iml" filepath="$PROJECT_DIR$/.idea/learn-faces.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learn-faces.iml" filepath="$PROJECT_DIR$/.idea/modules/learn-faces.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/learn-faces.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/learn-faces.app.iml" />
     </modules>
   </component>
 </project>
