@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,8 +30,10 @@ public class Person {
 
     }
 
-    // this overrides a method annotated as @RecentlyNotNull -- what?!?
-    // TODO: figure out what this means and fix it
+    // the superclass -- Object -- has toString() annotated as @RecentlyNotNull
+    // this is the same as @NotNull, so we need to annotate it as such.
+    // see https://stackoverflow.com/a/53059367/5936187
+    @NonNull
     public String toString() {
         return name;
     }

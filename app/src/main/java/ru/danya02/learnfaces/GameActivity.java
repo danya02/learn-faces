@@ -1,21 +1,22 @@
 package ru.danya02.learnfaces;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -26,6 +27,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -39,32 +42,6 @@ public class GameActivity extends AppCompatActivity {
     String correctName, correctPath;
 
     Target<Drawable> Button1Target, Button2Target, Button3Target, Button4Target;
-
-    // This requires access to `getApplicationContext()` to be able to store config files.
-    // Because of this, it cannot be static.
-    // TODO: there is probably a better way of doing this -- probably requires upgrading to `java.util.concurrent`; see https://stackoverflow.com/q/58767733/5936187
-    @SuppressLint("StaticFieldLeak")
-    class TestJSONChanged extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... strings) {
-            URL url;
-            try {
-                url = new URL(new CheapoConfigManager(getApplicationContext()).getDataField("databaseUri") + "database.json");
-            } catch (MalformedURLException e) {
-                Log.wtf("testNeedsUpdate", "Error in tested URL?!", e);
-                leaveTest(false);
-                return null;
-            }
-            leaveTest(DatabaseTools.databaseOnDiskOutdated(url, getApplicationContext()));
-            return null;
-        }
-
-        private void leaveTest(boolean update) {
-            runOnUiThread(GameActivity.this::hideDialog);
-            if (update) updateData();
-            else generateQuestionWrapper(true);
-        }
-    }
 
     ProgressDialog dialog;
     GameActivity activity;
@@ -88,8 +65,32 @@ public class GameActivity extends AppCompatActivity {
 
     private void testNeedsUpdating() {
         showDialog();
-        TestJSONChanged a = new TestJSONChanged();
-        a.execute();
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        executor.execute(() -> {
+            Runnable updateRequired = () -> {
+                handler.post(GameActivity.this::hideDialog);
+                updateData();
+            };
+            Runnable noUpdateNeeded = () -> {
+                handler.post(GameActivity.this::hideDialog);
+                generateQuestionWrapper(true);
+            };
+
+
+            URL url;
+            try {
+                url = new URL(new CheapoConfigManager(getApplicationContext()).getDataField("databaseUri") + "database.json");
+            } catch (MalformedURLException e) {
+                Log.wtf("testNeedsUpdate", "Error in tested URL?!", e);
+                noUpdateNeeded.run();
+                return;
+            }
+            if (DatabaseTools.databaseOnDiskOutdated(url, getApplicationContext()))
+                updateRequired.run();
+            else noUpdateNeeded.run();
+        });
     }
 
     private void updateData() {
@@ -153,13 +154,7 @@ public class GameActivity extends AppCompatActivity {
         b3.setOnClickListener(v -> onButtonPress(buttons.BUTTON3));
         b4.setOnClickListener(v -> onButtonPress(buttons.BUTTON4));
         skip.setOnClickListener(v -> onSkip());
-        new AsyncTask<Integer, Integer, Integer>() {
-            @Override
-            protected Integer doInBackground(Integer... integers) {
                 testNeedsUpdating();
-                return null;
-            }
-        }.execute();
     }
 
     public void generateQuestion() throws IllegalStateException {

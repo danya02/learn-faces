@@ -5,23 +5,21 @@
       <config />
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9babeff4-2d99-4881-890b-2b4e5d1f528b" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="9babeff4-2d99-4881-890b-2b4e5d1f528b" name="Default" comment="Refactoring all instances of AsyncTask usage.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/CheapoConfigManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/CheapoConfigManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/DatabaseAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/DatabaseAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/DatabaseTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/DatabaseTools.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/ru/danya02/learnfaces/ExampleInstrumentedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/androidTest/java/ru/danya02/learnfaces/ExampleInstrumentedTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/GameActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/GameActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/ResultsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/ResultsActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/StartMenuActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/StartMenuActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/UpdaterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/UpdaterActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/UpdaterResultActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/UpdaterResultActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,22 +104,25 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="BundleExportedModule" value="learn-faces.app" />
     <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/app" />
     <property name="ExportApk.BuildVariants" value="release" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$USER_HOME$/Android/learn-faces-keystore" />
     <property name="memory.settings.postsync.last.time.stamp" value="1630444884478" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Build Variants" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor.code.editing" />
   </component>
   <component name="PsdUISettings">
-    <option name="MODULE_TAB" value="Properties" />
+    <option name="MODULE_TAB" value="Default Config" />
+    <option name="BUILD_VARIANTS_TAB" value="Build Types" />
     <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />
+    <option name="LAST_EDITED_BUILD_TYPE" value="debug" />
   </component>
   <component name="RunManager" selected="Android App.app">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
@@ -265,7 +266,19 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Adding valid test faces." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding valid test faces." />
+    <MESSAGE value="Refactoring all instances of AsyncTask usage." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring all instances of AsyncTask usage." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ru/danya02/learnfaces/UpdaterActivity.java</url>
+          <line>91</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/main.py" />

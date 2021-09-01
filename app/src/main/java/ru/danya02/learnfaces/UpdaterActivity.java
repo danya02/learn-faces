@@ -1,16 +1,17 @@
 package ru.danya02.learnfaces;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +29,8 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class UpdaterActivity extends AppCompatActivity {
 
@@ -68,12 +71,23 @@ public class UpdaterActivity extends AppCompatActivity {
     boolean left = false;
 
 
-    // FIXME: replace with other concurrency mechanisms.
-    class DownloadDatabase extends AsyncTask<String, String, String> {
-        @SuppressLint("WrongThread") // re: line 108 and 110.
-        // FIXME: figure out why this issues a warning, it worked before.
-        @Override
-        protected String doInBackground(String... strings) {
+
+    void startUpdate() {
+        ProgressBar b1 = findViewById(R.id.progressBarAux);
+        b1.setVisibility(View.VISIBLE);
+        ProgressBar b2 = findViewById(R.id.progressBarMain);
+        b2.setVisibility(View.VISIBLE);
+
+        TextView t = findViewById(R.id.textStatus);
+        b1.setIndeterminate(true);
+        t.setVisibility(View.VISIBLE);
+        t.setText(R.string.update_updating_index);
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+
+
+        executor.execute(() -> {
             int count;
             CheapoConfigManager configManager = new CheapoConfigManager(getApplication());
 
@@ -88,7 +102,8 @@ public class UpdaterActivity extends AppCompatActivity {
                         8192);
 
                 File f = new File(getFilesDir(), "data.json");
-                assert f.createNewFile();
+                //noinspection ResultOfMethodCallIgnored
+                f.createNewFile();
                 OutputStream output = new FileOutputStream(String.format("%s/%s", getFilesDir(), "data.json"));
 
                 byte[] data = new byte[1024];
@@ -97,7 +112,12 @@ public class UpdaterActivity extends AppCompatActivity {
 
                 while ((count = input.read(data)) != -1) {
                     total += count;
-                    publishProgress("" + (int) ((total * 100) / fileLength));
+                    long finalTotal = total;
+                    handler.post(() -> {
+                        b1.setProgress((int) ((finalTotal * 100) / fileLength));
+                        b1.setMax(100);
+                        b1.setIndeterminate(false);
+                    });
                     output.write(data, 0, count);
                 }
                 output.flush();
@@ -107,40 +127,11 @@ public class UpdaterActivity extends AppCompatActivity {
 
             } catch (Exception e) {
                 Log.e("updateData", String.format("Error while downloading file %s.", file), e);
-                onPostExecute(e.toString());
             }
-            onPostExecute(null);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
             continueUpdateWrapper();
-        }
 
-        protected void onProgressUpdate(final String... progress) {
-            runOnUiThread(() -> {
-                ProgressBar p = findViewById(R.id.progressBarAux);
-                p.setProgress(Integer.parseInt(progress[0]));
-                p.setMax(100);
-                p.setIndeterminate(false);
+        });
 
-            });
-        }
-    }
-
-    void startUpdate() {
-        ProgressBar b1 = findViewById(R.id.progressBarAux);
-        b1.setVisibility(View.VISIBLE);
-        ProgressBar b2 = findViewById(R.id.progressBarMain);
-        b2.setVisibility(View.VISIBLE);
-
-        TextView t = findViewById(R.id.textStatus);
-        b1.setIndeterminate(true);
-        t.setVisibility(View.VISIBLE);
-        t.setText(R.string.update_updating_index);
-        DownloadDatabase d = new DownloadDatabase();
-        d.execute();
     }
 
     void continueUpdate() throws JSONException, FileNotFoundException {
@@ -199,65 +190,6 @@ public class UpdaterActivity extends AppCompatActivity {
         downloadFromIndex(0);
     }
 
-    // TODO: replace with other concurrency mechanisms.
-    class DownloadFileFromURL extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... strings) {
-            final TextView t = findViewById(R.id.textStatus);
-            final String file = strings[0];
-            int index = Integer.parseInt(strings[1]);
-            runOnUiThread(() -> t.setText(String.format(getString(R.string.update_downloading_formattable), file)));
-            try {
-                CheapoConfigManager configManager = new CheapoConfigManager(getApplicationContext());
-                URL url = new URL(configManager.getDataField("databaseUri") + file);
-                URLConnection urlConnection = url.openConnection();
-                urlConnection.connect();
-
-                int fileLength = urlConnection.getContentLength();
-                InputStream input = new BufferedInputStream(url.openStream(),
-                        8192);
-                File f = new File(getFilesDir(), file);
-                assert Objects.requireNonNull(f.getParentFile()).mkdirs();
-                assert f.createNewFile();
-                OutputStream output = new FileOutputStream(String.format("%s/%s", getFilesDir(), file));
-
-                byte[] data = new byte[1024];
-
-                int count;
-                long total = 0;
-                while ((count = input.read(data)) != -1) {
-                    total += count;
-                    publishProgress("" + (int) ((total * 100) / fileLength));
-                    output.write(data, 0, count);
-                }
-                output.flush();
-                output.close();
-                input.close();
-
-
-            } catch (Exception e) {
-                Log.e("updateData", String.format("Error while downloading file %s.", file), e);
-                leave(e.toString());
-            }
-            onPostExecute(index);
-            return null;
-        }
-
-
-        protected void onProgressUpdate(final String... progress) {
-            runOnUiThread(() -> {
-                ProgressBar p = findViewById(R.id.progressBarAux);
-                p.setProgress(Integer.parseInt(progress[0]));
-                p.setMax(100);
-                p.setIndeterminate(false);
-            });
-        }
-
-        protected void onPostExecute(int file_index) {
-            downloadFromIndex(file_index + 1);
-        }
-
-    }
 
     void leave(String s) {
         if (!left) {
@@ -270,7 +202,7 @@ public class UpdaterActivity extends AppCompatActivity {
         }
     }
 
-    void downloadFromIndex(final int index) {
+    void downloadFromIndex(int index) {
         if (paths.size() <= index) {
             leave(null);
         } else {
@@ -285,8 +217,62 @@ public class UpdaterActivity extends AppCompatActivity {
                 p.setIndeterminate(false);
             });
 
-            DownloadFileFromURL d = new DownloadFileFromURL();
-            d.execute(paths.get(index), String.valueOf(index));
+
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            Handler handler = new Handler(Looper.getMainLooper());
+
+            // TODO: this download logic is terrible. Redo it entirely as part of effort to move to SQLite databases.
+            executor.execute(() -> {
+                final TextView t = findViewById(R.id.textStatus);
+                final String file = paths.get(index);
+                handler.post(() -> t.setText(String.format(getString(R.string.update_downloading_formattable), file)));
+                try {
+                    CheapoConfigManager configManager = new CheapoConfigManager(getApplicationContext());
+                    URL url = new URL(configManager.getDataField("databaseUri") + file);
+                    URLConnection urlConnection = url.openConnection();
+                    urlConnection.connect();
+
+                    int fileLength = urlConnection.getContentLength();
+                    InputStream input = new BufferedInputStream(url.openStream(),
+                            8192);
+                    File f = new File(getFilesDir(), file);
+                    //noinspection ResultOfMethodCallIgnored
+                    Objects.requireNonNull(f.getParentFile()).mkdirs();
+                    //noinspection ResultOfMethodCallIgnored
+                    f.createNewFile();
+                    OutputStream output = new FileOutputStream(String.format("%s/%s", getFilesDir(), file));
+
+                    byte[] data = new byte[1024];
+
+                    int count;
+                    long total = 0;
+                    while ((count = input.read(data)) != -1) {
+                        total += count;
+                        long finalTotal = total;
+                        runOnUiThread(() -> {
+                            ProgressBar p = findViewById(R.id.progressBarAux);
+                            p.setProgress( Math.round(finalTotal * 100.0f / fileLength) );
+                            p.setMax(100);
+                            p.setIndeterminate(false);
+                        });
+
+                        output.write(data, 0, count);
+                    }
+                    output.flush();
+                    output.close();
+                    input.close();
+
+
+                } catch (Exception e) {
+                    Log.e("updateData", String.format("Error while downloading file %s.", file), e);
+                    leave(e.toString());
+                }
+
+                // FIXME: particularly terrible is this bit here: this calls the procedure
+                //  recursively, which may smash the stack when number of entries is large enough.
+                handler.post(() -> downloadFromIndex(index + 1));
+            });
+
         }
     }
 }

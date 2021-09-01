@@ -6,6 +6,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,10 +16,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class StartMenuActivity extends AppCompatActivity {
     ProgressDialog dialog;
-    testAddressRunner runner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,15 +93,54 @@ public class StartMenuActivity extends AppCompatActivity {
     public void setAddress(View view) {
 
         showDialog();
-        runner = new testAddressRunner();
-        runner.execute(this);
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
 
+        executor.execute(() -> {
+            final StartMenuActivity activity = this;
+            final EditText addr = activity.findViewById(R.id.source_address);
+            handler.post(() -> {
+                addr.setText(addr.getText().toString().trim());
+                if (addr.getText().charAt(addr.getText().toString().length() - 1) != '/') {
+                    addr.getText().append('/');
+                }
+
+            });
+
+            DatabaseTools.databaseStatus status = DatabaseTools.databaseAddressCheck(addr.getText().toString());
+            if (status == DatabaseTools.databaseStatus.BAD_URI) {
+                handler.post(() -> Toast.makeText(activity, R.string.invalid_address_toast, Toast.LENGTH_SHORT).show());
+            }
+            if (status == DatabaseTools.databaseStatus.NOT_CONNECTING) {
+                handler.post(() -> Toast.makeText(activity, R.string.cannot_download_to_test_toast, Toast.LENGTH_SHORT).show());
+            }
+            if (status == DatabaseTools.databaseStatus.BAD_JSON) {
+                handler.post(() -> Toast.makeText(activity, R.string.invalid_json_to_test_toast, Toast.LENGTH_SHORT).show());
+            }
+            if(status != DatabaseTools.databaseStatus.OK){
+                handler.post(activity::hideDialog);
+                return;
+            }
+
+            CheapoConfigManager configManager = new CheapoConfigManager(activity);
+            try {
+                configManager.setDataField("databaseUri", String.valueOf(addr.getText()));
+            } catch (IOException e) {
+                Log.wtf("mainMenu", "Error while writing to my directory?!", e);
+                handler.post(() -> Toast.makeText(activity, R.string.error_saving_address, Toast.LENGTH_LONG).show());
+                handler.post(activity::hideDialog);
+                return;
+            }
+            handler.post(() -> Toast.makeText(activity, R.string.address_set_ok_toast, Toast.LENGTH_SHORT).show());
+            handler.post(activity::hideDialog);
+
+        });
 
     }
 
     public void showDialog() {
         runOnUiThread(() -> {
-            dialog = new ProgressDialog(getApplicationContext());
+            dialog = new ProgressDialog(this);
             dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             dialog.setMessage(getString(R.string.testing_wait_popup));
             dialog.setIndeterminate(true);
@@ -111,51 +154,5 @@ public class StartMenuActivity extends AppCompatActivity {
     public void hideDialog() {
         dialog.dismiss();
     }
-
-    // FIXME: replace this with other concurrency mechanisms.
-    static class testAddressRunner extends AsyncTask<StartMenuActivity, Integer, StartMenuActivity> {
-
-        protected StartMenuActivity doInBackground(StartMenuActivity... activities) {
-            final StartMenuActivity activity = activities[0];
-            final EditText addr = activity.findViewById(R.id.source_address);
-            activity.runOnUiThread(() -> {
-                addr.setText(addr.getText().toString().trim());
-                if (addr.getText().charAt(addr.getText().toString().length() - 1) != '/') {
-                    addr.getText().append('/');
-                }
-
-            });
-
-            DatabaseTools.databaseStatus status = DatabaseTools.databaseAddressCheck(addr.getText().toString());
-            if (status == DatabaseTools.databaseStatus.BAD_URI) {
-                activity.runOnUiThread(() -> Toast.makeText(activity, R.string.invalid_address_toast, Toast.LENGTH_SHORT).show());
-                return activity;
-            }
-            if (status == DatabaseTools.databaseStatus.NOT_CONNECTING) {
-                activity.runOnUiThread(() -> Toast.makeText(activity, R.string.cannot_download_to_test_toast, Toast.LENGTH_SHORT).show());
-                return activity;
-            }
-            if (status == DatabaseTools.databaseStatus.BAD_JSON) {
-                activity.runOnUiThread(() -> Toast.makeText(activity, R.string.invalid_json_to_test_toast, Toast.LENGTH_SHORT).show());
-                return activity;
-            }
-            CheapoConfigManager configManager = new CheapoConfigManager(activity);
-            try {
-                configManager.setDataField("databaseUri", String.valueOf(addr.getText()));
-            } catch (IOException e) {
-                Log.wtf("mainMenu", "Error while writing to my directory?!", e);
-                activity.runOnUiThread(() -> Toast.makeText(activity, R.string.error_saving_address, Toast.LENGTH_LONG).show());
-                return activity;
-            }
-            activity.runOnUiThread(() -> Toast.makeText(activity, R.string.address_set_ok_toast, Toast.LENGTH_SHORT).show());
-            return activity;
-        }
-
-        @Override
-        protected void onPostExecute(final StartMenuActivity startMenuActivity) {
-            startMenuActivity.runOnUiThread(startMenuActivity::hideDialog);
-        }
-    }
-
 
 }
