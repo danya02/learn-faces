@@ -29,11 +29,9 @@
     <string name="infty">∞</string>
     <string name="questions_hint">Questions</string>
     <string name="default_question_num">10</string>
-    <string name="b_update_text">Update data</string>
     <string name="b_skip_text"><![CDATA[Skip >>]]></string>
     <string name="face_content_description">A face.</string>
     <string name="hint_url_json">URL of JSON database</string>
-    <string name="b_save">Save</string>
     <string name="error_saving_address">Error while saving address.</string>
     <string name="no_database_need_update">No database file found; update needed.</string>
     <string name="error_in_json">Unexpected error in JSON file.</string>
@@ -42,4 +40,5 @@
     <string name="invalid_json_to_test_toast">The object at this URL is not suitable JSON. Check the address.</string>
     <string name="address_set_ok_toast">Address set successfully; run update to confirm.</string>
     <string name="testing_wait_popup">Testing address. Please wait…</string>
+    <string name="b_settings">Open Settings</string>
 </resources>

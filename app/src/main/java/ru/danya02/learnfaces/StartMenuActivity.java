@@ -1,31 +1,21 @@
 package ru.danya02.learnfaces;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 public class StartMenuActivity extends AppCompatActivity {
-    ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_menu);
+
         final Button start = findViewById(R.id.b_start);
         start.setText(R.string.start_button_text);
         start.setOnClickListener(this::start);
@@ -35,25 +25,13 @@ public class StartMenuActivity extends AppCompatActivity {
         final Button dataview = findViewById(R.id.b_dataview);
         dataview.setText(R.string.b_dataview_text);
         dataview.setOnClickListener(this::toDataview);
-        final Button update = findViewById(R.id.b_update);
-        update.setText(R.string.b_update_text);
-        update.setOnClickListener(this::toUpdate);
-        final Button save = findViewById(R.id.b_save);
-        save.setText(R.string.b_save);
-        save.setOnClickListener(this::setAddress);
-        loadAddress();
+        final Button settings = findViewById(R.id.b_settings);
+        settings.setOnClickListener((view) -> Toast.makeText(this, "NotImplemented", Toast.LENGTH_LONG).show());
     }
 
     public void start(View view) {
-        EditText t = findViewById(R.id.question_num_startmenu);
         Intent toGame = new Intent(this, GameActivity.class);
-        String qs = String.valueOf(t.getText());
         Integer qn = 10;
-        try {
-            qn = Integer.parseInt(qs);
-        } catch (NumberFormatException e) {
-            Log.wtf("startMenu", "Invalid number from number-only EditText?!", e);
-        }
         toGame.putExtra("questions", qn);
         toGame.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(toGame);
@@ -68,91 +46,6 @@ public class StartMenuActivity extends AppCompatActivity {
     public void toDataview(View view) {
         Intent to_data = new Intent(this, DatabaseViewActivity.class);
         startActivity(to_data);
-    }
-
-    public void toUpdate(View view) {
-        Intent to_update = new Intent(this, UpdaterActivity.class);
-        startActivity(to_update);
-    }
-
-    public void loadAddress() {
-        CheapoConfigManager configManager = new CheapoConfigManager(getApplicationContext());
-        EditText addr = findViewById(R.id.source_address);
-        String s = configManager.getDataField("databaseUri");
-        if (s == null) {
-            try {
-                configManager.setDataField("databaseUri", getString(R.string.data_base_directory_link));
-            } catch (IOException e) {
-                Log.wtf("mainMenu", "Error while writing to my directory?!", e);
-                Toast.makeText(this, R.string.error_saving_address, Toast.LENGTH_LONG).show();
-            }
-        }
-        addr.setText(configManager.getDataField("databaseUri"));
-    }
-
-    public void setAddress(View view) {
-
-        showDialog();
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
-
-        executor.execute(() -> {
-            final StartMenuActivity activity = this;
-            final EditText addr = activity.findViewById(R.id.source_address);
-            handler.post(() -> {
-                addr.setText(addr.getText().toString().trim());
-                if (addr.getText().charAt(addr.getText().toString().length() - 1) != '/') {
-                    addr.getText().append('/');
-                }
-
-            });
-
-            DatabaseTools.databaseStatus status = DatabaseTools.databaseAddressCheck(addr.getText().toString());
-            if (status == DatabaseTools.databaseStatus.BAD_URI) {
-                handler.post(() -> Toast.makeText(activity, R.string.invalid_address_toast, Toast.LENGTH_SHORT).show());
-            }
-            if (status == DatabaseTools.databaseStatus.NOT_CONNECTING) {
-                handler.post(() -> Toast.makeText(activity, R.string.cannot_download_to_test_toast, Toast.LENGTH_SHORT).show());
-            }
-            if (status == DatabaseTools.databaseStatus.BAD_JSON) {
-                handler.post(() -> Toast.makeText(activity, R.string.invalid_json_to_test_toast, Toast.LENGTH_SHORT).show());
-            }
-            if(status != DatabaseTools.databaseStatus.OK){
-                handler.post(activity::hideDialog);
-                return;
-            }
-
-            CheapoConfigManager configManager = new CheapoConfigManager(activity);
-            try {
-                configManager.setDataField("databaseUri", String.valueOf(addr.getText()));
-            } catch (IOException e) {
-                Log.wtf("mainMenu", "Error while writing to my directory?!", e);
-                handler.post(() -> Toast.makeText(activity, R.string.error_saving_address, Toast.LENGTH_LONG).show());
-                handler.post(activity::hideDialog);
-                return;
-            }
-            handler.post(() -> Toast.makeText(activity, R.string.address_set_ok_toast, Toast.LENGTH_SHORT).show());
-            handler.post(activity::hideDialog);
-
-        });
-
-    }
-
-    public void showDialog() {
-        runOnUiThread(() -> {
-            dialog = new ProgressDialog(this);
-            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            dialog.setMessage(getString(R.string.testing_wait_popup));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(false);
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.show();
-
-        });
-    }
-
-    public void hideDialog() {
-        dialog.dismiss();
     }
 
 }
